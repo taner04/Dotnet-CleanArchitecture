@@ -1,0 +1,567 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\application\\response\\resultt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|solutionrelative:application\\response\\resultt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\application\\service\\authenticatioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|solutionrelative:application\\service\\authenticatioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\application\\common\\interfaces\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|solutionrelative:application\\common\\interfaces\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\infrastructure\\persistence\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\application\\response\\error.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|solutionrelative:application\\response\\error.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBB60D19-C4A3-4901-B799-7D09206B2CEC}|Api\\Api.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\api\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBB60D19-C4A3-4901-B799-7D09206B2CEC}|Api\\Api.csproj|solutionrelative:api\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{049AE77B-1BFE-41EC-A9A6-AC07FF5031D3}|Domain\\Domain.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{049AE77B-1BFE-41EC-A9A6-AC07FF5031D3}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBB60D19-C4A3-4901-B799-7D09206B2CEC}|Api\\Api.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\api\\controllers\\controllerbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBB60D19-C4A3-4901-B799-7D09206B2CEC}|Api\\Api.csproj|solutionrelative:api\\controllers\\controllerbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\infrastructure\\persistence\\seed\\applicationdbmigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\seed\\applicationdbmigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBB60D19-C4A3-4901-B799-7D09206B2CEC}|Api\\Api.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBB60D19-C4A3-4901-B799-7D09206B2CEC}|Api\\Api.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E29E6CD2-09B8-4620-856B-05AF38C4F53D}|eShop.AppHost\\eShop.AppHost.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\eshop.apphost\\apphost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E29E6CD2-09B8-4620-856B-05AF38C4F53D}|eShop.AppHost\\eShop.AppHost.csproj|solutionrelative:eshop.apphost\\apphost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\infrastructure\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\infrastructure\\migrations\\20250729142418_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\migrations\\20250729142418_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\infrastructure\\persistence\\configuration\\userconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\configuration\\userconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{049AE77B-1BFE-41EC-A9A6-AC07FF5031D3}|Domain\\Domain.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\domain\\common\\base\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{049AE77B-1BFE-41EC-A9A6-AC07FF5031D3}|Domain\\Domain.csproj|solutionrelative:domain\\common\\base\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\infrastructure\\persistence\\applicationdbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\applicationdbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{049AE77B-1BFE-41EC-A9A6-AC07FF5031D3}|Domain\\Domain.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\domain\\common\\base\\auditable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{049AE77B-1BFE-41EC-A9A6-AC07FF5031D3}|Domain\\Domain.csproj|solutionrelative:domain\\common\\base\\auditable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{049AE77B-1BFE-41EC-A9A6-AC07FF5031D3}|Domain\\Domain.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\domain\\common\\interfaces\\iauditable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{049AE77B-1BFE-41EC-A9A6-AC07FF5031D3}|Domain\\Domain.csproj|solutionrelative:domain\\common\\interfaces\\iauditable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\infrastructure\\persistence\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\infrastructure\\persistence\\repository\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\persistence\\repository\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{381FF91B-734A-4121-9333-BF5D4DA6F217}|SharedKernel\\SharedKernel.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\sharedkernel\\extensions\\dependencyinjectionextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{381FF91B-734A-4121-9333-BF5D4DA6F217}|SharedKernel\\SharedKernel.csproj|solutionrelative:sharedkernel\\extensions\\dependencyinjectionextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\application\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|solutionrelative:application\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\infrastructure\\globaleusing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\globaleusing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\application\\common\\interfaces\\services\\iauthenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|solutionrelative:application\\common\\interfaces\\services\\iauthenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\application\\common\\interfaces\\repositories\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0939D8FF-9126-4CA5-9D90-ECA8512F0FB2}|Application\\Application.csproj|solutionrelative:application\\common\\interfaces\\repositories\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|c:\\users\\tanergadomski\\desktop\\shortcuts\\projects\\clean-architecture\\src\\infrastructure\\infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{C558FF10-3750-421A-BA54-FB9D7F2A840A}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 23,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:12:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:8:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:138:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{131369f2-062d-44a2-8671-91ff31efb4f4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:7:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Error.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Response\\Error.cs",
+              "RelativeDocumentMoniker": "Application\\Response\\Error.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Response\\Error.cs",
+              "RelativeToolTip": "Application\\Response\\Error.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T14:40:17.116Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ResultT.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Response\\ResultT.cs",
+              "RelativeDocumentMoniker": "Application\\Response\\ResultT.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Response\\ResultT.cs",
+              "RelativeToolTip": "Application\\Response\\ResultT.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAABvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T14:39:37.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Domain\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Domain\\Entities\\User.cs",
+              "RelativeToolTip": "Domain\\Entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T14:12:31.367Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Entity.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Domain\\Common\\Base\\Entity.cs",
+              "RelativeDocumentMoniker": "Domain\\Common\\Base\\Entity.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Domain\\Common\\Base\\Entity.cs",
+              "RelativeToolTip": "Domain\\Common\\Base\\Entity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T14:07:33.477Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Persistence\\Repository\\UserRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Repository\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Persistence\\Repository\\UserRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Repository\\UserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:10:55.306Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Persistence\\Repository\\Repository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Repository\\Repository.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Persistence\\Repository\\Repository.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Repository\\Repository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:03:31.033Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AppHost.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\eShop.AppHost\\AppHost.cs",
+              "RelativeDocumentMoniker": "eShop.AppHost\\AppHost.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\eShop.AppHost\\AppHost.cs",
+              "RelativeToolTip": "eShop.AppHost\\AppHost.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T12:44:34.116Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Api\\Program.cs",
+              "RelativeDocumentMoniker": "Api\\Program.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Api\\Program.cs",
+              "RelativeToolTip": "Api\\Program.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAuwB8AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T12:49:28.951Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\DependencyInjection.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\DependencyInjection.cs",
+              "RelativeToolTip": "Infrastructure\\DependencyInjection.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAqwA0AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T12:47:55.961Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ApplicationDbMigration.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Persistence\\Seed\\ApplicationDbMigration.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Seed\\ApplicationDbMigration.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Persistence\\Seed\\ApplicationDbMigration.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Seed\\ApplicationDbMigration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:00:03.105Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthenticatioService.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Service\\AuthenticatioService.cs",
+              "RelativeDocumentMoniker": "Application\\Service\\AuthenticatioService.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Service\\AuthenticatioService.cs",
+              "RelativeToolTip": "Application\\Service\\AuthenticatioService.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAkwBsAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:12:26.527Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AuthenticationController.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Api\\Controllers\\AuthenticationController.cs",
+              "RelativeDocumentMoniker": "Api\\Controllers\\AuthenticationController.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Api\\Controllers\\AuthenticationController.cs",
+              "RelativeToolTip": "Api\\Controllers\\AuthenticationController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:18:54.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Common\\Interfaces\\Repositories\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "Application\\Common\\Interfaces\\Repositories\\IUserRepository.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Common\\Interfaces\\Repositories\\IUserRepository.cs",
+              "RelativeToolTip": "Application\\Common\\Interfaces\\Repositories\\IUserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAcAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:10:12.282Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "UserConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Persistence\\Configuration\\UserConfiguration.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\Configuration\\UserConfiguration.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Persistence\\Configuration\\UserConfiguration.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\Configuration\\UserConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:39:33.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ControllerBase.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Api\\Controllers\\ControllerBase.cs",
+              "RelativeDocumentMoniker": "Api\\Controllers\\ControllerBase.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Api\\Controllers\\ControllerBase.cs",
+              "RelativeToolTip": "Api\\Controllers\\ControllerBase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA0AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:17:25.774Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ApplicationDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeToolTip": "Infrastructure\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAA0wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T14:24:26.549Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "20250729142418_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Migrations\\20250729142418_InitialCreate.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250729142418_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Migrations\\20250729142418_InitialCreate.cs",
+              "RelativeToolTip": "Infrastructure\\Migrations\\20250729142418_InitialCreate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T14:24:28.851Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "IAuthenticationService.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Common\\Interfaces\\Services\\IAuthenticationService.cs",
+              "RelativeDocumentMoniker": "Application\\Common\\Interfaces\\Services\\IAuthenticationService.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Common\\Interfaces\\Services\\IAuthenticationService.cs",
+              "RelativeToolTip": "Application\\Common\\Interfaces\\Services\\IAuthenticationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAUAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:12:03.172Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "IAuditable.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Domain\\Common\\Interfaces\\IAuditable.cs",
+              "RelativeDocumentMoniker": "Domain\\Common\\Interfaces\\IAuditable.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Domain\\Common\\Interfaces\\IAuditable.cs",
+              "RelativeToolTip": "Domain\\Common\\Interfaces\\IAuditable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T14:05:30.263Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Auditable.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Domain\\Common\\Base\\Auditable.cs",
+              "RelativeDocumentMoniker": "Domain\\Common\\Base\\Auditable.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Domain\\Common\\Base\\Auditable.cs",
+              "RelativeToolTip": "Domain\\Common\\Base\\Auditable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T14:05:20.462Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ApplicationDbContextFactory.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Persistence\\ApplicationDbContextFactory.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\ApplicationDbContextFactory.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Persistence\\ApplicationDbContextFactory.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\ApplicationDbContextFactory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T14:04:17.333Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "GlobaleUsing.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\GlobaleUsing.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\GlobaleUsing.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\GlobaleUsing.cs",
+              "RelativeToolTip": "Infrastructure\\GlobaleUsing.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:24:21.638Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Persistence\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Persistence\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Persistence\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Infrastructure\\Persistence\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T12:53:33.474Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "DependencyInjectionExtension.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\SharedKernel\\Extensions\\DependencyInjectionExtension.cs",
+              "RelativeDocumentMoniker": "SharedKernel\\Extensions\\DependencyInjectionExtension.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\SharedKernel\\Extensions\\DependencyInjectionExtension.cs",
+              "RelativeToolTip": "SharedKernel\\Extensions\\DependencyInjectionExtension.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAwCgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:22:37.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "Application\\DependencyInjection.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\DependencyInjection.cs",
+              "RelativeToolTip": "Application\\DependencyInjection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA0AAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:21:18.442Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "IRepository.cs",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Common\\Interfaces\\Repositories\\IRepository.cs",
+              "RelativeDocumentMoniker": "Application\\Common\\Interfaces\\Repositories\\IRepository.cs",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Common\\Interfaces\\Repositories\\IRepository.cs",
+              "RelativeToolTip": "Application\\Common\\Interfaces\\Repositories\\IRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAcAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T13:04:30.96Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Infrastructure",
+              "DocumentMoniker": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Infrastructure.csproj",
+              "RelativeDocumentMoniker": "Infrastructure\\Infrastructure.csproj",
+              "ToolTip": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Infrastructure\\Infrastructure.csproj",
+              "RelativeToolTip": "Infrastructure\\Infrastructure.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvx8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-29T12:52:29.215Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

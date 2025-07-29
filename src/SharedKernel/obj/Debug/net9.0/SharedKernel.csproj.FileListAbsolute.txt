@@ -1,0 +1,12 @@
+C:\Users\TanerGadomski\Desktop\Shortcuts\Projects\Clean-Architecture\src\SharedKernel\bin\Debug\net9.0\SharedKernel.deps.json
+C:\Users\TanerGadomski\Desktop\Shortcuts\Projects\Clean-Architecture\src\SharedKernel\bin\Debug\net9.0\SharedKernel.dll
+C:\Users\TanerGadomski\Desktop\Shortcuts\Projects\Clean-Architecture\src\SharedKernel\bin\Debug\net9.0\SharedKernel.pdb
+C:\Users\TanerGadomski\Desktop\Shortcuts\Projects\Clean-Architecture\src\SharedKernel\obj\Debug\net9.0\SharedKernel.csproj.AssemblyReference.cache
+C:\Users\TanerGadomski\Desktop\Shortcuts\Projects\Clean-Architecture\src\SharedKernel\obj\Debug\net9.0\SharedKernel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\TanerGadomski\Desktop\Shortcuts\Projects\Clean-Architecture\src\SharedKernel\obj\Debug\net9.0\SharedKernel.AssemblyInfoInputs.cache
+C:\Users\TanerGadomski\Desktop\Shortcuts\Projects\Clean-Architecture\src\SharedKernel\obj\Debug\net9.0\SharedKernel.AssemblyInfo.cs
+C:\Users\TanerGadomski\Desktop\Shortcuts\Projects\Clean-Architecture\src\SharedKernel\obj\Debug\net9.0\SharedKernel.csproj.CoreCompileInputs.cache
+C:\Users\TanerGadomski\Desktop\Shortcuts\Projects\Clean-Architecture\src\SharedKernel\obj\Debug\net9.0\SharedKernel.dll
+C:\Users\TanerGadomski\Desktop\Shortcuts\Projects\Clean-Architecture\src\SharedKernel\obj\Debug\net9.0\refint\SharedKernel.dll
+C:\Users\TanerGadomski\Desktop\Shortcuts\Projects\Clean-Architecture\src\SharedKernel\obj\Debug\net9.0\SharedKernel.pdb
+C:\Users\TanerGadomski\Desktop\Shortcuts\Projects\Clean-Architecture\src\SharedKernel\obj\Debug\net9.0\ref\SharedKernel.dll

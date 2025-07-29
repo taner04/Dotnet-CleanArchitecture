@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "+MzogQm4OEs=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\TanerGadomski\\Desktop\\Shortcuts\\Projects\\Clean-Architecture\\src\\Application\\Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\TanerGadomski\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.7\\microsoft.extensions.dependencyinjection.abstractions.9.0.7.nupkg.sha512"
+  ],
+  "logs": []
+}
