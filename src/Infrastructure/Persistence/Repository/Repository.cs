@@ -1,13 +1,13 @@
-﻿using Application.Common.Interfaces.Repositories;
-using Domain.Common.Interfaces;
+﻿using Domain.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repository
 {
-    public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, IEntity<TId> 
+    public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, IEntity<TId>
     {
-        protected ApplicationDbContext DbContext { get; init; }
+
         protected DbSet<TEntity> DbSet { get; init; }
+        public DbContext DbContext { get; init; }
 
         protected Repository(ApplicationDbContext dbContext)
         {

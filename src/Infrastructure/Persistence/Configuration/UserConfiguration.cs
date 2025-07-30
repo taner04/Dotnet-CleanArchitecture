@@ -33,6 +33,12 @@ namespace Infrastructure.Persistence.Configuration
 
             builder.Property<DateTime?>(c => c.UpdatedAt)
                 .HasColumnType("timestamp with time zone");
+
+            builder.HasOne(u => u.Jwt)
+                .WithOne(j => j.User)
+                .HasForeignKey<Jwt>(j => j.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

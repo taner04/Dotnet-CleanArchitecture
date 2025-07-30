@@ -1,6 +1,5 @@
 ﻿using Domain.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Infrastructure.Persistence.Interceptor
@@ -20,19 +19,29 @@ namespace Infrastructure.Persistence.Interceptor
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
+        public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
+        {
+            if (eventData.Context is not null)
+            {
+                SetAuditableProperties(eventData.Context);
+            }
+
+            return base.SavingChanges(eventData, result);
+        }
+
         private static void SetAuditableProperties(DbContext context)
         {
             DateTime utcNow = DateTime.UtcNow;
 
             var entries = context.ChangeTracker.Entries()
-                    .Where(e => e.Entity is Domain.Common.Interfaces.IAuditable &&
-                                (e.State == EntityState.Added || e.State == EntityState.Modified));
+                    .Where(e => e.Entity is IAuditable && (e.State == EntityState.Added || e.State == EntityState.Modified));
 
             if (entries.Any())
             {
-                foreach (EntityEntry<IAuditable> entry in entries.Cast<EntityEntry<IAuditable>>())
+                foreach (var entry in entries)
                 {
-                    var entity = entry.Entity;
+                    var entity = (IAuditable)entry.Entity;
+
                     if (entry.State == EntityState.Modified)
                     {
                         entity.UpdatedAt = utcNow;

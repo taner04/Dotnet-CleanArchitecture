@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using SharedKernel.Extensions;
 using System.Reflection;
 
@@ -8,10 +9,10 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            // Register application services here
-            // Example: services.AddScoped<IYourService, YourService>();
+            var assembly = Assembly.GetExecutingAssembly();
 
-            services.AddServicesFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
+            services.AddServicesFromAssembly(assembly);
             return services;
         }
     }

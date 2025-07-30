@@ -2,7 +2,7 @@
 {
     public class User : Entity<UserId>
     {
-        public User(UserId id, string firstname, string lastname, string email, string password) : base(id)
+        public User(string firstname, string lastname, string email, string password) 
         {
             Firstname = firstname;
             Lastname = lastname;
@@ -14,5 +14,7 @@
         public string Lastname { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+
+        public Jwt? Jwt { get; set; }
     }
 }

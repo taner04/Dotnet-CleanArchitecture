@@ -1,4 +1,4 @@
 ﻿namespace Domain.Entities.TypedIds
 {
-    public record UserId(int Value);
+    public readonly record struct UserId(int Value);
 }

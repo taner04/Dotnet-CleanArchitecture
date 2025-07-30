@@ -5,7 +5,7 @@ namespace Application.Common.Interfaces.Services
 {
     public interface IAuthenticationService
     {
-        Task<ResultT<UserDto>> LoginAsync(UserLoginDto user);
-        Task<ResultT<bool>> RegisterAsync(UserRegisterDto user);
+        Task<Result<UserDto>> LoginAsync(UserLoginDto user);
+        Task<Result<bool>> RegisterAsync(UserRegisterDto user);
     }
 }
