@@ -43,7 +43,14 @@ namespace Application.Service
                  return Result<UserDto>.Failure(ErrorFactory.Unauthorized("Invalid credantials provided"));
             }
 
-            return default!;
+            if(foundUser.Jwt!.Expiration >= DateTime.UtcNow || foundUser.Jwt!.RefreshTokenExpiration >= DateTime.UtcNow)
+            {
+                foundUser.Jwt = _tokenGenerator.GenerateToken(foundUser);
+                _userRepository.Update(foundUser);
+                await _userRepository.DbContext.SaveChangesAsync();
+            }
+
+            return Result<UserDto>.Success(new(foundUser.Id.Value, foundUser.Firstname, foundUser.Lastname, foundUser.Email, foundUser.Jwt.Token));
         }
 
         public async Task<Result<bool>> RegisterAsync(UserRegisterDto user)

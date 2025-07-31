@@ -2,12 +2,10 @@
 
 namespace Domain.Common.Base
 {
-    public abstract class Entity<TId> : Auditable, IEntity<TId>
+    public abstract class Entity<TId> : Auditable, IEntity<TId> where TId : struct
     {
-#pragma warning disable CS8618 // Ein Non-Nullable-Feld muss beim Beenden des Konstruktors einen Wert ungleich NULL enthalten. Fügen Sie ggf. den „erforderlichen“ Modifizierer hinzu, oder deklarieren Sie den Modifizierer als NULL-Werte zulassend.
         public TId Id { get; init; }
-#pragma warning restore CS8618 // Ein Non-Nullable-Feld muss beim Beenden des Konstruktors einen Wert ungleich NULL enthalten. Fügen Sie ggf. den „erforderlichen“ Modifizierer hinzu, oder deklarieren Sie den Modifizierer als NULL-Werte zulassend.
-        
+
         private readonly List<IDomainEvent> _domainEvents = [];
 
 

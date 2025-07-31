@@ -11,6 +11,6 @@ namespace Infrastructure.Persistence.Repository
         }
 
         public async Task<User?> GetByEmailAsync(string email) 
-            => await DbSet.Where(u => u.Email == email).FirstOrDefaultAsync();
+            => await DbSet.Where(u => u.Email == email).Include(u => u.Jwt).FirstOrDefaultAsync();
     }
 }

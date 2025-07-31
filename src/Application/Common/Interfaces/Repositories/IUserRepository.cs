@@ -1,7 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Entities.TypedIds;
-
-namespace Application.Common.Interfaces.Repositories
+﻿namespace Application.Common.Interfaces.Repositories
 {
     public interface IUserRepository : IRepository<User, UserId>
     {

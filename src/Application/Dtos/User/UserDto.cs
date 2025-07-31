@@ -1,6 +1,4 @@
-﻿using Domain.Entities.TypedIds;
-
-namespace Application.Dtos.User
+﻿namespace Application.Dtos.User
 {
-    public record UserDto(UserId Id, string Firstname, string Lastname, string Mail);
+    public record UserDto(int Id, string Firstname, string Lastname, string Mail, string Token);
 }

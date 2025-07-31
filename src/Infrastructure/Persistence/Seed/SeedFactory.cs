@@ -7,7 +7,7 @@ namespace Infrastructure.Persistence.Seed
         public static void SeedData(DbContext dbContext)
         {
             UserSeed.Seed(dbContext);
-        
+            
             dbContext.SaveChanges();
         }
     }

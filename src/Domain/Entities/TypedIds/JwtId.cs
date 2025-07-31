@@ -1,4 +1,4 @@
 ﻿namespace Domain.Entities.TypedIds
 {
-    public record JwtId(int Value);
+    public readonly record struct JwtId(int Value);
 }

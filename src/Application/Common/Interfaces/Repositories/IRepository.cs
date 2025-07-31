@@ -2,7 +2,7 @@
 
 namespace Application.Common.Interfaces.Repositories
 {
-    public interface IRepository<TEntity, TId> where TEntity : IEntity<TId>
+    public interface IRepository<TEntity, TId> where TEntity : IEntity<TId> where TId : struct
     {
         DbContext DbContext { get; init; }
 

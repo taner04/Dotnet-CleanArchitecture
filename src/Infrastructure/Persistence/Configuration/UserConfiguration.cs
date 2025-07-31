@@ -3,14 +3,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
 {
-    public sealed class UserConfiguration : IEntityTypeConfiguration<User>
+    public sealed class UserConfiguration : BaseConfiguration<User, UserId>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public override void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable(nameof(User));
-
-            builder.HasKey(u => u.Id);
-
             builder.Property(u => u.Id)
                 .IsRequired()
                 .ValueGeneratedOnAdd()
@@ -27,18 +23,10 @@ namespace Infrastructure.Persistence.Configuration
                 .IsRequired()
                 .HasMaxLength(256);
 
-            builder.Property(c => c.CreatedAt)
-                .IsRequired()
-                .HasColumnType("timestamp with time zone");
-
-            builder.Property<DateTime?>(c => c.UpdatedAt)
-                .HasColumnType("timestamp with time zone");
-
             builder.HasOne(u => u.Jwt)
                 .WithOne(j => j.User)
                 .HasForeignKey<Jwt>(j => j.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-
         }
     }
 }

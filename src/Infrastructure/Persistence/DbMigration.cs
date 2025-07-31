@@ -14,10 +14,13 @@ namespace Infrastructure.Persistence
             var services = scope.ServiceProvider;
             var dbContext = services.GetRequiredService<ApplicationDbContext>();
 
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.Migrate();
+            if(dbContext.Database.GetPendingMigrations().Any())
+            {
+                dbContext.Database.EnsureDeleted();
+                dbContext.Database.Migrate();
 
-            SeedFactory.SeedData(dbContext);
+                SeedFactory.SeedData(dbContext);
+            }
         }
     }
 }
