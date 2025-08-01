@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Persistence.Configuration.Seed;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
@@ -16,23 +17,27 @@ namespace Infrastructure.Persistence.Configuration
                     id => id.Value,
                     value => new OrderItemId(value)
                 );
-            
+
             builder.Property(oi => oi.Quantity)
                 .IsRequired();
-            
-            builder.Property(oi => oi.Price)
+
+            builder.Property(oi => oi.Amount)
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
-            
+
             builder.HasOne(oi => oi.Order)
                 .WithMany(o => o.OrderItems)
                 .HasForeignKey(oi => oi.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             builder.HasOne(oi => oi.Product)
                 .WithMany()
                 .HasForeignKey(oi => oi.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            Seed(builder);
         }
+
+        public override void Seed(EntityTypeBuilder<OrderItem> builder) => builder.HasData(OrderItemSeed.OrderItems);
     }
 }

@@ -17,8 +17,8 @@
         public static Error InternalServerError(string message) =>
             new(ErrorTitles.InternalServerError, message, 500);
 
-        public static Error ValidationError(string message, Dictionary<string, string[]> validationErrors) =>
-            new(ErrorTitles.ValidationError, message, 422, validationErrors);
+        public static Error ValidationError(IDictionary<string, string[]> validationErrors) =>
+            new(ErrorTitles.ValidationError, "Some properties are missing", 422, validationErrors);
 
         public static Error Conflict(string message) =>
             new("Conflict", message, 409);

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Common.Interfaces.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Common.Interfaces.Repositories
 {
@@ -6,6 +7,7 @@ namespace Application.Common.Interfaces.Repositories
     {
         DbContext DbContext { get; init; }
 
+        Task<TEntity?> GetByIdAsync(TId id);
         Task<List<TEntity>> GetAllAsync();
         void Add(TEntity entity);
         void Update(TEntity entity);

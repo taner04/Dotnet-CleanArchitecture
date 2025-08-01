@@ -1,8 +1,10 @@
-﻿namespace Domain.Entities
+﻿using SharedKernel.Enums;
+
+namespace Domain.Entities
 {
     public sealed class Order : Entity<OrderId>
     {
-        public Order(decimal amount, DateTime orderDate, string paymentMethod)
+        public Order(decimal amount, DateTime orderDate, PaymendMethod paymentMethod)
         {
             Amount = amount;
             OrderDate = orderDate;
@@ -11,8 +13,8 @@
 
         public decimal Amount { get; init; }
         public DateTime OrderDate { get; init; }
-        public string PaymentMethod { get; init; } = null!;
-        public string OrderStatus { get; set; } = null!;
+        public PaymendMethod PaymentMethod { get; init; } 
+        public OrderStatus OrderStatus { get; set; } 
 
         public UserId UserId { get; init; } 
 

@@ -1,7 +1,11 @@
-﻿namespace Application.Common.Interfaces.Services
+﻿using Application.Dtos.Order;
+using Application.Response;
+
+namespace Application.Common.Interfaces.Services
 {
     public interface IOrderService
     {
-        Task<List<Order>> GetOrders(UserId userId);
+        Task<Result<List<OrderByIdDto>>> GetOrdersByUser(UserId userId);
+        Task<Result<bool>> CancelOrderAsync(OrderCancelDto orderCancel);
     }
 }

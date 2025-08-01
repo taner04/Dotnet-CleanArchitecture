@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Persistence.Configuration.Seed;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
@@ -42,6 +43,10 @@ namespace Infrastructure.Persistence.Configuration
 
             builder.HasIndex(j => j.UserId)
                 .IsUnique();
+
+            Seed(builder);
         }
+
+        public override void Seed(EntityTypeBuilder<Jwt> builder) => builder.HasData(JwtSeed.Jwt);
     }
 }

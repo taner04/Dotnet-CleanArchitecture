@@ -2,14 +2,14 @@
 {
     public sealed class OrderItem : Entity<OrderItemId>
     {
-        public OrderItem(int quantity, decimal price)
+        public OrderItem(int quantity, decimal amount)
         {
             Quantity = quantity;
-            Price = price;
+            Amount = amount;
         }
 
         public int Quantity { get; init; }
-        public decimal Price { get; init; }
+        public decimal Amount { get; init; }
 
         public OrderId OrderId { get; init; }
         public Order Order { get; init; } = null!;

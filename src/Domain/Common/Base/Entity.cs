@@ -1,10 +1,12 @@
-﻿using Domain.Common.Interfaces;
+﻿using Domain.Common.Interfaces.DomainEvent;
+using Domain.Common.Interfaces.Entity;
 
 namespace Domain.Common.Base
 {
-    public abstract class Entity<TId> : Auditable, IEntity<TId> where TId : struct
+    public abstract class Entity<TId> : Auditable, IEntity<TId>, ISoftDeletable where TId : struct
     {
         public TId Id { get; init; }
+        public bool IsDeleted { get; set; } = false;
 
         private readonly List<IDomainEvent> _domainEvents = [];
 

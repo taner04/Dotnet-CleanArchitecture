@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Persistence.Configuration.Seed;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
@@ -20,22 +21,26 @@ namespace Infrastructure.Persistence.Configuration
             builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(100);
-            
+
             builder.Property(p => p.Description)
                 .IsRequired()
                 .HasMaxLength(500);
-            
+
             builder.Property(p => p.Price)
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
-            
+
             builder.Property(p => p.Stock)
                 .IsRequired();
-            
+
             builder.Property(p => p.ImageUrl)
                 .IsRequired()
                 .HasMaxLength(256);
+
+            Seed(builder);
         }
+
+        public override void Seed(EntityTypeBuilder<Product> builder) => builder.HasData(ProductSeed.Products);
     }
 }
 

@@ -1,5 +1,4 @@
-﻿using Infrastructure.Persistence.Seed;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -18,8 +17,6 @@ namespace Infrastructure.Persistence
             {
                 dbContext.Database.EnsureDeleted();
                 dbContext.Database.Migrate();
-
-                SeedFactory.SeedData(dbContext);
             }
         }
     }

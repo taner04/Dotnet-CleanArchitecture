@@ -1,4 +1,4 @@
-﻿using Domain.Common.Interfaces;
+﻿using Domain.Common.Interfaces.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -33,27 +33,35 @@ namespace Infrastructure.Persistence.Interceptor
         {
             DateTime utcNow = DateTime.UtcNow;
 
-            var entries = context.ChangeTracker.Entries()
-                    .Where(e => e.Entity is IAuditable && (e.State == EntityState.Added || e.State == EntityState.Modified));
-
-            if (entries.Any())
+            foreach (var entry in context.ChangeTracker.Entries())
             {
-                foreach (var entry in entries)
+                if (entry.Entity is IAuditable auditable)
                 {
-                    var entity = (IAuditable)entry.Entity;
-
-                    if (entry.State == EntityState.Modified)
+                    switch (entry.State)
                     {
-                        entity.UpdatedAt = utcNow;
+                        case EntityState.Added:
+                            auditable.CreatedAt = utcNow;
+                            auditable.UpdatedAt = utcNow;
+                            break;
+
+                        case EntityState.Modified:
+                            auditable.UpdatedAt = utcNow;
+                            break;
                     }
+                }
 
-                    if (entry.State == EntityState.Added)
+                if (entry.State == EntityState.Deleted && entry.Entity is ISoftDeletable softDeletable)
+                {
+                    entry.State = EntityState.Modified;
+                    softDeletable.IsDeleted = true;
+
+                    if (softDeletable is IAuditable auditableDelete)
                     {
-                        entity.CreatedAt = utcNow;
-                        entity.UpdatedAt = utcNow;
+                        auditableDelete.UpdatedAt = utcNow;
                     }
                 }
             }
         }
+
     }
 }

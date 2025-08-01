@@ -1,4 +1,4 @@
-﻿namespace Domain.Common.Interfaces
+﻿namespace Domain.Common.Interfaces.DomainEvent
 {
     public interface IDomainEventHandler<TEvent> where TEvent : IDomainEvent
     {

@@ -1,5 +1,6 @@
 using Api;
 using Application;
+using eShop.ServiceDefaults;
 using Infrastructure;
 using Infrastructure.Persistence;
 using Scalar.AspNetCore;

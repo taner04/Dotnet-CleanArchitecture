@@ -1,5 +1,4 @@
-﻿using Application.Common.Interfaces.Services;
-using Application.Dtos.User;
+﻿using Application.Dtos.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers

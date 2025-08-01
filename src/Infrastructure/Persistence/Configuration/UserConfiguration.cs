@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Persistence.Configuration.Seed;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
@@ -27,6 +28,10 @@ namespace Infrastructure.Persistence.Configuration
                 .WithOne(j => j.User)
                 .HasForeignKey<Jwt>(j => j.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            Seed(builder);
         }
+
+        public override void Seed(EntityTypeBuilder<User> builder) => builder.HasData(UserSeed.User);
     }
 }

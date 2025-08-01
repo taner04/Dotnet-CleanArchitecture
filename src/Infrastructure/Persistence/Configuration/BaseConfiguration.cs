@@ -1,4 +1,5 @@
 ﻿using Domain.Common.Base;
+using Domain.Common.Interfaces.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,7 +12,7 @@ namespace Infrastructure.Persistence.Configuration
     /// <typeparam name="TEntity">The entity type.</typeparam>
     /// <typeparam name="TId">The type of the entity's identifier.</typeparam>
     public abstract class BaseConfiguration<TEntity, TId> :
-        IEntityTypeConfiguration<TEntity> where TEntity : Entity<TId> where TId : struct
+        IEntityTypeConfiguration<TEntity> where TEntity : Entity<TId>, ISoftDeletable where TId : struct
     {
         /// <summary>
         /// The SQL column type for timestamp with time zone.
@@ -35,6 +36,10 @@ namespace Infrastructure.Persistence.Configuration
 
             builder.Property<DateTime?>(c => c.UpdatedAt)
                 .HasColumnType(TimeStampWithTimeZone);
+
+            builder.HasQueryFilter(e => !e.IsDeleted);
         }
+
+        public virtual void Seed(EntityTypeBuilder<TEntity> builder) { }
     }
 }

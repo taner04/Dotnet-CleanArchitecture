@@ -4,6 +4,6 @@
         string Title,
         string Message,
         int StatusCode,
-        Dictionary<string, string[]>? ValidationErrors = null
+        IDictionary<string, string[]>? ValidationErrors = null
     );
 }

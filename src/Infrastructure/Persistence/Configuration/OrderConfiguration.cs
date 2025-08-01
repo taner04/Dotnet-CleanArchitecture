@@ -1,15 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.Persistence.Configuration.Seed;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
 {
-    public class OrderConfiguration : BaseConfiguration<Order, OrderId>
+    public sealed class OrderConfiguration : BaseConfiguration<Order, OrderId>
     {
         public override void Configure(EntityTypeBuilder<Order> builder)
         {
             base.Configure(builder);
 
-            builder.Property(o => o.Id)
+            builder.Property(j => j.Id)
                 .IsRequired()
                 .ValueGeneratedOnAdd()
                 .HasConversion(
@@ -17,31 +18,41 @@ namespace Infrastructure.Persistence.Configuration
                     value => new OrderId(value)
                 );
 
+            builder.Property(j => j.UserId)
+                .IsRequired()
+                .ValueGeneratedOnAdd()
+                .HasConversion(
+                    id => id.Value,
+                    value => new UserId(value)
+                );
+
             builder.Property(o => o.Amount)
-                .IsRequired();
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
 
             builder.Property(o => o.OrderDate)
                 .IsRequired()
                 .HasColumnType(TimeStampWithTimeZone);
-        
+
             builder.Property(o => o.PaymentMethod)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasConversion<int>();
 
             builder.Property(o => o.OrderStatus)
                 .IsRequired()
-                .HasMaxLength(50)
-                .HasDefaultValue("Pending");
+                .HasConversion<int>();
 
-            builder.HasOne<User>()
-                .WithMany()
-                .HasForeignKey(o => o.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Property(o => o.UserId)
+                .IsRequired();
 
             builder.HasMany(o => o.OrderItems)
-                .WithOne()
+                .WithOne(oi => oi.Order)
                 .HasForeignKey(oi => oi.OrderId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .IsRequired();
+
+            Seed(builder);
         }
+
+        public override void Seed(EntityTypeBuilder<Order> builder) => builder.HasData(OrderSeed.Order);
     }
 }
