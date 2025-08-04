@@ -3,7 +3,7 @@ using Domain.Common.Interfaces.Entity;
 
 namespace Domain.Common.Base
 {
-    public abstract class Entity<TId> : Auditable, IEntity<TId>, ISoftDeletable where TId : struct
+    public abstract class Entity<TId> : Auditable, IEntity<TId>, IDomain,ISoftDeletable where TId : struct
     {
         public TId Id { get; init; }
         public bool IsDeleted { get; set; } = false;

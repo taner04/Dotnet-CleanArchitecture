@@ -19,23 +19,16 @@ namespace Infrastructure.Persistence.Interceptor
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
-        public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
-        {
-            if (eventData.Context is not null)
-            {
-                SetAuditableProperties(eventData.Context);
-            }
-
-            return base.SavingChanges(eventData, result);
-        }
-
         private static void SetAuditableProperties(DbContext context)
         {
             DateTime utcNow = DateTime.UtcNow;
 
-            foreach (var entry in context.ChangeTracker.Entries())
+            var auditableEntities = context.ChangeTracker.Entries()
+                .Where(e => e.Entity is IAuditable && (e.State == EntityState.Added || e.State == EntityState.Modified));
+            
+            foreach (var entry in auditableEntities)
             {
-                if (entry.Entity is IAuditable auditable)
+                if(entry.Entity is IAuditable auditable)
                 {
                     switch (entry.State)
                     {
@@ -47,17 +40,6 @@ namespace Infrastructure.Persistence.Interceptor
                         case EntityState.Modified:
                             auditable.UpdatedAt = utcNow;
                             break;
-                    }
-                }
-
-                if (entry.State == EntityState.Deleted && entry.Entity is ISoftDeletable softDeletable)
-                {
-                    entry.State = EntityState.Modified;
-                    softDeletable.IsDeleted = true;
-
-                    if (softDeletable is IAuditable auditableDelete)
-                    {
-                        auditableDelete.UpdatedAt = utcNow;
                     }
                 }
             }

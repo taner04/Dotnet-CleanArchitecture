@@ -16,9 +16,17 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, WebApplicationBuilder builder)
         {
             builder.Services.AddSingleton<ISaveChangesInterceptor, UpdateAuditableInterceptor>();
+            builder.Services.AddSingleton<ISaveChangesInterceptor, SoftDeleteInterceptor>();
+            builder.Services.AddSingleton<ISaveChangesInterceptor, DispatchDomainEventInterceptor>();
+
             builder.Services.AddDbContext<ApplicationDbContext>((sp, opt) =>
             {
-                opt.AddInterceptors(sp.GetService<ISaveChangesInterceptor>()!);
+                var interceptors = sp.GetServices<ISaveChangesInterceptor>().ToList();
+                interceptors.ForEach(interceptor =>
+                {
+                    opt.AddInterceptors(interceptor);
+                });
+
                 opt.UseNpgsql(builder.Configuration.GetConnectionString("eshop"));
             });
 

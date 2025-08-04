@@ -7,6 +7,6 @@
         /// </summary>
         /// <param name="domainEvent">The domain event to handle.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task HandleAsync(TEvent domainEvent);
+        Task HandleAsync(TEvent domainEvent, CancellationToken cancellationToken);
     }
 }
