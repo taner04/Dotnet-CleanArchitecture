@@ -1,5 +1,4 @@
-﻿using Infrastructure.Persistence.Configuration.Seed;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
@@ -49,10 +48,6 @@ namespace Infrastructure.Persistence.Configuration
                 .WithOne(oi => oi.Order)
                 .HasForeignKey(oi => oi.OrderId)
                 .IsRequired();
-
-            Seed(builder);
         }
-
-        public override void Seed(EntityTypeBuilder<Order> builder) => builder.HasData(OrderSeed.Order);
     }
 }

@@ -1,5 +1,4 @@
-﻿using Infrastructure.Persistence.Configuration.Seed;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
@@ -36,11 +35,7 @@ namespace Infrastructure.Persistence.Configuration
             builder.Property(p => p.ImageUrl)
                 .IsRequired()
                 .HasMaxLength(256);
-
-            Seed(builder);
         }
-
-        public override void Seed(EntityTypeBuilder<Product> builder) => builder.HasData(ProductSeed.Products);
     }
 }
 

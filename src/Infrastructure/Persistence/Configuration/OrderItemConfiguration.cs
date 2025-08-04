@@ -1,5 +1,4 @@
-﻿using Infrastructure.Persistence.Configuration.Seed;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
@@ -34,10 +33,6 @@ namespace Infrastructure.Persistence.Configuration
                 .WithMany()
                 .HasForeignKey(oi => oi.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            Seed(builder);
         }
-
-        public override void Seed(EntityTypeBuilder<OrderItem> builder) => builder.HasData(OrderItemSeed.OrderItems);
     }
 }
