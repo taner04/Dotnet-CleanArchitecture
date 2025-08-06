@@ -51,7 +51,7 @@ namespace Application.Service
                  return Result<UserDto>.Failure(ErrorFactory.Unauthorized("Invalid credantials provided"));
             }
 
-            if (foundUser.Jwt == null || foundUser.Jwt.Expiration < DateTime.UtcNow)
+            if (foundUser.Jwt == null || foundUser.Jwt.Expiration > DateTime.UtcNow)
             {
                 foundUser.Jwt = _tokenGenerator.GenerateToken(foundUser);
                 _userRepository.Update(foundUser);
@@ -77,7 +77,9 @@ namespace Application.Service
                 return Result<bool>.Failure(ErrorFactory.Conflict("The Email already exists"));
             }
 
-            var mappedUser = new User(user.Firstname, user.Lastname, user.Email, _passwordHasher.HashPassword(user.Password));
+            var mappedUser = UserMapper.ToUser(user);
+            mappedUser.Password = _passwordHasher.HashPassword(mappedUser.Password);
+
             mappedUser.Jwt = _tokenGenerator.GenerateToken(mappedUser);
             
             _userRepository.Add(mappedUser);

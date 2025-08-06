@@ -11,15 +11,10 @@ namespace Infrastructure.Persistence.Repository
 
         public async Task<List<Order>> GetAllByUserIdAsync(UserId userId)
         {
-            return await DbSet.Include(o => o.OrderItems)
-                              .Where(o => o.UserId.Value == userId.Value)
+            return await DbSet.Where(o => o.UserId == userId)
+                              .Include(o => o.OrderItems)
+                                  .ThenInclude(oi => oi.Product)
                               .ToListAsync();
-        }
-
-        public async Task<Order?> GetOrderToCancel(OrderId orderId, UserId userId)
-        {
-            return await DbSet.Include(o => o.OrderItems)
-                              .FirstOrDefaultAsync(o => o.Id.Value == orderId.Value && o.UserId.Value == userId.Value);
         }
     }
 }

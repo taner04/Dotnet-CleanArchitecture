@@ -3,18 +3,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
 {
-    public sealed class UserConfiguration : BaseConfiguration<User, UserId>
+    public sealed class UserConfiguration : AuditableConfiguration<User>
     {
-        public override void Configure(EntityTypeBuilder<User> builder)
+        protected override void PostConfigure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(u => u.Id)
-                .IsRequired()
-                .ValueGeneratedOnAdd()
-                .HasConversion(
-                    id => id.Value, 
-                    value => new UserId(value)
-                );
-
             builder.Property(u => u.Email)
                 .IsRequired()
                 .HasMaxLength(256);

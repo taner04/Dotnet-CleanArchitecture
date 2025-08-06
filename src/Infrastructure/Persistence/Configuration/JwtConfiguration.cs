@@ -3,45 +3,27 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
 {
-    public sealed class JwtConfiguration : BaseConfiguration<Jwt, JwtId>
+    public sealed class JwtConfiguration : AuditableConfiguration<Jwt>
     {
-        public override void Configure(EntityTypeBuilder<Jwt> builder)
+        protected override void PostConfigure(EntityTypeBuilder<Jwt> builder)
         {
-            base.Configure(builder);
-
-            builder.Property(j => j.Id)
-                .IsRequired()
-                .ValueGeneratedOnAdd()
-                .HasConversion(
-                    id => id.Value,
-                    value => new JwtId(value)
-                );
+            builder.HasKey(j => j.Id);
 
             builder.Property(j => j.Token)
                 .IsRequired()
-                .HasMaxLength(1024);
+                .HasMaxLength(512);
 
             builder.Property(j => j.RefreshToken)
                 .IsRequired()
-                .HasMaxLength(1024);
+                .HasMaxLength(512);
 
             builder.Property(j => j.Expiration)
                 .IsRequired()
-                .HasColumnType(TimeStampWithTimeZone);
+                .HasColumnType(TimestampWithTimeZone);
 
             builder.Property(j => j.RefreshTokenExpiration)
                 .IsRequired()
-                .HasColumnType(TimeStampWithTimeZone);
-
-            builder.Property(j => j.UserId)
-                .IsRequired()
-                .HasConversion(
-                    id => id.Value,
-                    value => new UserId(value)
-                );
-
-            builder.HasIndex(j => j.UserId)
-                .IsUnique();
+                .HasColumnType(TimestampWithTimeZone);
         }
     }
 }

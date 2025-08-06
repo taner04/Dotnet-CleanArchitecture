@@ -12,15 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250801180035_SeedDataAgain")]
-    partial class SeedDataAgain
+    [Migration("20250806131016_UpdatetAtNullable")]
+    partial class UpdatetAtNullable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.7")
+                .HasAnnotation("ProductVersion", "9.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -28,10 +28,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Jwt", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -44,16 +41,14 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("RefreshToken")
                         .IsRequired()
-                        .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("RefreshTokenExpiration")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -66,7 +61,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Jwt", (string)null);
+                    b.ToTable("Jwt");
 
                     b.HasData(
                         new
@@ -85,13 +80,10 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -108,18 +100,19 @@ namespace Infrastructure.Migrations
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("integer");
 
+                    b.Property<string>("TrackingNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserId"));
 
                     b.HasKey("Id");
 
-                    b.ToTable("Order", (string)null);
+                    b.ToTable("Order");
 
                     b.HasData(
                         new
@@ -131,6 +124,7 @@ namespace Infrastructure.Migrations
                             OrderDate = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             OrderStatus = 1,
                             PaymentMethod = 3,
+                            TrackingNumber = "CD587DB4-C345-4D86-9D9C-F9C0A0BF50D3",
                             UserId = 1
                         });
                 });
@@ -138,13 +132,10 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.OrderItem", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -170,7 +161,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItem", (string)null);
+                    b.ToTable("OrderItem");
 
                     b.HasData(
                         new
@@ -198,34 +189,28 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.Property<int>("Stock")
                         .HasColumnType("integer");
@@ -235,7 +220,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product", (string)null);
+                    b.ToTable("Product");
 
                     b.HasData(
                         new
@@ -259,24 +244,218 @@ namespace Infrastructure.Migrations
                             Name = "Smartphone",
                             Price = 899.99m,
                             Stock = 50
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "A lightweight tablet",
+                            ImageUrl = "https://example.com/tablet.jpg",
+                            IsDeleted = false,
+                            Name = "Tablet",
+                            Price = 499.99m,
+                            Stock = 35
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "27-inch 4K monitor",
+                            ImageUrl = "https://example.com/monitor.jpg",
+                            IsDeleted = false,
+                            Name = "Monitor",
+                            Price = 329.99m,
+                            Stock = 15
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Mechanical keyboard",
+                            ImageUrl = "https://example.com/keyboard.jpg",
+                            IsDeleted = false,
+                            Name = "Keyboard",
+                            Price = 89.99m,
+                            Stock = 60
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Wireless mouse",
+                            ImageUrl = "https://example.com/mouse.jpg",
+                            IsDeleted = false,
+                            Name = "Mouse",
+                            Price = 49.99m,
+                            Stock = 80
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Noise-cancelling headphones",
+                            ImageUrl = "https://example.com/headphones.jpg",
+                            IsDeleted = false,
+                            Name = "Headphones",
+                            Price = 199.99m,
+                            Stock = 40
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "HD webcam",
+                            ImageUrl = "https://example.com/webcam.jpg",
+                            IsDeleted = false,
+                            Name = "Webcam",
+                            Price = 69.99m,
+                            Stock = 30
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Laser printer",
+                            ImageUrl = "https://example.com/printer.jpg",
+                            IsDeleted = false,
+                            Name = "Printer",
+                            Price = 159.99m,
+                            Stock = 10
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Wi-Fi 6 router",
+                            ImageUrl = "https://example.com/router.jpg",
+                            IsDeleted = false,
+                            Name = "Router",
+                            Price = 129.99m,
+                            Stock = 25
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "1TB portable SSD",
+                            ImageUrl = "https://example.com/ssd.jpg",
+                            IsDeleted = false,
+                            Name = "External SSD",
+                            Price = 119.99m,
+                            Stock = 45
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Fitness smartwatch",
+                            ImageUrl = "https://example.com/smartwatch.jpg",
+                            IsDeleted = false,
+                            Name = "Smartwatch",
+                            Price = 249.99m,
+                            Stock = 22
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Bluetooth speakers",
+                            ImageUrl = "https://example.com/speakers.jpg",
+                            IsDeleted = false,
+                            Name = "Speakers",
+                            Price = 79.99m,
+                            Stock = 55
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Ergonomic gaming chair",
+                            ImageUrl = "https://example.com/chair.jpg",
+                            IsDeleted = false,
+                            Name = "Gaming Chair",
+                            Price = 299.99m,
+                            Stock = 12
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "USB condenser microphone",
+                            ImageUrl = "https://example.com/microphone.jpg",
+                            IsDeleted = false,
+                            Name = "Microphone",
+                            Price = 109.99m,
+                            Stock = 18
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "High-end graphics card",
+                            ImageUrl = "https://example.com/gpu.jpg",
+                            IsDeleted = false,
+                            Name = "Graphics Card",
+                            Price = 799.99m,
+                            Stock = 8
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "20000mAh power bank",
+                            ImageUrl = "https://example.com/powerbank.jpg",
+                            IsDeleted = false,
+                            Name = "Power Bank",
+                            Price = 39.99m,
+                            Stock = 70
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Virtual reality headset",
+                            ImageUrl = "https://example.com/vr.jpg",
+                            IsDeleted = false,
+                            Name = "VR Headset",
+                            Price = 399.99m,
+                            Stock = 6
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Voice-controlled smart hub",
+                            ImageUrl = "https://example.com/hub.jpg",
+                            IsDeleted = false,
+                            Name = "Smart Home Hub",
+                            Price = 99.99m,
+                            Stock = 28
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Camera drone",
+                            ImageUrl = "https://example.com/drone.jpg",
+                            IsDeleted = false,
+                            Name = "Drone",
+                            Price = 599.99m,
+                            Stock = 5
                         });
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Firstname")
                         .IsRequired()
@@ -291,8 +470,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -336,7 +514,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Order");

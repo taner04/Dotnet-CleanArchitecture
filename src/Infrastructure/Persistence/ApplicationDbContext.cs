@@ -1,4 +1,5 @@
-﻿using Infrastructure.Persistence.Configuration.Seed;
+﻿using Infrastructure.Persistence.Configuration;
+using Infrastructure.Persistence.Configuration.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
@@ -16,6 +17,12 @@ namespace Infrastructure.Persistence
 #if DEBUG
             modelBuilder.SeedData();
 #endif
+        }
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            base.ConfigureConventions(configurationBuilder);
+            configurationBuilder.RegisterAllInVogenEfcConverter();
         }
     }
 }

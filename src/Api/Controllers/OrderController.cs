@@ -1,5 +1,5 @@
 ﻿using Application.Dtos.Order;
-using Domain.Entities.TypedIds;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -14,17 +14,25 @@ namespace Api.Controllers
             _orderService = orderService;
         }
 
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetAllOrdersAsync([FromRoute] UserId userId)
+        [HttpPost("user")]
+        public async Task<IActionResult> GetAllOrdersFromUserAsync([FromBody] OrdersByUserIdDto ordersByUserIdDto)
         {
-            var result = await _orderService.GetOrdersByUser(userId);
+            var result = await _orderService.GetOrdersByUser(UserId.From(ordersByUserIdDto.Id));
             return MapResponse(result);
         }
 
-        [HttpPost("cancel/{orderCancel.UserId}/order/{orderCancel.OrderId}")]
+
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateOrderAsync([FromBody] OrderCreateDto order)
+        {
+            var result = await _orderService.CreateOrderAsync(order);
+            return MapResponse(result);
+        }
+
+        [HttpPost("cancel")]
         public async Task<IActionResult> CancelOrderAsync([FromBody] OrderCancelDto orderCancel)
         {
-            var result = await _orderService.CancelOrderAsync(orderCancel);    
+            var result = await _orderService.CancelOrderAsync(orderCancel);   
             return MapResponse(result);
         }
     }

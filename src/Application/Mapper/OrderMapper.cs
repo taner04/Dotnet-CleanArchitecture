@@ -16,5 +16,18 @@ namespace Application.Mapper
                 order.OrderItems.Select(OrderItemMapper.ToOrderItemByOrderDto).ToList()
             );
         }
+
+        public static Order ToOrder(OrderCreateDto order)
+        {
+            return new Order(
+                order.Products.Select(oi => oi.Price).Sum(),
+                order.PaymentMethod,
+                Guid.NewGuid().ToString()
+            )
+            {
+                UserId = UserId.From(order.UserId),
+                OrderItems = order.Products.Select(OrderItemMapper.ToOrderItem).ToList()
+            };
+        }
     }
 }

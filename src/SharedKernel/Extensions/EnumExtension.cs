@@ -16,7 +16,7 @@
             return @enum.GetDescription();
         }
 
-        private static Enum GetEnumByInt<T>(int value)
+        public static Enum GetEnumByInt<T>(int value)
         {
             var enums = Enum.GetValues(typeof(T));
             foreach (var enumValue in enums)

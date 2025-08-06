@@ -14,5 +14,15 @@ namespace Application.Mapper
                 user.Jwt!.Token
             );
         }
+
+        public static User ToUser(UserRegisterDto user)
+        {
+            return new(
+                user.Firstname,
+                user.Lastname,
+                user.Email,
+                user.Password
+            );
+        }
     }
 }

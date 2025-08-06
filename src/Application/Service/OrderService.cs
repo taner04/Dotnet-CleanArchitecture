@@ -1,8 +1,10 @@
-﻿using Application.Common.Interfaces.Repositories;
+﻿using Application.Common.Interfaces;
+using Application.Common.Interfaces.Repositories;
 using Application.Common.Interfaces.Services;
 using Application.Dtos.Order;
 using Application.Mapper;
 using Application.Response;
+using Application.Validator;
 using SharedKernel.Attributes;
 using SharedKernel.Enums;
 
@@ -12,10 +14,12 @@ namespace Application.Service
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IValidatorFactory _validatorFactory;
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderService(IOrderRepository orderRepository, IValidatorFactory validatorFactory)
         {
             _orderRepository = orderRepository;
+            _validatorFactory = validatorFactory;
         }
 
         public async Task<Result<List<OrderByIdDto>>> GetOrdersByUser(UserId userId)
@@ -26,6 +30,14 @@ namespace Application.Service
 
         public async Task<Result<bool>> CancelOrderAsync(OrderCancelDto orderCancel)
         {
+            var validationResult = _validatorFactory.GetResult(orderCancel);
+            if (!validationResult.IsValid)
+            {
+                return Result<bool>.Failure(
+                    ErrorFactory.ValidationError(validationResult.ToDictionary())
+                );
+            }
+
             var order = await _orderRepository.GetByIdAsync(orderCancel.OrderId);
 
             if (order is null)
@@ -45,6 +57,24 @@ namespace Application.Service
 
             _orderRepository.Delete(order);
 
+            await _orderRepository.DbContext.SaveChangesAsync();
+
+            return Result<bool>.Success(true);
+        }
+
+        public async Task<Result<bool>> CreateOrderAsync(OrderCreateDto order)
+        {
+            var validationResult = _validatorFactory.GetResult(order);
+            if (!validationResult.IsValid)
+            {
+                return Result<bool>.Failure(
+                    ErrorFactory.ValidationError(validationResult.ToDictionary())
+                );
+            }
+
+            var newOrder = OrderMapper.ToOrder(order);
+
+            _orderRepository.Add(newOrder);
             await _orderRepository.DbContext.SaveChangesAsync();
 
             return Result<bool>.Success(true);

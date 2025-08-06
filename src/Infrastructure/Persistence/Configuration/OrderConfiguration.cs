@@ -3,45 +3,26 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
 {
-    public sealed class OrderConfiguration : BaseConfiguration<Order, OrderId>
+    public sealed class OrderConfiguration : AuditableConfiguration<Order>
     {
-        public override void Configure(EntityTypeBuilder<Order> builder)
+        protected override void PostConfigure(EntityTypeBuilder<Order> builder)
         {
-            base.Configure(builder);
-
-            builder.Property(j => j.Id)
-                .IsRequired()
-                .ValueGeneratedOnAdd()
-                .HasConversion(
-                    id => id.Value,
-                    value => new OrderId(value)
-                );
-
-            builder.Property(j => j.UserId)
-                .IsRequired()
-                .ValueGeneratedOnAdd()
-                .HasConversion(
-                    id => id.Value,
-                    value => new UserId(value)
-                );
+            builder.HasKey(o => o.Id);
 
             builder.Property(o => o.Amount)
-                .IsRequired()
-                .HasColumnType("decimal(18,2)");
+                .IsRequired();
 
             builder.Property(o => o.OrderDate)
                 .IsRequired()
-                .HasColumnType(TimeStampWithTimeZone);
+                .HasColumnType(TimestampWithTimeZone);
 
             builder.Property(o => o.PaymentMethod)
-                .IsRequired()
-                .HasConversion<int>();
+                .IsRequired();
 
             builder.Property(o => o.OrderStatus)
-                .IsRequired()
-                .HasConversion<int>();
+                .IsRequired();
 
-            builder.Property(o => o.UserId)
+            builder.Property(o => o.TrackingNumber)
                 .IsRequired();
 
             builder.HasMany(o => o.OrderItems)

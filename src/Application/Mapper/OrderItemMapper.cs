@@ -1,4 +1,5 @@
 ﻿using Application.Dtos.OrderItem;
+using Application.Dtos.Product;
 
 namespace Application.Mapper
 {
@@ -11,6 +12,17 @@ namespace Application.Mapper
                 orderItem.Amount,
                 ProductMapper.ToProductByOrderDto(orderItem.Product)
             );
+        }
+
+        public static OrderItem ToOrderItem(ProductCreateOrderDto product)
+        {
+            return new OrderItem(
+                product.Quantity,
+                product.Quantity * product.Price
+            )
+            {
+                ProductId = ProductId.From(product.ProductId),
+            };
         }
     }
 }

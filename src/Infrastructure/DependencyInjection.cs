@@ -17,7 +17,7 @@ namespace Infrastructure
         {
             builder.Services.AddSingleton<ISaveChangesInterceptor, UpdateAuditableInterceptor>();
             builder.Services.AddSingleton<ISaveChangesInterceptor, SoftDeleteInterceptor>();
-            builder.Services.AddSingleton<ISaveChangesInterceptor, DispatchDomainEventInterceptor>();
+            //builder.Services.AddSingleton<ISaveChangesInterceptor, DispatchDomainEventInterceptor>();
 
             builder.Services.AddDbContext<ApplicationDbContext>((sp, opt) =>
             {

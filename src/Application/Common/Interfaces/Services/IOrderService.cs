@@ -7,5 +7,6 @@ namespace Application.Common.Interfaces.Services
     {
         Task<Result<List<OrderByIdDto>>> GetOrdersByUser(UserId userId);
         Task<Result<bool>> CancelOrderAsync(OrderCancelDto orderCancel);
+        Task<Result<bool>> CreateOrderAsync(OrderCreateDto order);
     }
 }

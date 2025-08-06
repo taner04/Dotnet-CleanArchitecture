@@ -3,26 +3,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
 {
-    public sealed class OrderItemConfiguration : BaseConfiguration<OrderItem, OrderItemId>
+    public sealed class OrderItemConfiguration : AuditableConfiguration<OrderItem>
     {
-        public override void Configure(EntityTypeBuilder<OrderItem> builder)
+        protected override void PostConfigure(EntityTypeBuilder<OrderItem> builder)
         {
-            base.Configure(builder);
-
-            builder.Property(oi => oi.Id)
-                .IsRequired()
-                .ValueGeneratedOnAdd()
-                .HasConversion(
-                    id => id.Value,
-                    value => new OrderItemId(value)
-                );
+            builder.HasKey(oi => oi.Id);
 
             builder.Property(oi => oi.Quantity)
                 .IsRequired();
 
             builder.Property(oi => oi.Amount)
-                .IsRequired()
-                .HasColumnType("decimal(18,2)");
+                .IsRequired();
 
             builder.HasOne(oi => oi.Order)
                 .WithMany(o => o.OrderItems)
