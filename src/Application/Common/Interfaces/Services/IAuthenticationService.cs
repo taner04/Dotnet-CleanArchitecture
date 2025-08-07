@@ -1,4 +1,5 @@
-﻿using Application.Dtos.User;
+﻿using Application.Dtos.Jwt;
+using Application.Dtos.User;
 using Application.Response;
 
 namespace Application.Common.Interfaces.Services
@@ -7,5 +8,6 @@ namespace Application.Common.Interfaces.Services
     {
         Task<Result<UserDto>> LoginAsync(UserLoginDto user);
         Task<Result<bool>> RegisterAsync(UserRegisterDto user);
+        Task<Result<JwtRefreshedTokenDto>> RefreshTokenAsync(UserByIdDto userById);
     }
 }

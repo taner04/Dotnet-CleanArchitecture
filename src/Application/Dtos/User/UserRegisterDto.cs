@@ -1,4 +1,4 @@
 ﻿namespace Application.Dtos.User
 {
-    public record UserRegisterDto(string Firstname, string Lastname, string Email, string Password);
+    public record UserRegisterDto(string FirstName, string LastName, string Email, string Password);
 }

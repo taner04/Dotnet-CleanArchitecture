@@ -7,13 +7,13 @@ namespace Application.Validator.User
     {
         public RegisterValidator()
         {
-            RuleFor(x => x.Firstname)
+            RuleFor(x => x.FirstName)
                 .NotEmpty()
                 .WithMessage("Firstname is required.")
                 .MaximumLength(50)
                 .WithMessage("Firstname must not exceed 50 characters.");
 
-            RuleFor(x => x.Lastname)
+            RuleFor(x => x.LastName)
                 .NotEmpty()
                 .WithMessage("Lastname is required.")
                 .MaximumLength(50)

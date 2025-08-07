@@ -26,7 +26,8 @@
             this.jwt = jwt ?? throw new ArgumentNullException(nameof(jwt));
         }
 
-        public bool HasValidJwt => !jwt.IsExpired;
+        public bool HasValidJwtToken => !jwt.IsTokenExpired;
+        public bool HasValidRefreshToken => !jwt.IsRefreshTokenExpired;
 
         public Jwt Jwt => jwt ?? throw new InvalidOperationException("JWT is not set.");
 

@@ -1,7 +1,9 @@
-﻿namespace Application.Common.Interfaces.Infrastructure
+﻿using Domain.Entities.Users;
+
+namespace Application.Common.Interfaces.Infrastructure
 {
     public interface ITokenGenerator
     {
-        Jwt GenerateToken(string email, UserId userId);
+        void GenerateToken(User user);
     }
 }

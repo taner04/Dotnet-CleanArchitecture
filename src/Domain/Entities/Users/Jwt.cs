@@ -26,7 +26,8 @@ namespace Domain.Entities
             _refreshTokenExpiration = JwtTokenExpiration.From(dateToday.AddDays(RefreshTokenExpirationDays));
         }
 
-        public bool IsExpired => DateTime.UtcNow >= _tokenExpiration.Value;
+        public bool IsTokenExpired => DateTime.UtcNow >= _tokenExpiration.Value;
+        public bool IsRefreshTokenExpired => DateTime.UtcNow >= _refreshTokenExpiration.Value;
 
         public JwtToken Token { get => _token; set => _token = value; }
         public JwtTokenExpiration TokenExpiration { get => _tokenExpiration; set => _tokenExpiration = value; }

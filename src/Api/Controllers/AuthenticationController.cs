@@ -1,4 +1,5 @@
 ﻿using Application.Dtos.User;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -28,9 +29,10 @@ namespace Api.Controllers
         }
 
         [HttpPost("refresh-token")]
-        public Task<IActionResult> RefreshTokenAsync()
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] UserByIdDto userByIdDto)
         {
-            throw new NotImplementedException("Refresh token functionality is not implemented yet.");
+            var result = await _authenticationService.RefreshTokenAsync(UserId.From(userByIdDto.Id));
+            return MapResponse(result);
         }
     }
 }
