@@ -1,4 +1,4 @@
-﻿using Domain.Common.Interfaces.Entity;
+﻿using Domain.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Common.Interfaces.Repositories

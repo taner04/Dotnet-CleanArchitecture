@@ -2,18 +2,18 @@
 
 namespace Domain.Entities
 {
-    [ValueObject<int>]
+    [ValueObject<Guid>]
     public readonly partial struct JwtId;
 
-    [ValueObject<int>]
+    [ValueObject<Guid>]
     public readonly partial struct OrderId;
 
-    [ValueObject<int>]
+    [ValueObject<Guid>]
     public readonly partial struct OrderItemId;
 
-    [ValueObject<int>]
+    [ValueObject<Guid>]
     public readonly partial struct ProductId;
 
-    [ValueObject<int>]
+    [ValueObject<Guid>]
     public readonly partial struct UserId;
 }

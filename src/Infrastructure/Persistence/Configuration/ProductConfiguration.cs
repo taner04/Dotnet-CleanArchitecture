@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Domain.Entities.Products;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
 {
@@ -6,26 +8,21 @@ namespace Infrastructure.Persistence.Configuration
     {
         protected override void PostConfigure(EntityTypeBuilder<Product> builder)
         {
+            builder.ToTable("Product");
+
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Name)
-              .IsRequired()
-              .HasMaxLength(100);
+                .IsRequired()
+                .HasMaxLength(200);
+            
+            builder.Property(p => p.Price)
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
 
             builder.Property(p => p.Description)
                 .IsRequired()
-                .HasMaxLength(500);
-
-            builder.Property(p => p.Price)
-                .IsRequired();
-
-            builder.Property(p => p.Stock)
-                .IsRequired();
-
-            builder.Property(p => p.ImageUrl)
-                .IsRequired()
-                .HasMaxLength(256);
+                .HasMaxLength(1000);
         }
     }
 }
-

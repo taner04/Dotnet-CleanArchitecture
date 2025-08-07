@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities.Users;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
@@ -7,18 +8,43 @@ namespace Infrastructure.Persistence.Configuration
     {
         protected override void PostConfigure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable("User");
+
+            builder.HasKey(u => u.Id);
+
             builder.Property(u => u.Email)
-                .IsRequired()
-                .HasMaxLength(256);
+                .IsRequired();
 
-            builder.Property(u => u.Password)
-                .IsRequired()
-                .HasMaxLength(256);
+            builder.Property(u => u.FirstName)
+                .IsRequired();
 
-            builder.HasOne(u => u.Jwt)
-                .WithOne(j => j.User)
-                .HasForeignKey<Jwt>(j => j.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.Property(u => u.LastName)
+                .IsRequired();
+
+            builder.Property(u => u.Email)
+                .IsRequired();
+            
+            builder.Property(u => u.PasswordHash)
+                .IsRequired();
+
+            builder.OwnsOne(u => u.Jwt, jwt =>
+            {
+                jwt.Property(j => j.Token)
+                    .HasColumnName("JwtToken")
+                    .HasColumnType(Postgres.Text);
+
+                jwt.Property(j => j.TokenExpiration)
+                    .HasColumnName("JwtTokenExpiration")
+                    .HasColumnType(Postgres.TimestampWithTimeZone);
+
+                jwt.Property(j => j.RefreshToken)
+                    .HasColumnName("JwtRefrehToken")
+                    .HasColumnType(Postgres.Text);
+
+                jwt.Property(j => j.RefreshTokenExpiration)
+                    .HasColumnName("JwtRefreshTokenExpiration")
+                    .HasColumnType(Postgres.TimestampWithTimeZone);
+            });
         }
     }
 }

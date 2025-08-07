@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities.Orders;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
@@ -7,28 +8,26 @@ namespace Infrastructure.Persistence.Configuration
     {
         protected override void PostConfigure(EntityTypeBuilder<Order> builder)
         {
+            builder.ToTable("Order");
             builder.HasKey(o => o.Id);
 
-            builder.Property(o => o.Amount)
-                .IsRequired();
+            builder.OwnsMany(o => o.OrderItems, orderItems =>
+            {
+                orderItems.ToTable("OrderItems");
 
-            builder.Property(o => o.OrderDate)
-                .IsRequired()
-                .HasColumnType(TimestampWithTimeZone);
+                orderItems.WithOwner().HasForeignKey("OrderId");
+                orderItems.HasKey(i => i.Id);
 
-            builder.Property(o => o.PaymentMethod)
-                .IsRequired();
+                orderItems.Property(i => i.ProductId)
+                    .HasColumnName("ProductId");
 
-            builder.Property(o => o.OrderStatus)
-                .IsRequired();
-
-            builder.Property(o => o.TrackingNumber)
-                .IsRequired();
-
-            builder.HasMany(o => o.OrderItems)
-                .WithOne(oi => oi.Order)
-                .HasForeignKey(oi => oi.OrderId)
-                .IsRequired();
+                orderItems.Property(i => i.Quantity)
+                    .IsRequired();
+                
+                orderItems.Property(i => i.UnitPrice)
+                    .IsRequired()
+                    .HasColumnType("decimal(18,2)");
+            });
         }
     }
 }

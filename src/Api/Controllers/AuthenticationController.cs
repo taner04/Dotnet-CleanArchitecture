@@ -26,5 +26,11 @@ namespace Api.Controllers
             var result = await _authenticationService.RegisterAsync(user);
             return MapResponse(result);
         }
+
+        [HttpPost("refresh-token")]
+        public Task<IActionResult> RefreshTokenAsync()
+        {
+            throw new NotImplementedException("Refresh token functionality is not implemented yet.");
+        }
     }
 }

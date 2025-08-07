@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Persistence.Configuration;
-using Infrastructure.Persistence.Configuration.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
@@ -13,10 +12,11 @@ namespace Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-#if DEBUG
-            modelBuilder.SeedData();
-#endif
+//#if DEBUG
+//            modelBuilder.SeedData();
+//#endif
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

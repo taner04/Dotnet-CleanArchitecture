@@ -1,4 +1,5 @@
-﻿using Vogen;
+﻿using Domain.ValueObjects;
+using Vogen;
 
 namespace Infrastructure.Persistence.Configuration
 {
@@ -7,5 +8,8 @@ namespace Infrastructure.Persistence.Configuration
     [EfCoreConverter<OrderItemId>]
     [EfCoreConverter<ProductId>]
     [EfCoreConverter<UserId>]
+    [EfCoreConverter<JwtToken>]
+    [EfCoreConverter<JwtTokenExpiration>]
+    [EfCoreConverter<Money>]
     public sealed partial class VogenEfcConverter;
 }

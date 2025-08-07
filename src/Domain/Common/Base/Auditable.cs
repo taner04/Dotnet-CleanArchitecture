@@ -1,4 +1,4 @@
-﻿using Domain.Common.Interfaces.Entity;
+﻿using Domain.Common.Interfaces;
 
 namespace Domain.Common.Base
 {
@@ -6,5 +6,6 @@ namespace Domain.Common.Base
     {
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

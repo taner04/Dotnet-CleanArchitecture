@@ -1,4 +1,6 @@
-﻿namespace Application.Common.Interfaces.Repositories
+﻿using Domain.Entities.Users;
+
+namespace Application.Common.Interfaces.Repositories
 {
     public interface IUserRepository : IRepository<User, UserId>
     {

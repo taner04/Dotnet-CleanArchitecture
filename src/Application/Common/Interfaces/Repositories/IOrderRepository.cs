@@ -1,4 +1,6 @@
-﻿namespace Application.Common.Interfaces.Repositories
+﻿using Domain.Entities.Orders;
+
+namespace Application.Common.Interfaces.Repositories
 {
     public interface IOrderRepository : IRepository<Order, OrderId>
     {
