@@ -2,7 +2,7 @@
 
 namespace SharedKernel.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
     public class ServiceInjectionAttribute : Attribute
     {
         public ServiceInjectionAttribute(Type @interface, ScopeType scope)

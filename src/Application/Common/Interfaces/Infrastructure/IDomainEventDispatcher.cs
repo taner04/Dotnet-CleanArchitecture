@@ -4,6 +4,6 @@ namespace Application.Common.Interfaces.Infrastructure
 {
     public interface IDomainEventDispatcher
     {
-        Task DispatchAsync(List<IDomainEvent> domainEvents);
+        Task DispatchAsync(List<IDomainEvent> domainEvents, CancellationToken cancellationToken);
     }
 }

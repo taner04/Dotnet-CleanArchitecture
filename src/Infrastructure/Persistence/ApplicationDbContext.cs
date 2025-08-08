@@ -14,9 +14,6 @@ namespace Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-//#if DEBUG
-//            modelBuilder.SeedData();
-//#endif
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

@@ -1,4 +1,5 @@
-﻿using Application.Response;
+﻿using Application.Extensions;
+using Application.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -6,26 +7,36 @@ namespace Api.Controllers
     [ApiController]
     public abstract class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
     {
-        protected IActionResult MapResponse<T>(Result<T> result)
+        protected IActionResult MapResponse<T>(ResultT<T> result)
         {
-            if (result.IsSuccess)
-            {
-                return Ok(result.Value);
-            }
+           return result.Match<IActionResult>(
+                onSuccess: Ok,
+                onFailure: CreateError
+           );
+        }
 
+        protected IActionResult MapResponse(Result result)
+        {
+            return result.Match<IActionResult>(
+                onSuccess: Ok,
+                onFailure: CreateError
+            );
+        }
+
+        private ObjectResult CreateError(Error? error)
+        {
             var problemDetails = new ProblemDetails
             {
-                Title = result.Error?.Title,
-                Detail = result.Error?.Message,
-                Status = result.Error?.StatusCode,
-                Instance = $"{HttpContext.Request.Method} {HttpContext.Request.Path}"
+                Title = error?.Title,
+                Detail = error?.Message,
+                Status = error?.StatusCode,
+                Instance = $"{HttpContext.Request.Method} {HttpContext.Request.Path}",
+                Extensions = { ["traceId"] = HttpContext.TraceIdentifier }
             };
 
-            problemDetails.Extensions["traceId"] = HttpContext.TraceIdentifier;
-
-            if (result.Error?.ValidationErrors is { Count: > 0 })
+            if (error?.ValidationErrors is { Count: > 0 })
             {
-                problemDetails.Extensions["validationErrors"] = result.Error.Value.ValidationErrors;
+                problemDetails.Extensions["validationErrors"] = error?.ValidationErrors;
             }
 
             return new ObjectResult(problemDetails)

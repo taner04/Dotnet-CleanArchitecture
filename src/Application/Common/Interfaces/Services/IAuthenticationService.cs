@@ -6,8 +6,8 @@ namespace Application.Common.Interfaces.Services
 {
     public interface IAuthenticationService
     {
-        Task<Result<UserDto>> LoginAsync(UserLoginDto user);
-        Task<Result<bool>> RegisterAsync(UserRegisterDto user);
-        Task<Result<JwtRefreshedTokenDto>> RefreshTokenAsync(UserByIdDto userById);
+        Task<ResultT<UserDto>> LoginAsync(UserLoginDto user);
+        Task<Result> RegisterAsync(UserRegisterDto user);
+        Task<ResultT<JwtRefreshedTokenDto>> RefreshTokenAsync(UserId userId);
     }
 }

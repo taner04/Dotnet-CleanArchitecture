@@ -1,4 +1,5 @@
-﻿using Domain.ValueObjects;
+﻿using Domain.Entities.Products;
+using Domain.ValueObjects;
 
 namespace Domain.Entities.Orders
 {
@@ -10,9 +11,9 @@ namespace Domain.Entities.Orders
 
         public Money TotalPrice => Money.From(Quantity * UnitPrice.Value);
 
-#pragma warning disable CS8618 // Ein Non-Nullable-Feld muss beim Beenden des Konstruktors einen Wert ungleich NULL enthalten. Fügen Sie ggf. den „erforderlichen“ Modifizierer hinzu, oder deklarieren Sie den Modifizierer als NULL-Werte zulassend.
+#pragma warning disable CS8618
         private OrderItem() { } // for EF
-#pragma warning restore CS8618 // Ein Non-Nullable-Feld muss beim Beenden des Konstruktors einen Wert ungleich NULL enthalten. Fügen Sie ggf. den „erforderlichen“ Modifizierer hinzu, oder deklarieren Sie den Modifizierer als NULL-Werte zulassend.
+#pragma warning restore CS8618 
 
         public OrderItem(OrderItemId id, ProductId productId, int quantity, Money unitPrice)
         {
@@ -21,5 +22,7 @@ namespace Domain.Entities.Orders
             Quantity = quantity;
             UnitPrice = unitPrice;
         }
+
+        public Product Product { get; private set; } = null!; // EF Core will set this property
     }
 }

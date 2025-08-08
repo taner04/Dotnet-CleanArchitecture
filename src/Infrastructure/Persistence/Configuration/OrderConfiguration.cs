@@ -27,6 +27,11 @@ namespace Infrastructure.Persistence.Configuration
                 orderItems.Property(i => i.UnitPrice)
                     .IsRequired()
                     .HasColumnType("decimal(18,2)");
+
+                orderItems.HasOne(i => i.Product)
+                    .WithMany()
+                    .HasForeignKey(i => i.ProductId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }

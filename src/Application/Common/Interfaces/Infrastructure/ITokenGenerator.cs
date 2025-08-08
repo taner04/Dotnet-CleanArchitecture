@@ -4,6 +4,6 @@ namespace Application.Common.Interfaces.Infrastructure
 {
     public interface ITokenGenerator
     {
-        void GenerateToken(User user);
+        Jwt GenerateToken(User user);
     }
 }

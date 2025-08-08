@@ -11,6 +11,7 @@ namespace Api
         {
             _problemDetailsService = problemDetailsService;
         }
+
         public async ValueTask<bool> TryHandleAsync(
             HttpContext httpContext, 
             Exception exception, 

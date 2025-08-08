@@ -21,13 +21,13 @@ namespace Infrastructure.Persistence.Interceptor
         {
             if (eventData.Context is not null)
             {
-                await TriggerDomainEvents(eventData.Context);
+                await TriggerDomainEvents(eventData.Context, cancellationToken);
             }
 
             return result;
         }
 
-        private async Task TriggerDomainEvents(DbContext context)
+        private async Task TriggerDomainEvents(DbContext context, CancellationToken cancellationToken)
         {
             var aggregateRoots = context.ChangeTracker
                                         .Entries()
@@ -38,7 +38,7 @@ namespace Infrastructure.Persistence.Interceptor
                 if (entry.Entity is IAggregateRoot aggregateRoot)
                 {
                     var domainEvents = aggregateRoot.PopDomainEvents();
-                    await _domainEventDispatcher.DispatchAsync(domainEvents);
+                    await _domainEventDispatcher.DispatchAsync(domainEvents, cancellationToken);
                 }
             }
         }
