@@ -2,5 +2,5 @@
 
 namespace Application.Dtos.Order
 {
-    public readonly record struct OrderDto(Guid Id, decimal TotalPrice, List<OrderItemOrderDto> OrderItems);
+    public readonly record struct OrderDto(Guid Id, decimal TotalPrice, List<OrderItemDto> OrderItems);
 }

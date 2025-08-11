@@ -22,14 +22,14 @@ namespace Api.Controllers
         }
 
         [HttpPost("user/new-order")]
-        public async Task<IActionResult> CreateOrderAsync([FromBody] OrderCreateDto orderCreateDto)
+        public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderRequest orderCreateDto)
         {
             var result = await _orderService.CreateOrderAsync(orderCreateDto);
             return MapResponse(result);
         }
 
         [HttpDelete("user/cancel")]
-        public async Task<IActionResult> CancelOrderAsync([FromBody] OrderCancelDto orderCancelDto)
+        public async Task<IActionResult> CancelOrderAsync([FromBody] CancelOrderRequest orderCancelDto)
         {
             var result = await _orderService.CancelOrderAsync(orderCancelDto);
             return MapResponse(result);

@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Application.Validator.User
 {
-    public sealed class LoginValidator : AbstractValidator<UserLoginDto>
+    public sealed class LoginRequestValidator : AbstractValidator<LoginRequest>
     {
-        public LoginValidator()
+        public LoginRequestValidator()
         {
             RuleFor(x => x.Email)
                 .NotEmpty()

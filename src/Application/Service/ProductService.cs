@@ -22,24 +22,38 @@ namespace Application.Service
             _validatorFactory = validatorFactory ?? throw new ArgumentNullException(nameof(validatorFactory));
         }
 
-        public async Task<ResultT<List<ProductItemDto>>> GetAllAsync()
+        public async Task<ResultT<List<ProductDto>>> GetAllAsync()
         {
             var products = await _productRepository.GetAllAsync();
-            return ResultT<List<ProductItemDto>>.Success(products.Select(p => p.ToProductItemDto()).ToList());
+            return ResultT<List<ProductDto>>.Success(products.Select(p => p.ToProductItemDto()).ToList());
         }
 
-        public async Task<ResultT<List<ProductItemDto>>> SearchByNameAsync(ProductByNameDto productByName)
+        public async Task<ResultT<ProductDto>> GetProductDetailsAsync(ProductId productId)
+        {
+            var product = await _productRepository.GetByIdAsync(productId);
+
+            if (product is null)
+            {
+                return ResultT<ProductDto>.Failure(
+                    ErrorFactory.NotFound($"Product with ID {productId} not found.")
+                );
+            }
+
+            return ResultT<ProductDto>.Success(product.ToProductItemDto());
+        }
+
+        public async Task<ResultT<List<ProductDto>>> SearchByNameAsync(ProductByNameDto productByName)
         {
             var validationResult = _validatorFactory.GetResult(productByName);
             if (!validationResult.IsValid)
             {
-                return ResultT<List<ProductItemDto>>.Failure(
+                return ResultT<List<ProductDto>>.Failure(
                     ErrorFactory.ValidationError(validationResult.ToDictionary())
                 );
             }
 
             var products = await _productRepository.SearchByNameAsync(productByName.Name);
-            return ResultT<List<ProductItemDto>>.Success(products.Select(p => p.ToProductItemDto()).ToList());
+            return ResultT<List<ProductDto>>.Success(products.Select(p => p.ToProductItemDto()).ToList());
         }
     }
 }

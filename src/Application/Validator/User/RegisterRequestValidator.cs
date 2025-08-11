@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Application.Validator.User
 {
-    public sealed class RegisterValidator : AbstractValidator<UserRegisterDto>
+    public sealed class RegisterRequestValidator : AbstractValidator<RegisterRequest>
     {
-        public RegisterValidator()
+        public RegisterRequestValidator()
         {
             RuleFor(x => x.FirstName)
                 .NotEmpty()

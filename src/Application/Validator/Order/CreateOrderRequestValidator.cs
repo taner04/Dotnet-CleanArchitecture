@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Application.Validator.Order
 {
-    public sealed class OrderCreateValidator : AbstractValidator<OrderCreateDto>
+    public sealed class CreateOrderRequestValidator : AbstractValidator<CreateOrderRequest>
     {
-        public OrderCreateValidator() 
+        public CreateOrderRequestValidator() 
         {
             RuleFor(order => order.UserId)
                 .NotEmpty()

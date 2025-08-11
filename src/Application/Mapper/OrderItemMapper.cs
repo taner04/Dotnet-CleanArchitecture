@@ -5,9 +5,9 @@ namespace Application.Mapper
 {
     public static class OrderItemMapper
     {
-        public static OrderItemOrderDto ToOrderItemOrderDto(this OrderItem orderItem)
+        public static OrderItemDto ToOrderItemOrderDto(this OrderItem orderItem)
         {
-            return new OrderItemOrderDto(
+            return new OrderItemDto(
                 orderItem.Quantity,
                 orderItem.UnitPrice.Value,
                 orderItem.Product.ToProductOrderDto()

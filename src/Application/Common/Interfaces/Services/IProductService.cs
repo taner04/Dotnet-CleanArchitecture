@@ -5,7 +5,8 @@ namespace Application.Common.Interfaces.Services
 {
     public interface IProductService
     {
-        Task<ResultT<List<ProductItemDto>>> GetAllAsync();
-        Task<ResultT<List<ProductItemDto>>> SearchByNameAsync(ProductByNameDto productByNameDto);
+        Task<ResultT<List<ProductDto>>> GetAllAsync();
+        Task<ResultT<List<ProductDto>>> SearchByNameAsync(ProductByNameDto productByNameDto);
+        Task<ResultT<ProductDto>> GetProductDetailsAsync(ProductId productId);
     }
 }

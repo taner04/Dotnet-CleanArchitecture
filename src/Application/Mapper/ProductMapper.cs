@@ -5,18 +5,18 @@ namespace Application.Mapper
 {
     public static class ProductMapper
     {
-        public static ProductOrderDto ToProductOrderDto(this Product product)
+        public static ProductSnapshotDto ToProductOrderDto(this Product product)
         {
-            return new ProductOrderDto(
+            return new ProductSnapshotDto(
                 product.Name,
                 product.Description,
                 product.Price
             );
         }
 
-        public static ProductItemDto ToProductItemDto(this Product product)
+        public static ProductDto ToProductItemDto(this Product product)
         {
-            return new ProductItemDto(
+            return new ProductDto(
                 product.Id.Value,
                 product.Name,
                 product.Description,

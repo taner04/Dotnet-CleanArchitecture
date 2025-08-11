@@ -1,4 +1,5 @@
 ﻿using Application.Dtos.Product;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -24,6 +25,13 @@ namespace Api.Controllers
         public async Task<IActionResult> GetProductByName([FromBody] ProductByNameDto productByName)
         {
             var result = await _productService.SearchByNameAsync(productByName);
+            return MapResponse(result);
+        }
+
+        [HttpGet("{productId}")]
+        public async Task<IActionResult> GetProductDetailsAsync([FromRoute] ProductDetailsByIdDto productId)
+        {
+            var result = await _productService.GetProductDetailsAsync(ProductId.From(productId.ProductId));
             return MapResponse(result);
         }
     }

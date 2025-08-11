@@ -6,7 +6,7 @@ namespace Application.Common.Interfaces.Services
     public interface IOrderService
     {
         Task<ResultT<List<OrderDto>>> GetOrdersByUserAsync(UserId userId);
-        Task<Result> CreateOrderAsync(OrderCreateDto orderCreate);
-        Task<Result> CancelOrderAsync(OrderCancelDto orderCancelDto);
+        Task<Result> CreateOrderAsync(CreateOrderRequest orderCreate);
+        Task<Result> CancelOrderAsync(CancelOrderRequest orderCancelDto);
     }
 }

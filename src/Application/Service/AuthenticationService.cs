@@ -28,12 +28,12 @@ namespace Application.Service
             _tokenGenerator = tokenGenerator ?? throw new ArgumentNullException(nameof(tokenGenerator));
         }
 
-        public async Task<ResultT<UserDto>> LoginAsync(UserLoginDto user)
+        public async Task<ResultT<AuthResponse>> LoginAsync(LoginRequest user)
         {
             var validationResult = _validatorFactory.GetResult(user);
             if (!validationResult.IsValid)
             {
-                return ResultT<UserDto>.Failure(
+                return ResultT<AuthResponse>.Failure(
                     ErrorFactory.ValidationError(validationResult.ToDictionary())
                 );
             }
@@ -41,14 +41,14 @@ namespace Application.Service
             var existingUser = await _userRepository.GetByEmailAsync(user.Email);
             if (existingUser is null)
             {
-                return ResultT<UserDto>.Failure(
+                return ResultT<AuthResponse>.Failure(
                     ErrorFactory.NotFound("User not found")
                 );
             }
 
             if (!_passwordHasher.VerifyPassword(user.Password, existingUser.PasswordHash))
             {
-                return ResultT<UserDto>.Failure(
+                return ResultT<AuthResponse>.Failure(
                     ErrorFactory.Unauthorized("Invalid password")
                 );
             }
@@ -58,7 +58,7 @@ namespace Application.Service
             _userRepository.Update(existingUser);
             await _userRepository.DbContext.SaveChangesAsync();
 
-            return ResultT<UserDto>.Success(new UserDto(
+            return ResultT<AuthResponse>.Success(new AuthResponse(
                 existingUser.Id.Value,
                 existingUser.FirstName,
                 existingUser.LastName,
@@ -68,7 +68,7 @@ namespace Application.Service
             ));
         }
 
-        public async Task<Result> RegisterAsync(UserRegisterDto user)
+        public async Task<Result> RegisterAsync(RegisterRequest user)
         {
             var validationResult = _validatorFactory.GetResult(user);
             if (!validationResult.IsValid)
@@ -103,19 +103,19 @@ namespace Application.Service
 
             return Result.Success();
         }
-        public async Task<ResultT<JwtRefreshedTokenDto>> RefreshTokenAsync(UserId userId)
+        public async Task<ResultT<RefreshTokenResponse>> RefreshTokenAsync(UserId userId)
         {
             var user = await _userRepository.GetByIdAsync(userId);
             if (user is null)
             {
-                return ResultT<JwtRefreshedTokenDto>.Failure(
+                return ResultT<RefreshTokenResponse>.Failure(
                     ErrorFactory.NotFound("User not found")
                 );
             }
 
             if(!user.HasValidRefreshToken)
             {
-                return ResultT<JwtRefreshedTokenDto>.Failure(
+                return ResultT<RefreshTokenResponse>.Failure(
                     ErrorFactory.Unauthorized("Refresh token is invalid or expired. Please relogin.")
                 );
             }
@@ -125,7 +125,7 @@ namespace Application.Service
             _userRepository.Update(user);
             await _userRepository.DbContext.SaveChangesAsync();
 
-            return ResultT<JwtRefreshedTokenDto>.Success(new JwtRefreshedTokenDto(
+            return ResultT<RefreshTokenResponse>.Success(new RefreshTokenResponse(
                 user.Jwt.Token.Value,
                 user.Jwt.RefreshToken.Value
             ));

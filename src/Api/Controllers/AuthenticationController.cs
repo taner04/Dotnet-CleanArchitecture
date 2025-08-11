@@ -15,21 +15,21 @@ namespace Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] UserLoginDto user)
+        public async Task<IActionResult> LoginAsync([FromBody] LoginRequest user)
         {
             var result = await _authenticationService.LoginAsync(user);
             return MapResponse(result);
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterAsync([FromBody] UserRegisterDto user)
+        public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest user)
         {
             var result = await _authenticationService.RegisterAsync(user);
             return MapResponse(result);
         }
 
         [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshTokenAsync([FromBody] UserByIdDto userByIdDto)
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] GetUserByIdRequest userByIdDto)
         {
             var result = await _authenticationService.RefreshTokenAsync(UserId.From(userByIdDto.Id));
             return MapResponse(result);
