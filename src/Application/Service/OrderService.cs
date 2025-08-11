@@ -2,7 +2,6 @@
 using Application.Common.Interfaces.Repositories;
 using Application.Common.Interfaces.Services;
 using Application.Dtos.Order;
-using Application.Dtos.Paging;
 using Application.Mapper;
 using Application.Response;
 using Application.Validator;
@@ -34,21 +33,6 @@ namespace Application.Service
         {
             var orders = await _orderRepository.OrdersByUserAsync(userId);
             return ResultT<List<OrderDto>>.Success([.. orders.Select(o => o.ToOrderDto())]);
-        }
-
-        public Task<ResultT<PagedResultDto<OrderDto>>> GetPagedOrdersByUserAsync(UserId userId, PagingParams paging)
-        {
-            var page = Math.Max(1, paging.Page);
-            var size = Math.Clamp(paging.PageSize, 1, 100);
-
-            IQueryable<Order> query = _orderRepository.OrdersByUserAsync(userId);
-
-            query = (paging.SortBy?.ToLowerInvariant(), paging.SortDir.ToLowerInvariant()) switch
-            {
-                ("createdat", "desc") => query.OrderByDescending(o => o.CreatedAt).ThenBy(o => o.Id),
-                ("createdat", _) => query.OrderBy(o => o.CreatedAt).ThenBy(o => o.Id),
-                _ => query.OrderByDescending(o => o.CreatedAt).ThenBy(o => o.Id), // default
-            };
         }
 
         //TODO: Save changes in a single transaction
