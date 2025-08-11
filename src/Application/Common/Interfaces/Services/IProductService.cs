@@ -6,6 +6,6 @@ namespace Application.Common.Interfaces.Services
     public interface IProductService
     {
         Task<ResultT<List<ProductItemDto>>> GetAllAsync();
-        Task<ResultT<List<ProductItemDto>>> SearchByNameAsync(string name);
+        Task<ResultT<List<ProductItemDto>>> SearchByNameAsync(ProductByNameDto productByNameDto);
     }
 }
