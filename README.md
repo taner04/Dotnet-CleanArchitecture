@@ -85,6 +85,7 @@ Here are some features planned for future implementation:
 - **Caching:** Improve performance by adding caching strategies for frequently accessed data.
 - **Paging:** Implement paging support for API endpoints that return collections.
 - **Authorization:** Add authorization mechanisms to secure API endpoints. (Tokens alr. there)
+- **Documentation:** Add a more detailed doc. for each layer
 
 ---
 
