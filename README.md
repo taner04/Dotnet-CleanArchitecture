@@ -1,7 +1,11 @@
 # Dotnet Clean Architecture
 
-This repository is a reference implementation of **Clean Architecture** principles in a .NET solution.
-It demonstrates how to structure a modern, maintainable, and testable application by separating concerns into clearly defined layers.
+> **Note:** This is my first project implementing Clean Architecture in .NET. Feedback and suggestions are very welcome—feel free to open an issue or start a discussion!
+
+This repository is a reference implementation of **Clean Architecture** principles in a .NET solution.  
+It demonstrates how to structure a modern, maintainable, and testable application by separating concerns into clearly defined layers.  
+
+It is also intended to serve as inspiration for others looking to adopt Clean Architecture in their own .NET projects.
 
 ---
 
@@ -15,9 +19,9 @@ The solution follows the **Clean Architecture** pattern:
 - **Api** – Provides HTTP endpoints for clients, mapping requests to application services.
 - **SharedKernel** – Cross-cutting abstractions and utilities shared across projects.
 - **eShop.AppHost / eShop.ServiceDefaults** – Hosting and default configuration for running the application.
-
-> **Note:** This solution does **not** use CQRS. All reads and writes are handled through the same application services.
-> A custom **Domain Event Dispatcher** propagates domain events to their handlers (see section below).
+> **Note:** This solution does **not** use CQRS. All reads and writes are handled through the same application services.  
+>
+> **Why?** Since MediatR is now a commercial library, this project avoids a CQRS pattern that would typically require it or similar tools. This keeps dependencies simple and licensing concerns minimal.
 
 ---
 
@@ -71,6 +75,16 @@ This will start the application and all supporting services defined in the Aspir
 ## 📚 References
 - Robert C. Martin: [*Clean Architecture*](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)  
 - Jimmy Bogard: [*Domain Driven Design*](https://www.jimmybogard.com/tag/domain-driven-design/)
+
+---
+
+## 💡 Future Ideas
+
+Here are some features planned for future implementation:
+
+- **Caching:** Improve performance by adding caching strategies for frequently accessed data.
+- **Paging:** Implement paging support for API endpoints that return collections.
+- **Authorization:** Add robust authorization mechanisms to secure API endpoints.
 
 ---
 
