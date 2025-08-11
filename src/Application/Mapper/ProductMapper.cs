@@ -5,7 +5,7 @@ namespace Application.Mapper
 {
     public static class ProductMapper
     {
-        public static ProductSnapshotDto ToProductOrderDto(this Product product)
+        public static ProductSnapshotDto ToProductSnapshotDto(this Product product)
         {
             return new ProductSnapshotDto(
                 product.Name,
@@ -14,7 +14,7 @@ namespace Application.Mapper
             );
         }
 
-        public static ProductDto ToProductItemDto(this Product product)
+        public static ProductDto ToProductDto(this Product product)
         {
             return new ProductDto(
                 product.Id.Value,

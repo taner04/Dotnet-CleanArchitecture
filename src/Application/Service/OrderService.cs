@@ -16,22 +16,20 @@ namespace Application.Service
     [ServiceInjection(typeof(IOrderService), ScopeType.AddTransient)]
     public sealed class OrderService : IOrderService
     {
-        private readonly IOrderRepository _orderRepository;
-        private readonly IProductRepository _productRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
         private readonly IValidatorFactory _validatorFactory;
 
-        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository, IValidatorFactory validatorFactory, IUserRepository userRepository)
+        public OrderService(IUnitOfWork unitOfWork, IValidatorFactory validatorFactory, IUserRepository userRepository)
         {
-            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
-            _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _validatorFactory = validatorFactory ?? throw new ArgumentNullException(nameof(validatorFactory));
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         public async Task<ResultT<List<OrderDto>>> GetOrdersByUserAsync(UserId userId)
         {
-            var orders = await _orderRepository.OrdersByUserAsync(userId);
+            var orders = await _unitOfWork.OrderRepository.OrdersByUserAsync(userId);
             return ResultT<List<OrderDto>>.Success([.. orders.Select(o => o.ToOrderDto())]);
         }
 
@@ -60,7 +58,7 @@ namespace Application.Service
             foreach (var product in orderCreate.Products)
             {
                 var productId = ProductId.From(product.ProductId);
-                var productEntity = await _productRepository.GetByIdAsync(productId);
+                var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
                 
                 if (productEntity is null)
                 {
@@ -77,7 +75,7 @@ namespace Application.Service
                 }
 
                 productEntity.UpdateQuantity(-product.Quantity);
-                _productRepository.Update(productEntity);
+                _unitOfWork.ProductRepository.Update(productEntity);
 
                 order.AddOrderItem(
                     productId, 
@@ -87,10 +85,9 @@ namespace Application.Service
             }
 
             order.AddDomainEvent(new OrderConfirmationDomainEvent(userId, order));
-            _orderRepository.Add(order);
+            _unitOfWork.OrderRepository.Add(order);
 
-            await _orderRepository.DbContext.SaveChangesAsync();
-            await _productRepository.DbContext.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
 
             return Result.Success();
         }
@@ -105,7 +102,7 @@ namespace Application.Service
                 );
             }
 
-            var order = await _orderRepository.GetByIdAsync(OrderId.From(orderCancelDto.OrderId));
+            var order = await _unitOfWork.OrderRepository.GetByIdAsync(OrderId.From(orderCancelDto.OrderId));
             if (order is null)
             {
                 return Result.Failure(
@@ -120,8 +117,8 @@ namespace Application.Service
                 );
             }
 
-            _orderRepository.Delete(order);
-            await _orderRepository.DbContext.SaveChangesAsync();
+            _unitOfWork.OrderRepository.Delete(order);
+            await _unitOfWork.SaveChangesAsync();
 
             return Result.Success();
         }

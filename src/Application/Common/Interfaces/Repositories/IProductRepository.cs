@@ -4,6 +4,6 @@ namespace Application.Common.Interfaces.Repositories
 {
     public interface IProductRepository : IRepository<Product, ProductId>
     {
-        Task<List<Product>> SearchByNameAsync(string name);
+        Task<List<Product>> GetByNameAsync(string name);
     }
 }

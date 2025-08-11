@@ -13,24 +13,24 @@ namespace Application.Service
     [ServiceInjection(typeof(IProductService), ScopeType.AddTransient)]
     public sealed class ProductService : IProductService
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IValidatorFactory _validatorFactory;
 
-        public ProductService(IProductRepository productRepository, IValidatorFactory validatorFactory)
+        public ProductService(IUnitOfWork unitOfWork, IValidatorFactory validatorFactory)
         {
-            _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _validatorFactory = validatorFactory ?? throw new ArgumentNullException(nameof(validatorFactory));
         }
 
         public async Task<ResultT<List<ProductDto>>> GetAllAsync()
         {
-            var products = await _productRepository.GetAllAsync();
-            return ResultT<List<ProductDto>>.Success(products.Select(p => p.ToProductItemDto()).ToList());
+            var products = await _unitOfWork.ProductRepository.GetAllAsync();
+            return ResultT<List<ProductDto>>.Success(products.Select(p => p.ToProductDto()).ToList());
         }
 
         public async Task<ResultT<ProductDto>> GetProductDetailsAsync(ProductId productId)
         {
-            var product = await _productRepository.GetByIdAsync(productId);
+            var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
 
             if (product is null)
             {
@@ -39,7 +39,7 @@ namespace Application.Service
                 );
             }
 
-            return ResultT<ProductDto>.Success(product.ToProductItemDto());
+            return ResultT<ProductDto>.Success(product.ToProductDto());
         }
 
         public async Task<ResultT<List<ProductDto>>> SearchByNameAsync(ProductByNameDto productByName)
@@ -52,8 +52,8 @@ namespace Application.Service
                 );
             }
 
-            var products = await _productRepository.SearchByNameAsync(productByName.Name);
-            return ResultT<List<ProductDto>>.Success(products.Select(p => p.ToProductItemDto()).ToList());
+            var products = await _unitOfWork.ProductRepository.GetByNameAsync(productByName.Name);
+            return ResultT<List<ProductDto>>.Success(products.Select(p => p.ToProductDto()).ToList());
         }
     }
 }

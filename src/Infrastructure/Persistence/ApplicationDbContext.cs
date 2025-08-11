@@ -1,4 +1,7 @@
-﻿using Infrastructure.Persistence.Configuration;
+﻿using Domain.Entities.Orders;
+using Domain.Entities.Products;
+using Domain.Entities.Users;
+using Infrastructure.Persistence.Configuration;
 using Infrastructure.Persistence.Seeds;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +13,11 @@ namespace Infrastructure.Persistence
             DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
+
+        public DbSet<Product> Products { get; set; } 
+        public DbSet<User> Users { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

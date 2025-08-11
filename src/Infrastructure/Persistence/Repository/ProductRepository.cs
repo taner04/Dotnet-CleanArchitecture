@@ -8,7 +8,7 @@ namespace Infrastructure.Persistence.Repository
     {
         public ProductRepository(ApplicationDbContext dbContext) : base(dbContext) { }
 
-        public async Task<List<Product>> SearchByNameAsync(string name)
+        public async Task<List<Product>> GetByNameAsync(string name)
         {
             return await DbSet.Where(p => EF.Functions.ILike(p.Name, $"%{name}%"))
                               .ToListAsync();
