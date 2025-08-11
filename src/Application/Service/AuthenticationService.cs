@@ -22,10 +22,10 @@ namespace Application.Service
 
         public AuthenticationService(IUserRepository userRepository, IValidatorFactory validatorFactory, IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator)
         {
-            _userRepository = userRepository;
-            _validatorFactory = validatorFactory;
-            _passwordHasher = passwordHasher;
-            _tokenGenerator = tokenGenerator;
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _validatorFactory = validatorFactory ?? throw new ArgumentNullException(nameof(validatorFactory));
+            _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
+            _tokenGenerator = tokenGenerator ?? throw new ArgumentNullException(nameof(tokenGenerator));
         }
 
         public async Task<ResultT<UserDto>> LoginAsync(UserLoginDto user)

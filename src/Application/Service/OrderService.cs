@@ -5,6 +5,7 @@ using Application.Dtos.Order;
 using Application.Mapper;
 using Application.Response;
 using Application.Validator;
+using Domain.DomainEvents.Order;
 using Domain.Entities.Orders;
 using Domain.ValueObjects;
 using SharedKernel.Attributes;
@@ -17,13 +18,15 @@ namespace Application.Service
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IValidatorFactory _validatorFactory;
 
-        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository, IValidatorFactory validatorFactory)
+        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository, IValidatorFactory validatorFactory, IUserRepository userRepository)
         {
-            _orderRepository = orderRepository;
-            _productRepository = productRepository;
-            _validatorFactory = validatorFactory;
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+            _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            _validatorFactory = validatorFactory ?? throw new ArgumentNullException(nameof(validatorFactory));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         public async Task<ResultT<List<OrderDto>>> GetOrdersByUserAsync(UserId userId)
@@ -43,7 +46,17 @@ namespace Application.Service
                 );
             }
 
-            var order = new Order(OrderId.From(Guid.CreateVersion7()), UserId.From(orderCreate.UserId));
+            var userId = UserId.From(orderCreate.UserId);
+
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user is null)
+            {
+                return Result.Failure(
+                    ErrorFactory.NotFound($"User with ID {orderCreate.UserId} not found.")
+                );
+            }
+
+            var order = new Order(OrderId.From(Guid.CreateVersion7()), userId);
             foreach (var product in orderCreate.Products)
             {
                 var productId = ProductId.From(product.ProductId);
@@ -73,6 +86,7 @@ namespace Application.Service
                 );
             }
 
+            order.AddDomainEvent(new OrderConfirmationDomainEvent(userId, order));
             _orderRepository.Add(order);
 
             await _orderRepository.DbContext.SaveChangesAsync();

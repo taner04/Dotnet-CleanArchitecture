@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Infrastructure.Persistence.Extensions
 {
-    public static class DbMigration
+    public static class DatabaseMigration
     {
         public static void Migrate(this IHost host)
         {

@@ -18,7 +18,9 @@ namespace Application.Validator
         public FluentValidation.IValidator<T> GetValidator<T>() 
         {
             var validatorType = typeof(FluentValidation.IValidator<T>);
-            var validator = _serviceProvider.GetRequiredService(validatorType);
+
+            var validator = _serviceProvider.GetRequiredService(validatorType) ?? 
+                            throw new InvalidOperationException($"No validator found for type {typeof(T).FullName}");
 
             if (validator is not FluentValidation.IValidator<T> typedValidator)
             {

@@ -1,10 +1,17 @@
 using Api;
 using Api.Extensions;
 using Application;
+using DotNetEnv;
 using eShop.ServiceDefaults;
 using Infrastructure;
 using Infrastructure.Persistence.Extensions;
 using Scalar.AspNetCore;
+
+
+if (File.Exists(".env.dev"))
+{
+    Env.Load(".env.dev");
+}
 
 var configuration = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)

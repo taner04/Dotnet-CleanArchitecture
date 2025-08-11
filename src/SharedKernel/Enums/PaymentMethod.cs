@@ -1,6 +1,6 @@
 ﻿namespace SharedKernel.Enums
 {
-    public enum PaymendMethod
+    public enum PaymentMethod
     {
         Bank = 1,
         PayPal = 2,
