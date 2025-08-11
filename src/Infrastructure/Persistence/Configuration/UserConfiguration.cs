@@ -30,18 +30,22 @@ namespace Infrastructure.Persistence.Configuration
             builder.OwnsOne(u => u.Jwt, jwt =>
             {
                 jwt.Property(j => j.Token)
+                    .IsRequired()
                     .HasColumnName("JwtToken")
                     .HasColumnType(Postgres.Text);
 
                 jwt.Property(j => j.TokenExpiration)
+                    .IsRequired()
                     .HasColumnName("JwtTokenExpiration")
                     .HasColumnType(Postgres.TimestampWithTimeZone);
 
                 jwt.Property(j => j.RefreshToken)
-                    .HasColumnName("JwtRefrehToken")
+                    .IsRequired()
+                    .HasColumnName("JwtRefreshToken")
                     .HasColumnType(Postgres.Text);
 
                 jwt.Property(j => j.RefreshTokenExpiration)
+                    .IsRequired()
                     .HasColumnName("JwtRefreshTokenExpiration")
                     .HasColumnType(Postgres.TimestampWithTimeZone);
             });

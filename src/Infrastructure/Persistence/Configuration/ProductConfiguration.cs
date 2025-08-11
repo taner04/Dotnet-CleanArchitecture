@@ -23,6 +23,9 @@ namespace Infrastructure.Persistence.Configuration
             builder.Property(p => p.Description)
                 .IsRequired()
                 .HasMaxLength(1000);
+
+            builder.Property(p => p.Quantity)
+                .IsRequired();
         }
     }
 }

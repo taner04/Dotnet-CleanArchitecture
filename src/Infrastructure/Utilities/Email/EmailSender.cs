@@ -1,28 +1,21 @@
 ﻿using Application.Common.Interfaces.Infrastructure;
-using Microsoft.Extensions.Configuration;
 using MimeKit;
+using System.Diagnostics;
 
 namespace Infrastructure.Utilities.Email
 {
     [ServiceInjection(typeof(IEmailSender), ScopeType.AddTransient)]
     public class EmailSender : IEmailSender
     {
-        private readonly IConfiguration _configuration;
-
-        public EmailSender(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
         //TODO: Maybe implement actual email sending logic using SMTP or any other service.
-        public Task SendAsync(MimeMessage mimeMessage)
+        public Task SendAsync(MimeMessage mimeMessage, CancellationToken cancellationToken)
         {
             if (mimeMessage is null)
             {
                 throw new ArgumentNullException(nameof(mimeMessage), "MimeMessage cannot be null.");
             }
 
-            Console.WriteLine($"Email send to: {mimeMessage.To.First()}");
+            Debug.WriteLine($"\n\tEmail send to: {mimeMessage.To.First()}", "Domain-Event");
             return Task.CompletedTask;
             //try
             //{

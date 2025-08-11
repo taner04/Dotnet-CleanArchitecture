@@ -5,5 +5,5 @@ using SharedKernel.Enums;
 namespace Domain.DomainEvents.User
 {
     [ServiceInjection(typeof(IDomainEvent), ScopeType.AddTransient)]
-    public readonly record struct UserNotificationDomainEvent(string FirstName, string LastName, string Email) : IDomainEvent;
+    public readonly record struct UserRegisteredDomainEvent(string FirstName, string LastName, string Email) : IDomainEvent;
 }

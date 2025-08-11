@@ -96,7 +96,7 @@ namespace Application.Service
 
             newUser.SetJwt(_tokenGenerator.GenerateToken(newUser));
 
-            newUser.AddDomainEvent(new UserNotificationDomainEvent(newUser.FirstName, newUser.LastName, newUser.Email));
+            newUser.AddDomainEvent(new UserRegisteredDomainEvent(newUser.FirstName, newUser.LastName, newUser.Email));
 
             _userRepository.Add(newUser);
             await _userRepository.DbContext.SaveChangesAsync();

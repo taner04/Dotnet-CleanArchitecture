@@ -13,5 +13,16 @@ namespace Application.Mapper
                 product.Price
             );
         }
+
+        public static ProductItemDto ToProductItemDto(this Product product)
+        {
+            return new ProductItemDto(
+                product.Id.Value,
+                product.Name,
+                product.Description,
+                product.Price,
+                product.Quantity
+            );
+        }
     }
 }

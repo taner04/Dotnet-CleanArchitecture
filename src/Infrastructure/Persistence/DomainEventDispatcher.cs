@@ -22,9 +22,9 @@ namespace Infrastructure.Persistence
                 var handlerType = typeof(IDomainEventHandler<>).MakeGenericType(domainEvent.GetType());
                 var handler = _serviceProvider.GetService(handlerType);
 
-                if(handler is IDomainEventHandler<IDomainEvent> domainEventHandler)
+                if (handler is not null)
                 {
-                    await domainEventHandler.HandleAsync(domainEvent, cancellationToken);   
+                    await ((dynamic)handler).HandleAsync((dynamic)domainEvent, cancellationToken);
                 }
             }
         }

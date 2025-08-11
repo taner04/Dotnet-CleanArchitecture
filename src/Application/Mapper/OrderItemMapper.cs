@@ -10,7 +10,6 @@ namespace Application.Mapper
             return new OrderItemOrderDto(
                 orderItem.Quantity,
                 orderItem.UnitPrice.Value,
-                orderItem.TotalPrice.Value,
                 orderItem.Product.ToProductOrderDto()
             );
         }

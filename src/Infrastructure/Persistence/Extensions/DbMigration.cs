@@ -15,6 +15,7 @@ namespace Infrastructure.Persistence.Extensions
 
             if (dbContext.Database.GetPendingMigrations().Any())
             {
+                dbContext.Database.EnsureDeleted();
                 dbContext.Database.Migrate();
             }
         }

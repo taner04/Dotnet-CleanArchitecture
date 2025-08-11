@@ -9,8 +9,8 @@ namespace Api.Controllers
     {
         protected IActionResult MapResponse<T>(ResultT<T> result)
         {
-           return result.Match<IActionResult>(
-                onSuccess: Ok,
+           return result.Match(
+                onSuccess: value => Ok(value),
                 onFailure: CreateError
            );
         }

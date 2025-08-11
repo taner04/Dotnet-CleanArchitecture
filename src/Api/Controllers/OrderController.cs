@@ -14,10 +14,17 @@ namespace Api.Controllers
             _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
         }
 
-        [HttpGet("user")]
-        public async Task<IActionResult> GetOrdersByUserAsync([FromQuery] OrderByUserDto orderByUserDto)
+        [HttpPost("user")]
+        public async Task<IActionResult> GetOrdersByUserAsync([FromBody] OrderByUserDto orderByUserDto)
         {
             var result = await _orderService.GetOrdersByUserAsync(UserId.From(orderByUserDto.UserId));
+            return MapResponse(result);
+        }
+
+        [HttpPost("user/new-order")]
+        public async Task<IActionResult> CreateOrderAsync([FromBody] OrderCreateDto orderCreateDto)
+        {
+            var result = await _orderService.CreateOrderAsync(orderCreateDto);
             return MapResponse(result);
         }
 
@@ -25,7 +32,6 @@ namespace Api.Controllers
         public async Task<IActionResult> CancelOrderAsync([FromBody] OrderCancelDto orderCancelDto)
         {
             var result = await _orderService.CancelOrderAsync(orderCancelDto);
-
             return MapResponse(result);
         }
     }

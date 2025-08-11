@@ -71,12 +71,117 @@ namespace Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
                     b.ToTable("Product", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e807f68c-e98c-7348-9b4e-8a24a62f0e15"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Lightweight laptop with Apple's M2 chip",
+                            IsDeleted = false,
+                            Name = "Apple MacBook Air M2",
+                            Price = 1199.99m,
+                            Quantity = 10
+                        },
+                        new
+                        {
+                            Id = new Guid("0cb16e4a-467c-7dcd-86ff-542d3ca37d8b"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Flagship Android smartphone",
+                            IsDeleted = false,
+                            Name = "Samsung Galaxy S23",
+                            Price = 949.00m,
+                            Quantity = 15
+                        },
+                        new
+                        {
+                            Id = new Guid("97449bb7-8e90-72fc-a5af-177f62554331"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Advanced wireless mouse",
+                            IsDeleted = false,
+                            Name = "Logitech MX Master 3S",
+                            Price = 99.99m,
+                            Quantity = 20
+                        },
+                        new
+                        {
+                            Id = new Guid("bcf74560-1f6c-7962-aa83-8c1cf0e90fef"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Noise-cancelling over-ear headphones",
+                            IsDeleted = false,
+                            Name = "Sony WH-1000XM5",
+                            Price = 349.99m,
+                            Quantity = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("9d10c1bb-b729-74b9-919e-5996eaa4feab"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Smart speaker with Alexa",
+                            IsDeleted = false,
+                            Name = "Amazon Echo Dot (5th Gen)",
+                            Price = 49.99m,
+                            Quantity = 30
+                        },
+                        new
+                        {
+                            Id = new Guid("4f2b3e8f-b137-7962-abce-cae1c62489d5"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "27-inch 4K monitor",
+                            IsDeleted = false,
+                            Name = "Dell UltraSharp U2723QE",
+                            Price = 679.99m,
+                            Quantity = 8
+                        },
+                        new
+                        {
+                            Id = new Guid("125daedf-2ed9-7fc0-be1c-ab4125fc0dbe"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Portable charger 20100mAh",
+                            IsDeleted = false,
+                            Name = "Anker PowerCore 20100",
+                            Price = 49.95m,
+                            Quantity = 25
+                        },
+                        new
+                        {
+                            Id = new Guid("ee1bda8b-ab9d-79ae-972b-5d598e3d4ed1"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Full-frame mirrorless camera",
+                            IsDeleted = false,
+                            Name = "Canon EOS R6",
+                            Price = 2499.00m,
+                            Quantity = 12
+                        },
+                        new
+                        {
+                            Id = new Guid("84fa579c-057b-7bf2-b85d-1aeb218bf2b4"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Handheld gaming console with OLED screen",
+                            IsDeleted = false,
+                            Name = "Nintendo Switch OLED",
+                            Price = 349.99m,
+                            Quantity = 18
+                        },
+                        new
+                        {
+                            Id = new Guid("51336668-7448-7081-b4e8-7ff9c92d6731"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "E-reader with 32GB storage and warm light",
+                            IsDeleted = false,
+                            Name = "Kindle Paperwhite Signature",
+                            Price = 189.99m,
+                            Quantity = 14
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Users.User", b =>
@@ -112,6 +217,18 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("01989884-c581-745b-b2f2-d431f5602652"),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "doe@mail.com",
+                            FirstName = "John",
+                            IsDeleted = false,
+                            LastName = "Doe",
+                            PasswordHash = "$2a$12$Me0cidHOdqgvogI2GRBLN.zpF9MIynObUTmlP2vRqRvz3pKjGbJ9q"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Orders.Order", b =>
@@ -176,7 +293,7 @@ namespace Infrastructure.Migrations
                             b1.Property<string>("RefreshToken")
                                 .IsRequired()
                                 .HasColumnType("text")
-                                .HasColumnName("JwtRefrehToken");
+                                .HasColumnName("JwtRefreshToken");
 
                             b1.Property<DateTime>("RefreshTokenExpiration")
                                 .HasColumnType("timestamp with time zone")
@@ -193,10 +310,20 @@ namespace Infrastructure.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("User", (string)null);
+                            b1.ToTable("User");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    UserId = new Guid("01989884-c581-745b-b2f2-d431f5602652"),
+                                    RefreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTk4OTg4NC1jNTgxLTc0NWItYjJmMi1kNDMxZjU2MDI2NTIiLCJlbWFpbCI6ImRvZUBtYWlsLmNvbSIsIm5iZiI6MTc1NDkwNTQ5NSwiZXhwIjoxNzU3NDk3NDk1LCJpc3MiOiJodHRwczovL3d3dy5lU2hvcC1hcGkuY29tIiwiYXVkIjoiZVNob3AtQXBpIn0.DlqCR-wmvI7CY5QE5-Kq6XH5jXL-b-HMlaJ4_NjRfyA",
+                                    RefreshTokenExpiration = new DateTime(2025, 12, 31, 23, 59, 59, 0, DateTimeKind.Utc),
+                                    Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTk4OTg4NC1jNTgxLTc0NWItYjJmMi1kNDMxZjU2MDI2NTIiLCJlbWFpbCI6ImRvZUBtYWlsLmNvbSIsIm5iZiI6MTc1NDkwNTQ5NSwiZXhwIjoxNzU0OTA5MDk1LCJpc3MiOiJodHRwczovL3d3dy5lU2hvcC1hcGkuY29tIiwiYXVkIjoiZVNob3AtQXBpIn0.gqv_MmGUdCBFr9CKBlQYI6oID9J0lQGL6Sh3maiyCgQ",
+                                    TokenExpiration = new DateTime(2025, 12, 31, 23, 59, 59, 0, DateTimeKind.Utc)
+                                });
                         });
 
                     b.Navigation("Jwt")

@@ -34,11 +34,6 @@
 
         public void UpdateQuantity(int amount)
         {
-            if (amount < 0)
-            {
-                throw new ArgumentException("Amount cannot be negative.", nameof(amount));
-            }
-
             if(_quantity + amount < 0)
             {
                 throw new InvalidOperationException("Insufficient stock to update quantity.");

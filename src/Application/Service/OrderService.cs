@@ -12,7 +12,7 @@ using SharedKernel.Enums;
 
 namespace Application.Service
 {
-    [ServiceInjection(typeof(OrderService), ScopeType.AddTransient)]
+    [ServiceInjection(typeof(IOrderService), ScopeType.AddTransient)]
     public sealed class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
@@ -69,7 +69,7 @@ namespace Application.Service
                 order.AddOrderItem(
                     productId, 
                     product.Quantity, 
-                    Money.From(product.UnitPrice)
+                    Money.From(productEntity.Price)
                 );
             }
 

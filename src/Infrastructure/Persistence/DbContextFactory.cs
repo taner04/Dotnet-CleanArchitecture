@@ -9,6 +9,8 @@ namespace Infrastructure.Persistence
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
+            optionsBuilder.EnableDetailedErrors();
+            optionsBuilder.EnableSensitiveDataLogging();
             optionsBuilder.UseNpgsql("Host=localhost;Database=eshop;Username=postgres;");
 
             return new ApplicationDbContext(optionsBuilder.Options);

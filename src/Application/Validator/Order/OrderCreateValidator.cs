@@ -9,7 +9,9 @@ namespace Application.Validator.Order
         {
             RuleFor(order => order.UserId)
                 .NotEmpty()
-                .WithMessage("User ID cannot be empty.");
+                .WithMessage("User ID cannot be empty.")
+                .Must(x => Guid.TryParse(x.ToString(), out _))
+                .WithMessage("User ID must be a valid GUID.");
 
             RuleFor(order => order.Products)
                 .NotEmpty()

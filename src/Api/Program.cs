@@ -13,6 +13,9 @@ var configuration = new ConfigurationBuilder()
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 builder.AddServiceDefaults();
 
 builder.Services.AddBearerScheme(configuration);
