@@ -1,4 +1,4 @@
-﻿using Application.Response;
+﻿using SharedKernel.Response;
 
 namespace Application.Extensions
 {

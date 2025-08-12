@@ -1,4 +1,4 @@
-﻿namespace Application.Response
+﻿namespace SharedKernel.Response
 {
     public static class ErrorFactory
     {

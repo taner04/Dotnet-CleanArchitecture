@@ -1,4 +1,5 @@
 ﻿using Application.Dtos.Order;
+using Application.Extensions;
 using FluentValidation;
 
 namespace Application.Validator.Order
@@ -7,11 +8,8 @@ namespace Application.Validator.Order
     {
         public CreateOrderRequestValidator() 
         {
-            RuleFor(order => order.UserId)
-                .NotEmpty()
-                .WithMessage("User ID cannot be empty.")
-                .Must(x => Guid.TryParse(x.ToString(), out _))
-                .WithMessage("User ID must be a valid GUID.");
+            RuleFor(order => order.UserId).IsId()
+                                          .WithMessage("ID needs to be a valid Guid");
 
             RuleFor(order => order.Products)
                 .NotEmpty()

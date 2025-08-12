@@ -1,6 +1,6 @@
 ﻿using Application.Extensions;
-using Application.Response;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Response;
 
 namespace Api.Controllers
 {

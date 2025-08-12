@@ -1,5 +1,4 @@
 ﻿using Application.Dtos.Product;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -21,17 +20,17 @@ namespace Api.Controllers
             return MapResponse(result);
         }
 
-        [HttpPost]
+        [HttpPost("name")]
         public async Task<IActionResult> GetProductByName([FromBody] ProductByNameDto productByName)
         {
             var result = await _productService.SearchByNameAsync(productByName);
             return MapResponse(result);
         }
 
-        [HttpGet("{productId}")]
-        public async Task<IActionResult> GetProductDetailsAsync([FromRoute] ProductDetailsByIdDto productId)
+        [HttpGet("details")]
+        public async Task<IActionResult> GetProductDetailsAsync([FromBody] ProductDetailsByIdDto productDetailsById)
         {
-            var result = await _productService.GetProductDetailsAsync(ProductId.From(productId.ProductId));
+            var result = await _productService.GetProductDetailsAsync(productDetailsById);
             return MapResponse(result);
         }
     }

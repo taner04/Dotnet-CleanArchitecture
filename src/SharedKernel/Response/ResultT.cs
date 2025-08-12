@@ -1,4 +1,4 @@
-﻿namespace Application.Response
+﻿namespace SharedKernel.Response
 {
     public sealed class ResultT<TValue> : Result
     {

@@ -1,5 +1,4 @@
 ﻿using Application.Dtos.User;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -31,7 +30,7 @@ namespace Api.Controllers
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshTokenAsync([FromBody] GetUserByIdRequest userByIdDto)
         {
-            var result = await _authenticationService.RefreshTokenAsync(UserId.From(userByIdDto.Id));
+            var result = await _authenticationService.RefreshTokenAsync(userByIdDto);
             return MapResponse(result);
         }
     }

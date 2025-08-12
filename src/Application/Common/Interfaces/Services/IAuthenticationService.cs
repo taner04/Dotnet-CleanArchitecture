@@ -1,6 +1,6 @@
 ﻿using Application.Dtos.Jwt;
 using Application.Dtos.User;
-using Application.Response;
+using SharedKernel.Response;
 
 namespace Application.Common.Interfaces.Services
 {
@@ -8,6 +8,6 @@ namespace Application.Common.Interfaces.Services
     {
         Task<ResultT<AuthResponse>> LoginAsync(LoginRequest user);
         Task<Result> RegisterAsync(RegisterRequest user);
-        Task<ResultT<RefreshTokenResponse>> RefreshTokenAsync(UserId userId);
+        Task<ResultT<RefreshTokenResponse>> RefreshTokenAsync(GetUserByIdRequest getUserById);
     }
 }

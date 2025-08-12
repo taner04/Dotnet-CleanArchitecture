@@ -4,11 +4,11 @@ using Application.Common.Interfaces.Repositories;
 using Application.Common.Interfaces.Services;
 using Application.Dtos.Jwt;
 using Application.Dtos.User;
+using Application.Extensions;
 using Application.Mapper;
-using Application.Response;
-using Application.Validator;
 using Domain.DomainEvents.User;
 using SharedKernel.Attributes;
+using SharedKernel.Response;
 
 namespace Application.Service
 {
@@ -90,9 +90,10 @@ namespace Application.Service
 
             return Result.Success();
         }
-        public async Task<ResultT<RefreshTokenResponse>> RefreshTokenAsync(UserId userId)
+
+        public async Task<ResultT<RefreshTokenResponse>> RefreshTokenAsync(GetUserByIdRequest getUserById)
         {
-            var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(getUserById.UserId);
             if (user is null)
             {
                 return ResultT<RefreshTokenResponse>.Failure(

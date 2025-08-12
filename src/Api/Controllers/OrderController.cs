@@ -1,5 +1,4 @@
 ﻿using Application.Dtos.Order;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -17,7 +16,7 @@ namespace Api.Controllers
         [HttpPost("user")]
         public async Task<IActionResult> GetOrdersByUserAsync([FromBody] OrderByUserDto orderByUserDto)
         {
-            var result = await _orderService.GetOrdersByUserAsync(UserId.From(orderByUserDto.UserId));
+            var result = await _orderService.GetOrdersByUserAsync(orderByUserDto);
             return MapResponse(result);
         }
 

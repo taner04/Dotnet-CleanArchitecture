@@ -1,5 +1,5 @@
 ﻿using Application.Dtos.Product;
-using Application.Response;
+using SharedKernel.Response;
 
 namespace Application.Common.Interfaces.Services
 {
@@ -7,6 +7,6 @@ namespace Application.Common.Interfaces.Services
     {
         Task<ResultT<List<ProductDto>>> GetAllAsync();
         Task<ResultT<List<ProductDto>>> SearchByNameAsync(ProductByNameDto productByNameDto);
-        Task<ResultT<ProductDto>> GetProductDetailsAsync(ProductId productId);
+        Task<ResultT<ProductDto>> GetProductDetailsAsync(ProductDetailsByIdDto productDetailsById);
     }
 }

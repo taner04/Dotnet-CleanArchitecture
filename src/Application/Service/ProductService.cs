@@ -2,11 +2,11 @@
 using Application.Common.Interfaces.Repositories;
 using Application.Common.Interfaces.Services;
 using Application.Dtos.Product;
+using Application.Extensions;
 using Application.Mapper;
-using Application.Response;
-using Application.Validator;
 using SharedKernel.Attributes;
 using SharedKernel.Enums;
+using SharedKernel.Response;
 
 namespace Application.Service
 {
@@ -28,14 +28,14 @@ namespace Application.Service
             return ResultT<List<ProductDto>>.Success(products.Select(p => p.ToProductDto()).ToList());
         }
 
-        public async Task<ResultT<ProductDto>> GetProductDetailsAsync(ProductId productId)
+        public async Task<ResultT<ProductDto>> GetProductDetailsAsync(ProductDetailsByIdDto productDetailsById)
         {
-            var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
+            var product = await _unitOfWork.ProductRepository.GetByIdAsync(productDetailsById.ProductId);
 
             if (product is null)
             {
                 return ResultT<ProductDto>.Failure(
-                    ErrorFactory.NotFound($"Product with ID {productId} not found.")
+                    ErrorFactory.NotFound($"Product with ID {productDetailsById.ProductId} not found.")
                 );
             }
 
@@ -53,7 +53,7 @@ namespace Application.Service
             }
 
             var products = await _unitOfWork.ProductRepository.GetByNameAsync(productByName.Name);
-            return ResultT<List<ProductDto>>.Success(products.Select(p => p.ToProductDto()).ToList());
+            return ResultT<List<ProductDto>>.Success([.. products.Select(p => p.ToProductDto())]);
         }
     }
 }

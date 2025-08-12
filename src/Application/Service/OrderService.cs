@@ -2,14 +2,13 @@
 using Application.Common.Interfaces.Repositories;
 using Application.Common.Interfaces.Services;
 using Application.Dtos.Order;
+using Application.Extensions;
 using Application.Mapper;
-using Application.Response;
-using Application.Validator;
 using Domain.DomainEvents.Order;
 using Domain.Entities.Orders;
-using Domain.ValueObjects;
 using SharedKernel.Attributes;
 using SharedKernel.Enums;
+using SharedKernel.Response;
 
 namespace Application.Service
 {
@@ -27,13 +26,12 @@ namespace Application.Service
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
-        public async Task<ResultT<List<OrderDto>>> GetOrdersByUserAsync(UserId userId)
+        public async Task<ResultT<List<OrderDto>>> GetOrdersByUserAsync(OrderByUserDto orderByUserDto)
         {
-            var orders = await _unitOfWork.OrderRepository.OrdersByUserAsync(userId);
+            var orders = await _unitOfWork.OrderRepository.OrdersByUserAsync(orderByUserDto.UserId);
             return ResultT<List<OrderDto>>.Success([.. orders.Select(o => o.ToOrderDto())]);
         }
 
-        //TODO: Save changes in a single transaction
         public async Task<Result> CreateOrderAsync(CreateOrderRequest orderCreate)
         {
             var validationResult = _validatorFactory.GetResult(orderCreate);
@@ -44,7 +42,7 @@ namespace Application.Service
                 );
             }
 
-            var userId = UserId.From(orderCreate.UserId);
+            var userId = orderCreate.UserId;
 
             var user = await _userRepository.GetByIdAsync(userId);
             if (user is null)
@@ -54,10 +52,10 @@ namespace Application.Service
                 );
             }
 
-            var order = new Order(OrderId.From(Guid.CreateVersion7()), userId);
+            var order = new Order(Guid.CreateVersion7(), userId);
             foreach (var product in orderCreate.Products)
             {
-                var productId = ProductId.From(product.ProductId);
+                var productId = product.ProductId;
                 var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
                 
                 if (productEntity is null)
@@ -80,7 +78,7 @@ namespace Application.Service
                 order.AddOrderItem(
                     productId, 
                     product.Quantity, 
-                    Money.From(productEntity.Price)
+                    productEntity.Price
                 );
             }
 
@@ -102,7 +100,7 @@ namespace Application.Service
                 );
             }
 
-            var order = await _unitOfWork.OrderRepository.GetByIdAsync(OrderId.From(orderCancelDto.OrderId));
+            var order = await _unitOfWork.OrderRepository.GetByIdAsync(orderCancelDto.OrderId);
             if (order is null)
             {
                 return Result.Failure(
@@ -110,7 +108,7 @@ namespace Application.Service
                 );
             }
 
-            if(order.UserId != UserId.From(orderCancelDto.UserId))
+            if(order.UserId != orderCancelDto.UserId)
             {
                 return Result.Failure(
                     ErrorFactory.Unauthorized("You cannot cancel an order that does not belong to you.")

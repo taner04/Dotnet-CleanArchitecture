@@ -1,4 +1,4 @@
 ﻿namespace Application.Dtos.User
 {
-    public readonly record struct GetUserByIdRequest(Guid Id);
+    public readonly record struct GetUserByIdRequest(Guid UserId);
 }
