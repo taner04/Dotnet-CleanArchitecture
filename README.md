@@ -11,7 +11,10 @@ It is also intended to serve as inspiration for others looking to adopt Clean Ar
 
 ## 🏛 Architecture Overview
 
+
 The solution follows the **Clean Architecture** pattern:
+
+![Architecture Diagram](/png/architecture.png)
 
 - **Domain** – Contains the core business model and rules (entities, value objects, domain events, domain interfaces).
 - **Application** – Contains application services that orchestrate business operations, coordinate domain logic, and handle cross-cutting concerns.
@@ -19,9 +22,6 @@ The solution follows the **Clean Architecture** pattern:
 - **Api** – Provides HTTP endpoints for clients, mapping requests to application services.
 - **SharedKernel** – Cross-cutting abstractions and utilities shared across projects.
 - **eShop.AppHost / eShop.ServiceDefaults** – Hosting and default configuration for running the application.
-> **Note:** This solution does **not** use CQRS. All reads and writes are handled through the same application services.  
->
-> **Why?** Since MediatR is now a commercial library, this project avoids a CQRS pattern that would typically require it or similar tools. This keeps dependencies simple and licensing concerns minimal.
 
 ---
 
@@ -38,16 +38,6 @@ src/
  ├── eShop.ServiceDefaults # Shared service defaults and extensions
  └── eShop.sln             # Visual Studio solution file
 ```
----
-
-## ✅ Principles
-
-- **Dependency Rule:** Source code dependencies always point inward toward the **Domain**.
-- **Separation of Concerns:** Web, application, domain, and infrastructure concerns are **isolated**.
-- **Testability:** Business rules can be tested **without** infrastructure.
-- **Explicit Boundaries:** Contracts (interfaces) live in the inner layers; implementations live outside.
-- **Event-Driven Domain:** Use **Domain Events** to react to state changes cleanly.
-
 ---
 
 ## 🚀 Getting Started
@@ -85,7 +75,6 @@ Here are some features planned for future implementation:
 - **Caching:** Improve performance by adding caching strategies for frequently accessed data.
 - **Paging:** Implement paging support for API endpoints that return collections.
 - **Authorization:** Add authorization mechanisms to secure API endpoints. (Tokens alr. there)
-- **Documentation:** Add a more detailed doc. for each layer
 
 ---
 
