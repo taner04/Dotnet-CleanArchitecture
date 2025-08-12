@@ -3,6 +3,19 @@ using Vogen;
 
 namespace Domain.ValueObjects
 {
-    [ValueObject<string>]
-    public partial class JwtToken : IValueObject { }
+    [ValueObject<string>
+        (fromPrimitiveCasting: CastOperator.Implicit, 
+         toPrimitiveCasting: CastOperator.Implicit)]
+    public partial class JwtToken : IValueObject 
+    {
+        private static Validation Validate(string input)
+        {
+            if(string.IsNullOrWhiteSpace(input))
+            {
+                return Validation.Invalid("The JWT token cannot be null or empty.");
+            }
+
+            return Validation.Ok;
+        }
+    }
 }

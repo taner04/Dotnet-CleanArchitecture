@@ -5,12 +5,6 @@ namespace Domain.Entities.Orders
 {
     public sealed class OrderItem : Entity<OrderItemId>
     {
-        public ProductId ProductId { get; private set; }
-        public int Quantity { get; private set; }
-        public Money UnitPrice { get; private set; }
-
-        public Money TotalPrice => Money.From(Quantity * UnitPrice.Value);
-
 #pragma warning disable CS8618
         private OrderItem() { } // for EF
 #pragma warning restore CS8618 
@@ -23,6 +17,11 @@ namespace Domain.Entities.Orders
             UnitPrice = unitPrice;
         }
 
-        public Product Product { get; private set; } = null!; // EF Core will set this property
+        public Product Product { get; private set; } = null!; // This will be set by the repository or service layer after fetching the product details.
+        public ProductId ProductId { get; private set; }
+        public int Quantity { get; private set; }
+        public Money UnitPrice { get; private set; }
+
+        public Money TotalPrice => Money.From(Quantity * UnitPrice.Value);
     }
 }

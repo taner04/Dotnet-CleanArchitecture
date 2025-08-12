@@ -6,7 +6,5 @@ namespace Domain.Common.Base
         where TId : struct
     {
         public TId Id { get; init; }
-
-        protected Guid NewId() => Guid.CreateVersion7();
     }
 }

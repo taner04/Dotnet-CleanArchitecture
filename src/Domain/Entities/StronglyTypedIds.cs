@@ -2,18 +2,28 @@
 
 namespace Domain.Entities
 {
-    [ValueObject<Guid>]
+    [ValueObject<Guid>
+        (fromPrimitiveCasting: CastOperator.Implicit,
+         toPrimitiveCasting: CastOperator.Implicit)]
     public readonly partial struct JwtId;
 
-    [ValueObject<Guid>]
+    [ValueObject<Guid>
+        (fromPrimitiveCasting: CastOperator.Implicit,
+         toPrimitiveCasting: CastOperator.Implicit)]
     public readonly partial struct OrderId;
 
-    [ValueObject<Guid>]
+    [ValueObject<Guid>
+        (fromPrimitiveCasting: CastOperator.Implicit,
+         toPrimitiveCasting: CastOperator.Implicit)]
     public readonly partial struct OrderItemId;
 
-    [ValueObject<Guid>]
+    [ValueObject<Guid>
+        (fromPrimitiveCasting: CastOperator.Implicit,
+         toPrimitiveCasting: CastOperator.Implicit)]
     public readonly partial struct ProductId;
 
-    [ValueObject<Guid>]
+    [ValueObject<Guid>
+        (fromPrimitiveCasting: CastOperator.Implicit,
+         toPrimitiveCasting: CastOperator.Implicit)]
     public readonly partial struct UserId;
 }
