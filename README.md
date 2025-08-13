@@ -56,12 +56,12 @@ To launch the application:
 1. **Start Docker** to ensure all required containers and services can run.
 2. Run the `eShop.AppHost` project. This will orchestrate the startup of all necessary services and dependencies.
 
-- Alternatively, run the provided script from the root directory:
+Alternatively, run the provided script from the root directory:
     
-    - **Windows (PowerShell):**
-        ```powershell
-        ./launch.ps1
-        ```
+- **Windows (PowerShell):**
+    ```powershell
+    ./launch.ps1
+    ```
 
 This will start the application and all supporting services defined in the Aspire project.
 
