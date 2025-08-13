@@ -80,4 +80,4 @@ Here are some features planned for future implementation:
 
 ## 📝 License
 
-This project is licensed under the [MIT License](/docs/License.md).
+This project is licensed under the [MIT License](/LICENSE)
