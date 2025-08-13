@@ -44,20 +44,24 @@ src/
 
 To get started, ensure you have the following prerequisites installed:
 
-- [Docker](https://www.docker.com/get-started) (for containerized development and infrastructure)
-- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) (for building and running the solution)
+- [Docker](https://www.docker.com/get-started)
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) 
 
 Once prerequisites are installed, you can clone the repository and follow the setup instructions below.
 
 ### 🏁 Running the Solution
 
-To launch the application, start the `eShop.Aspire` project. This project orchestrates the startup of all required services and dependencies.
+To launch the application:
 
-You can run it using the following command:
+1. **Start Docker** to ensure all required containers and services can run.
+2. Run the `eShop.AppHost` project. This will orchestrate the startup of all necessary services and dependencies.
 
-```bash
-dotnet run --project src/eShop.AppHost
-```
+- Alternatively, run the provided script from the root directory:
+    
+    - **Windows (PowerShell):**
+        ```powershell
+        ./launch.ps1
+        ```
 
 This will start the application and all supporting services defined in the Aspire project.
 
