@@ -1,8 +1,10 @@
 ﻿using Application.Dtos.Order;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("api/orders")]
     public class OrderController : ControllerBase
     {

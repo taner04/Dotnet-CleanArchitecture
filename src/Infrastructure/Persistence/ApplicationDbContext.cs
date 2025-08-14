@@ -17,7 +17,6 @@ namespace Infrastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 #if DEBUG
             modelBuilder.SeedProducts();
-            modelBuilder.SeedUsers();
 #endif
         }
 

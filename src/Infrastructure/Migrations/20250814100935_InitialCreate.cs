@@ -52,10 +52,8 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    JwtToken = table.Column<string>(type: "text", nullable: false),
-                    JwtTokenExpiration = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    JwtRefreshToken = table.Column<string>(type: "text", nullable: false),
-                    JwtRefreshTokenExpiration = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RefreshToken = table.Column<string>(type: "text", nullable: false),
+                    RefreshTokenExpiration = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
@@ -115,11 +113,6 @@ namespace Infrastructure.Migrations
                     { new Guid("e807f68c-e98c-7348-9b4e-8a24a62f0e15"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lightweight laptop with Apple's M2 chip", false, "Apple MacBook Air M2", 1199.99m, 10, null },
                     { new Guid("ee1bda8b-ab9d-79ae-972b-5d598e3d4ed1"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Full-frame mirrorless camera", false, "Canon EOS R6", 2499.00m, 12, null }
                 });
-
-            migrationBuilder.InsertData(
-                table: "User",
-                columns: new[] { "Id", "JwtRefreshToken", "JwtRefreshTokenExpiration", "JwtToken", "JwtTokenExpiration", "CreatedAt", "Email", "FirstName", "IsDeleted", "LastName", "PasswordHash", "UpdatedAt" },
-                values: new object[] { new Guid("01989884-c581-745b-b2f2-d431f5602652"), "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTk4OTg4NC1jNTgxLTc0NWItYjJmMi1kNDMxZjU2MDI2NTIiLCJlbWFpbCI6ImRvZUBtYWlsLmNvbSIsIm5iZiI6MTc1NDkwNTQ5NSwiZXhwIjoxNzU3NDk3NDk1LCJpc3MiOiJodHRwczovL3d3dy5lU2hvcC1hcGkuY29tIiwiYXVkIjoiZVNob3AtQXBpIn0.DlqCR-wmvI7CY5QE5-Kq6XH5jXL-b-HMlaJ4_NjRfyA", new DateTime(2025, 12, 31, 23, 59, 59, 0, DateTimeKind.Utc), "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTk4OTg4NC1jNTgxLTc0NWItYjJmMi1kNDMxZjU2MDI2NTIiLCJlbWFpbCI6ImRvZUBtYWlsLmNvbSIsIm5iZiI6MTc1NDkwNTQ5NSwiZXhwIjoxNzU0OTA5MDk1LCJpc3MiOiJodHRwczovL3d3dy5lU2hvcC1hcGkuY29tIiwiYXVkIjoiZVNob3AtQXBpIn0.gqv_MmGUdCBFr9CKBlQYI6oID9J0lQGL6Sh3maiyCgQ", new DateTime(2025, 12, 31, 23, 59, 59, 0, DateTimeKind.Utc), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "doe@mail.com", "John", false, "Doe", "$2a$12$Me0cidHOdqgvogI2GRBLN.zpF9MIynObUTmlP2vRqRvz3pKjGbJ9q", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",

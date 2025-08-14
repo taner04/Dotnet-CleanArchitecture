@@ -5,14 +5,14 @@ namespace Application.Mapper
 {
     public static class UserMapper
     {
-        public static AuthResponse ToAuthResponse(this User user)
+        public static AuthResponse ToAuthResponse(this User user, string accessToken)
         {
             return new AuthResponse(
                 user.Id.Value,
                 user.FirstName,
                 user.LastName,
                 user.Email,
-                user.Jwt.Token.Value,
+                accessToken,
                 user.Jwt.RefreshToken.Value
             );
         }

@@ -3,7 +3,6 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,11 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250811114136_InitialCreate")]
-    partial class InitialCreate
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,18 +217,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("01989884-c581-745b-b2f2-d431f5602652"),
-                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "doe@mail.com",
-                            FirstName = "John",
-                            IsDeleted = false,
-                            LastName = "Doe",
-                            PasswordHash = "$2a$12$Me0cidHOdqgvogI2GRBLN.zpF9MIynObUTmlP2vRqRvz3pKjGbJ9q"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Orders.Order", b =>
@@ -296,20 +281,11 @@ namespace Infrastructure.Migrations
                             b1.Property<string>("RefreshToken")
                                 .IsRequired()
                                 .HasColumnType("text")
-                                .HasColumnName("JwtRefreshToken");
+                                .HasColumnName("RefreshToken");
 
                             b1.Property<DateTime>("RefreshTokenExpiration")
                                 .HasColumnType("timestamp with time zone")
-                                .HasColumnName("JwtRefreshTokenExpiration");
-
-                            b1.Property<string>("Token")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("JwtToken");
-
-                            b1.Property<DateTime>("TokenExpiration")
-                                .HasColumnType("timestamp with time zone")
-                                .HasColumnName("JwtTokenExpiration");
+                                .HasColumnName("RefreshTokenExpiration");
 
                             b1.HasKey("UserId");
 
@@ -317,16 +293,6 @@ namespace Infrastructure.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
-
-                            b1.HasData(
-                                new
-                                {
-                                    UserId = new Guid("01989884-c581-745b-b2f2-d431f5602652"),
-                                    RefreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTk4OTg4NC1jNTgxLTc0NWItYjJmMi1kNDMxZjU2MDI2NTIiLCJlbWFpbCI6ImRvZUBtYWlsLmNvbSIsIm5iZiI6MTc1NDkwNTQ5NSwiZXhwIjoxNzU3NDk3NDk1LCJpc3MiOiJodHRwczovL3d3dy5lU2hvcC1hcGkuY29tIiwiYXVkIjoiZVNob3AtQXBpIn0.DlqCR-wmvI7CY5QE5-Kq6XH5jXL-b-HMlaJ4_NjRfyA",
-                                    RefreshTokenExpiration = new DateTime(2025, 12, 31, 23, 59, 59, 0, DateTimeKind.Utc),
-                                    Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTk4OTg4NC1jNTgxLTc0NWItYjJmMi1kNDMxZjU2MDI2NTIiLCJlbWFpbCI6ImRvZUBtYWlsLmNvbSIsIm5iZiI6MTc1NDkwNTQ5NSwiZXhwIjoxNzU0OTA5MDk1LCJpc3MiOiJodHRwczovL3d3dy5lU2hvcC1hcGkuY29tIiwiYXVkIjoiZVNob3AtQXBpIn0.gqv_MmGUdCBFr9CKBlQYI6oID9J0lQGL6Sh3maiyCgQ",
-                                    TokenExpiration = new DateTime(2025, 12, 31, 23, 59, 59, 0, DateTimeKind.Utc)
-                                });
                         });
 
                     b.Navigation("Jwt")

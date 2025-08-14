@@ -20,8 +20,7 @@
             Jwt = jwt ?? throw new ArgumentNullException(nameof(jwt));
         }
 
-        public bool HasValidJwtToken => Jwt.IsTokenExpired;
-        public bool HasValidRefreshToken => Jwt.IsRefreshTokenExpired;
+        public bool HasValidRefreshToken => !Jwt.IsRefreshTokenExpired;
 
         public Jwt Jwt { get; private set; } = null!; // This will be set by the repository or service layer after fetching the user details.
 

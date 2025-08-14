@@ -28,7 +28,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshTokenAsync([FromBody] GetUserByIdRequest userByIdDto)
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshTokenDto userByIdDto)
         {
             var result = await _authenticationService.RefreshTokenAsync(userByIdDto);
             return MapResponse(result);

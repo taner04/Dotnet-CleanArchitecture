@@ -8,6 +8,6 @@ namespace Application.Common.Interfaces.Services
     {
         Task<ResultT<AuthResponse>> LoginAsync(LoginRequest user);
         Task<Result> RegisterAsync(RegisterRequest user);
-        Task<ResultT<RefreshTokenResponse>> RefreshTokenAsync(GetUserByIdRequest getUserById);
+        Task<ResultT<RefreshTokenResponse>> RefreshTokenAsync(RefreshTokenDto refreshToken);
     }
 }

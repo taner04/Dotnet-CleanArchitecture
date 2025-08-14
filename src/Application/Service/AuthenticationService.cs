@@ -18,14 +18,14 @@ namespace Application.Service
         private readonly IUnitOfWork _unitOfWork;
         private readonly IValidatorFactory _validatorFactory;
         private readonly IPasswordHasher _passwordHasher;
-        private readonly ITokenGenerator _tokenGenerator;
+        private readonly ITokenService _tokenService;
 
-        public AuthenticationService(IUnitOfWork unitOfWork, IValidatorFactory validatorFactory, IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator)
+        public AuthenticationService(IUnitOfWork unitOfWork, IValidatorFactory validatorFactory, IPasswordHasher passwordHasher, ITokenService tokenService)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _validatorFactory = validatorFactory ?? throw new ArgumentNullException(nameof(validatorFactory));
             _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
-            _tokenGenerator = tokenGenerator ?? throw new ArgumentNullException(nameof(tokenGenerator));
+            _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
         }
 
         public async Task<ResultT<AuthResponse>> LoginAsync(LoginRequest user)
@@ -53,12 +53,17 @@ namespace Application.Service
                 );
             }
 
-            existingUser.SetJwt(_tokenGenerator.GenerateToken(existingUser));
+            if (!existingUser.HasValidRefreshToken)
+            {
+                var refreshToken = _tokenService.GenerateRefreshToken(existingUser);
+                existingUser.SetJwt(new Jwt(refreshToken));
 
-            _unitOfWork.UserRepository.Update(existingUser);
-            await _unitOfWork.SaveChangesAsync();
+                _unitOfWork.UserRepository.Update(existingUser);
+                await _unitOfWork.SaveChangesAsync();
+            }
 
-            return ResultT<AuthResponse>.Success(existingUser.ToAuthResponse());
+            var accessToken = _tokenService.GenerateAccessToken(existingUser);
+            return ResultT<AuthResponse>.Success(existingUser.ToAuthResponse(accessToken));
         }
 
         public async Task<Result> RegisterAsync(RegisterRequest user)
@@ -81,7 +86,8 @@ namespace Application.Service
 
             var newUser = user.ToUser(_passwordHasher.HashPassword(user.Password));
 
-            newUser.SetJwt(_tokenGenerator.GenerateToken(newUser));
+            var refreshToken = _tokenService.GenerateRefreshToken(newUser);
+            newUser.SetJwt(new Jwt(refreshToken));
 
             newUser.AddDomainEvent(new UserRegisteredDomainEvent(newUser.FirstName, newUser.LastName, newUser.Email));
 
@@ -91,9 +97,32 @@ namespace Application.Service
             return Result.Success();
         }
 
-        public async Task<ResultT<RefreshTokenResponse>> RefreshTokenAsync(GetUserByIdRequest getUserById)
+        public async Task<ResultT<RefreshTokenResponse>> RefreshTokenAsync(RefreshTokenDto refreshToken)
         {
-            var user = await _unitOfWork.UserRepository.GetByIdAsync(getUserById.UserId);
+            var validationResult = _validatorFactory.GetResult(refreshToken);
+            if (!validationResult.IsValid)
+            {
+                return ResultT<RefreshTokenResponse>.Failure(
+                    ErrorFactory.ValidationError(validationResult.ToDictionary())
+                );
+            }
+
+            if (!_tokenService.IsRefreshTokenValid(refreshToken.RefreshToken))
+            {
+                return ResultT<RefreshTokenResponse>.Failure(
+                    ErrorFactory.Unauthorized("Invalid refresh token")
+                );
+            }
+
+            var emailClaim = _tokenService.GetClaim(refreshToken.RefreshToken, "email");
+            if(emailClaim is null || emailClaim.Value is null)
+            {
+                return ResultT<RefreshTokenResponse>.Failure(
+                    ErrorFactory.Unauthorized("Email claim not found in refresh token")
+                );
+            }
+
+            var user = await _unitOfWork.UserRepository.GetByEmailAsync(emailClaim.Value);
             if (user is null)
             {
                 return ResultT<RefreshTokenResponse>.Failure(
@@ -101,21 +130,25 @@ namespace Application.Service
                 );
             }
 
-            if(!user.HasValidRefreshToken)
+            var subClaim = _tokenService.GetClaim(refreshToken.AccessToken, "sub");
+            if (user.Jwt.RefreshToken.Value != refreshToken.RefreshToken || user.Id != Guid.Parse(subClaim.Value))
             {
                 return ResultT<RefreshTokenResponse>.Failure(
-                    ErrorFactory.Unauthorized("Refresh token is invalid or expired. Please relogin.")
+                    ErrorFactory.Unauthorized("Refresh token does not match the user's token")
                 );
             }
 
-            user.SetJwt(_tokenGenerator.GenerateToken(user));
+            var newAccessToken = _tokenService.GenerateAccessToken(user);
+            var newRefreshToken = _tokenService.GenerateRefreshToken(user);
+
+            user.SetJwt(new Jwt(newRefreshToken));
 
             _unitOfWork.UserRepository.Update(user);
             await _unitOfWork.SaveChangesAsync();
 
             return ResultT<RefreshTokenResponse>.Success(new RefreshTokenResponse(
-                user.Jwt.Token.Value,
-                user.Jwt.RefreshToken.Value
+                newAccessToken,
+                newRefreshToken
             ));
         }
     }
