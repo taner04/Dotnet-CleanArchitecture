@@ -78,6 +78,7 @@ Here are some features planned for future implementation:
 
 - **Caching:** Improve performance by adding caching strategies for frequently accessed data.
 - **Paging:** Implement paging support for API endpoints that return collections.
+- **Client:** Implement a client that interacts with the API
 
 ---
 
