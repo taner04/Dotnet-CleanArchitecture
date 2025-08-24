@@ -27,9 +27,9 @@ builder.AddServiceDefaults();
 
 builder.Services.AddBearerScheme(configuration);
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.Services.AddProblemDetails(confIG =>
+builder.Services.AddProblemDetails(confIg =>
 {
-    confIG.CustomizeProblemDetails = context =>
+    confIg.CustomizeProblemDetails = context =>
     {
         context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
     };
@@ -52,7 +52,7 @@ if (app.Environment.IsDevelopment())
     {
         opt.Layout = ScalarLayout.Classic;
         opt.Theme = ScalarTheme.Mars;
-        opt.DefaultHttpClient = new(ScalarTarget.CSharp, ScalarClient.Http11);
+        opt.DefaultHttpClient = new KeyValuePair<ScalarTarget, ScalarClient>(ScalarTarget.CSharp, ScalarClient.Http11);
     });
     app.Migrate();
 }

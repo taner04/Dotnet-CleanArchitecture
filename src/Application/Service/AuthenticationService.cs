@@ -38,7 +38,7 @@ namespace Application.Service
                 );
             }
 
-            var existingUser = await _unitOfWork.UserRepository.GetByEmailAsync(user.Email);
+            var existingUser = await _unitOfWork.UserRepository.FindEntity(x => x.Email == user.Email);
             if (existingUser is null)
             {
                 return ResultT<AuthResponse>.Failure(
@@ -76,7 +76,7 @@ namespace Application.Service
                 );
             }
 
-            var existingUser = await _unitOfWork.UserRepository.GetByEmailAsync(user.Email);
+            var existingUser = _unitOfWork.UserRepository.FindEntity(x => x.Email == user.Email);
             if( existingUser is not null)
             {
                 return Result.Failure(
@@ -115,14 +115,8 @@ namespace Application.Service
             }
 
             var emailClaim = _tokenService.GetClaim(refreshToken.RefreshToken, "email");
-            if(emailClaim is null || emailClaim.Value is null)
-            {
-                return ResultT<RefreshTokenResponse>.Failure(
-                    ErrorFactory.Unauthorized("Email claim not found in refresh token")
-                );
-            }
 
-            var user = await _unitOfWork.UserRepository.GetByEmailAsync(emailClaim.Value);
+            var user = await _unitOfWork.UserRepository.FindEntity(x => x.Email == emailClaim.Value);
             if (user is null)
             {
                 return ResultT<RefreshTokenResponse>.Failure(
