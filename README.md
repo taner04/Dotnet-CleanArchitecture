@@ -62,8 +62,11 @@ Alternatively, run the provided script from the root directory:
   ```powershell
   ./launch.ps1
   ```
-
-This will start the application and all supporting services defined in the Aspire project.
+- **MacOS/Unix (bash)**
+  ```bash
+  ./launch.sh
+  ```
+  This will start the application and all supporting services defined in the Aspire project.
 
 ---
 
