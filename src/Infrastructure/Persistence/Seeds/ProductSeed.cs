@@ -20,7 +20,7 @@ namespace Infrastructure.Persistence.Seeds
                 new(ProductId.From(Guid.Parse("84fa579c-057b-7bf2-b85d-1aeb218bf2b4")), "Nintendo Switch OLED", "Handheld gaming console with OLED screen", 349.99m, 18),
                 new(ProductId.From(Guid.Parse("51336668-7448-7081-b4e8-7ff9c92d6731")), "Kindle Paperwhite Signature", "E-reader with 32GB storage and warm light", 189.99m, 14),
             };
-            modelBuilder.Entity<Domain.Entities.Products.Product>().HasData(products);
+            modelBuilder.Entity<Product>().HasData(products);
         }
     }
 }
