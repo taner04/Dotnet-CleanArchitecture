@@ -52,7 +52,7 @@ namespace Application.Service
                 );
             }
 
-            var order = new Order(Guid.CreateVersion7(), userId);
+            var order = Order.TryCreate(Guid.CreateVersion7(), userId);
             foreach (var product in orderCreate.Products)
             {
                 var productId = product.ProductId;

@@ -1,18 +1,45 @@
-﻿namespace Domain.Entities.Products
+﻿using Domain.Exceptions;
+
+namespace Domain.Entities.Products
 {
     public sealed class Product : AggregateRoot<ProductId>
     {
-#pragma warning disable CS8618 // Ein Non-Nullable-Feld muss beim Beenden des Konstruktors einen Wert ungleich NULL enthalten. Fügen Sie ggf. den „erforderlichen“ Modifizierer hinzu, oder deklarieren Sie den Modifizierer als NULL-Werte zulassend.
+#pragma warning disable CS8618 
         private Product() { } // for EF Core
-#pragma warning restore CS8618 // Ein Non-Nullable-Feld muss beim Beenden des Konstruktors einen Wert ungleich NULL enthalten. Fügen Sie ggf. den „erforderlichen“ Modifizierer hinzu, oder deklarieren Sie den Modifizierer als NULL-Werte zulassend.
+#pragma warning restore CS8618 
         
-        public Product(ProductId id, string name, string description, decimal price, int quanity)
+        private Product(ProductId id, string name, string description, decimal price, int quanity)
         {
             Id = id;
             Name = name;
             Description = description;
             Price = price;
             Quantity = quanity;
+        }
+
+        public static Product TryCreate(ProductId id, string name, string description, decimal price, int quanity)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Product name cannot be empty.", nameof(name));
+            }
+
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                throw new ArgumentException("Product description cannot be empty.", nameof(description));
+            }
+
+            if (price <= 0)
+            {
+                throw new ValueBelowMinimumException("Price must be greater than zero.");
+            }
+
+            if (quanity < 0)
+            {
+                throw new ValueBelowMinimumException("Quantity cannot be negative.");
+            }
+            
+            return new Product(id, name, description, price, quanity);
         }
 
         public void UpdateDetails(string name, string description, decimal price)
@@ -26,7 +53,7 @@
         {
             if(Quantity + amount < 0)
             {
-                throw new InvalidOperationException("Insufficient stock to update quantity.");
+                throw new ValueBelowMinimumException("Insufficient stock to update quantity.");
             }
 
             Quantity += amount;

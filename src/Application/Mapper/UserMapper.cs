@@ -19,7 +19,7 @@ namespace Application.Mapper
 
         public static User ToUser(this RegisterRequest request, string hashedPwd)
         {
-            return new User(
+            return User.TryCreate(
                 UserId.From(Guid.CreateVersion7()),
                 request.FirstName,
                 request.LastName,

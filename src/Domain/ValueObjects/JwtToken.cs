@@ -10,12 +10,7 @@ namespace Domain.ValueObjects
     {
         private static Validation Validate(string input)
         {
-            if(string.IsNullOrWhiteSpace(input))
-            {
-                return Validation.Invalid("The JWT token cannot be null or empty.");
-            }
-
-            return Validation.Ok;
+            return string.IsNullOrWhiteSpace(input) ? Validation.Invalid("The JWT token cannot be null or empty.") : Validation.Ok;
         }
     }
 }

@@ -10,12 +10,7 @@ namespace Domain.ValueObjects
     {
         private static Validation Validate(DateTime input)
         {
-            if(input < DateTime.UtcNow)
-            {
-                return Validation.Invalid("The expiration date cannot be in the past.");
-            }
-
-            return Validation.Ok;
+            return input < DateTime.UtcNow ? Validation.Invalid("The expiration date cannot be in the past.") : Validation.Ok;
         }
     } 
 }

@@ -19,7 +19,7 @@ namespace Domain.Entities
             RefreshToken = refreshToken;
             RefreshTokenExpiration = JwtTokenExpiration.From(dateToday.AddDays(RefreshTokenExpirationDays));
         }
-
+        
         public bool IsRefreshTokenExpired => DateTime.UtcNow >= RefreshTokenExpiration.Value;
 
         public JwtToken RefreshToken { get; private set; }

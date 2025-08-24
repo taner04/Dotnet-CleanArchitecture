@@ -1,4 +1,5 @@
-﻿using Domain.ValueObjects;
+﻿using Domain.Exceptions;
+using Domain.ValueObjects;
 
 namespace Domain.Entities.Orders
 {
@@ -8,18 +9,28 @@ namespace Domain.Entities.Orders
 
         private Order() { } // for EF
 
-        public Order(OrderId id, UserId userId)
+        private Order(OrderId id, UserId userId)
         {
             Id = id;
-            OrderDate = DateTime.UtcNow;
             UserId = userId;
+            OrderDate = DateTime.UtcNow;
         }
 
         public void AddOrderItem(ProductId productId, int quantity, Money unitPrice)
         {
-            var item = new OrderItem(Guid.CreateVersion7(), productId, quantity, unitPrice);
-            _orderItems.Add(item);
+            _orderItems.Add(OrderItem.TryCreate(Guid.CreateVersion7(), productId, quantity, unitPrice));
         }
+
+        public static Order TryCreate(OrderId id, UserId userId)
+        {
+            if (id == Guid.Empty || userId == Guid.Empty)
+            {
+                throw new InvalidIdException();
+            }
+
+            return new Order(id, userId);
+        }
+        
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
         public DateTime OrderDate { get; private set; }
         public UserId UserId { get; private set; }

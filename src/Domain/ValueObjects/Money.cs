@@ -10,12 +10,7 @@ namespace Domain.ValueObjects
     {
         private static Validation Validate(decimal input)
         {
-            if(input < 0)
-            {
-                return Validation.Invalid("The value cannot be less then 0.");
-            }
-
-            return Validation.Ok;
+            return input < 0 ? Validation.Invalid("The value cannot be less then 0.") : Validation.Ok;
         }
     }
 }
