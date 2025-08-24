@@ -55,6 +55,12 @@ namespace Infrastructure.Utilities.Token
             return claim ?? throw new ArgumentException($"Claim '{claimType}' not found in the token.");
         }
 
+        public List<Claim> GetClaims(string token)
+        {
+            var jwtSecurityToken = _tokenHandler.ReadJwtToken(token) ?? throw new ArgumentException("Invalid token format.");
+            return [.. jwtSecurityToken.Claims.Where(c => ClaimsToExtract.Contains(c.Type))];
+        }
+
         public bool IsRefreshTokenValid(string token)
         {
             var validationParameters = GetValidationParameters();
@@ -64,7 +70,9 @@ namespace Infrastructure.Utilities.Token
                 var principal = _tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
                 
                 var scope = principal.Claims.FirstOrDefault(c => c.Type == "scope")?.Value;
-                return string.Equals(scope, "refresh", StringComparison.Ordinal);
+                if (!string.Equals(scope, "refresh", StringComparison.Ordinal)) return false;
+                
+                return true;
             }
             catch (Exception)
             {

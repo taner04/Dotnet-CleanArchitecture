@@ -16,6 +16,9 @@ namespace Infrastructure.Persistence
         {
             foreach (var domainEvent in domainEvents)
             {
+
+                if(domainEvent is null) continue;
+
                 var handlerType = typeof(IDomainEventHandler<>).MakeGenericType(domainEvent.GetType());
                 var handler = _serviceProvider.GetService(handlerType);
 

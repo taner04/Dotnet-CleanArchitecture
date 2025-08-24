@@ -1,17 +1,13 @@
-﻿using Domain.Entities.Orders;
-using Domain.Entities.Products;
-using Domain.Entities.Users;
-
-namespace Infrastructure.Persistence.Repository
+﻿namespace Infrastructure.Persistence.Repository
 {
     [ServiceInjection(typeof(IUnitOfWork), ScopeType.AddTransient)]
     public sealed class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _dbContext;
 
-        private IRepository<User, UserId>? _userRepository;
-        private IRepository<Product, ProductId>? _productRepository;
-        private IRepository<Order, OrderId>? _orderRepository;
+        private IUserRepository? _userRepository;
+        private IProductRepository? _productRepository;
+        private IOrderRepository? _orderRepository;
         
         private bool disposedValue;
 
@@ -20,29 +16,29 @@ namespace Infrastructure.Persistence.Repository
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public IRepository<User, UserId> UserRepository
+        public IUserRepository UserRepository
         {
             get
             {
-                _userRepository ??= new Repository<User, UserId>(_dbContext);
+                _userRepository ??= new UserRepository(_dbContext);
                 return _userRepository;
             }
         }
 
-        public IRepository<Product, ProductId> ProductRepository
+        public IProductRepository ProductRepository
         {
             get
             {
-                _productRepository ??= new Repository<Product, ProductId>(_dbContext);
+                _productRepository ??= new ProductRepository(_dbContext);
                 return _productRepository;
             }
         }
 
-        public IRepository<Order, OrderId> OrderRepository
+        public IOrderRepository OrderRepository
         {
             get
             {
-                _orderRepository ??= new Repository<Order, OrderId>(_dbContext);
+                _orderRepository ??= new OrderRepository(_dbContext);
                 return _orderRepository;
             }
         }
@@ -52,14 +48,15 @@ namespace Infrastructure.Persistence.Repository
 
         private void Dispose(bool disposing)
         {
-            if (disposedValue) return;
-            
-            if (disposing)
+            if (!disposedValue)
             {
-                _dbContext?.Dispose();
-            }
+                if (disposing)
+                {
+                    _dbContext?.Dispose();
+                }
 
-            disposedValue = true;
+                disposedValue = true;
+            }
         }
 
         void IDisposable.Dispose()

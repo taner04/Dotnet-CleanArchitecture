@@ -35,10 +35,11 @@ namespace Infrastructure.Persistence.Interceptor
 
             foreach (var entry in aggregateRoots)
             {
-                if (entry.Entity is not IAggregateRoot aggregateRoot) continue;
-                
-                var domainEvents = aggregateRoot.PopDomainEvents();
-                await _domainEventDispatcher.DispatchAsync(domainEvents, cancellationToken);
+                if (entry.Entity is IAggregateRoot aggregateRoot)
+                {
+                    var domainEvents = aggregateRoot.PopDomainEvents();
+                    await _domainEventDispatcher.DispatchAsync(domainEvents, cancellationToken);
+                }
             }
         }
     }

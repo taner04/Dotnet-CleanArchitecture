@@ -21,7 +21,7 @@ namespace Infrastructure.Persistence.Interceptor
 
         private static void SetAuditableProperties(DbContext context)
         {
-            var utcNow = DateTime.UtcNow;
+            DateTime utcNow = DateTime.UtcNow;
 
             var auditableEntities = context.ChangeTracker
                                            .Entries()
@@ -37,16 +37,14 @@ namespace Infrastructure.Persistence.Interceptor
                             auditable.CreatedAt = utcNow;
                             auditable.UpdatedAt = utcNow;
                             break;
+
                         case EntityState.Modified:
                             auditable.UpdatedAt = utcNow;
                             break;
+
                         case EntityState.Deleted:
                             auditable.IsDeleted = true;
                             entry.State = EntityState.Modified;
-                            break;
-                        case EntityState.Detached:
-                        case EntityState.Unchanged:
-                        default:
                             break;
                     }
                 }
