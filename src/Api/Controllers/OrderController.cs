@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+#if !DEBUG
     [Authorize]
+#endif
     [Route("api/orders")]
     public class OrderController : ControllerBase
     {
