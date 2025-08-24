@@ -52,7 +52,7 @@ namespace Application.Service
                 );
             }
 
-            var products = await _unitOfWork.ProductRepository.GetByNameAsync(productByName.Name);
+            var products = await _unitOfWork.ProductRepository.FindEntities(x => x.Name == productByName.Name);
             return ResultT<List<ProductDto>>.Success([.. products.Select(p => p.ToProductDto())]);
         }
     }

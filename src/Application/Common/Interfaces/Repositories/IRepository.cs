@@ -1,4 +1,5 @@
-﻿using Domain.Common.Interfaces;
+﻿using System.Linq.Expressions;
+using Domain.Common.Interfaces;
 
 namespace Application.Common.Interfaces.Repositories
 {
@@ -9,5 +10,7 @@ namespace Application.Common.Interfaces.Repositories
         void Add(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);
+        Task<TEntity?> FindEntity(Expression<Func<TEntity, bool>> predicate);
+        Task< List<TEntity>> FindEntities(Expression<Func<TEntity, bool>> predicate);
     }
 }

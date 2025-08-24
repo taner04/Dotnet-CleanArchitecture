@@ -1,13 +1,17 @@
-﻿namespace Infrastructure.Persistence.Repository
+﻿using Domain.Entities.Orders;
+using Domain.Entities.Products;
+using Domain.Entities.Users;
+
+namespace Infrastructure.Persistence.Repository
 {
     [ServiceInjection(typeof(IUnitOfWork), ScopeType.AddTransient)]
     public sealed class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _dbContext;
 
-        private IUserRepository? _userRepository;
-        private IProductRepository? _productRepository;
-        private IOrderRepository? _orderRepository;
+        private IRepository<User, UserId>? _userRepository;
+        private IRepository<Product, ProductId>? _productRepository;
+        private IRepository<Order, OrderId>? _orderRepository;
         
         private bool disposedValue;
 
@@ -16,29 +20,29 @@
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public IUserRepository UserRepository
+        public IRepository<User, UserId> UserRepository
         {
             get
             {
-                _userRepository ??= new UserRepository(_dbContext);
+                _userRepository ??= new Repository<User, UserId>(_dbContext);
                 return _userRepository;
             }
         }
 
-        public IProductRepository ProductRepository
+        public IRepository<Product, ProductId> ProductRepository
         {
             get
             {
-                _productRepository ??= new ProductRepository(_dbContext);
+                _productRepository ??= new Repository<Product, ProductId>(_dbContext);
                 return _productRepository;
             }
         }
 
-        public IOrderRepository OrderRepository
+        public IRepository<Order, OrderId> OrderRepository
         {
             get
             {
-                _orderRepository ??= new OrderRepository(_dbContext);
+                _orderRepository ??= new Repository<Order, OrderId>(_dbContext);
                 return _orderRepository;
             }
         }
@@ -48,15 +52,14 @@
 
         private void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (disposedValue) return;
+            
+            if (disposing)
             {
-                if (disposing)
-                {
-                    _dbContext?.Dispose();
-                }
-
-                disposedValue = true;
+                _dbContext?.Dispose();
             }
+
+            disposedValue = true;
         }
 
         void IDisposable.Dispose()

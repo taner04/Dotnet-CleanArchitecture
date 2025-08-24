@@ -16,19 +16,17 @@ namespace Application.Service
     public sealed class OrderService : IOrderService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserRepository _userRepository;
         private readonly IValidatorFactory _validatorFactory;
 
-        public OrderService(IUnitOfWork unitOfWork, IValidatorFactory validatorFactory, IUserRepository userRepository)
+        public OrderService(IUnitOfWork unitOfWork, IValidatorFactory validatorFactory)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _validatorFactory = validatorFactory ?? throw new ArgumentNullException(nameof(validatorFactory));
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         public async Task<ResultT<List<OrderDto>>> GetOrdersByUserAsync(OrderByUserDto orderByUserDto)
         {
-            var orders = await _unitOfWork.OrderRepository.OrdersByUserAsync(orderByUserDto.UserId);
+            var orders = await _unitOfWork.OrderRepository.FindEntities(x => x.UserId == orderByUserDto.UserId);
             return ResultT<List<OrderDto>>.Success([.. orders.Select(o => o.ToOrderDto())]);
         }
 
@@ -44,7 +42,7 @@ namespace Application.Service
 
             var userId = orderCreate.UserId;
 
-            var user = await _userRepository.GetByIdAsync(userId);
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
             if (user is null)
             {
                 return Result.Failure(
@@ -55,8 +53,7 @@ namespace Application.Service
             var order = new Order(Guid.CreateVersion7(), userId);
             foreach (var product in orderCreate.Products)
             {
-                var productId = product.ProductId;
-                var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
+                var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(product.ProductId);
                 
                 if (productEntity is null)
                 {
@@ -76,7 +73,7 @@ namespace Application.Service
                 _unitOfWork.ProductRepository.Update(productEntity);
 
                 order.AddOrderItem(
-                    productId, 
+                    product.ProductId, 
                     product.Quantity, 
                     productEntity.Price
                 );

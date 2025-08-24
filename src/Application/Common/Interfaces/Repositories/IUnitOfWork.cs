@@ -1,10 +1,14 @@
-﻿namespace Application.Common.Interfaces.Repositories
+﻿using Domain.Entities.Orders;
+using Domain.Entities.Products;
+using Domain.Entities.Users;
+
+namespace Application.Common.Interfaces.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        IUserRepository UserRepository { get; }
-        IProductRepository ProductRepository { get; }
-        IOrderRepository OrderRepository { get; }
+        IRepository<User, UserId> UserRepository { get; }
+        IRepository<Product, ProductId> ProductRepository { get; }
+        IRepository<Order, OrderId> OrderRepository { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
