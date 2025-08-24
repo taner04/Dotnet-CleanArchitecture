@@ -82,6 +82,7 @@ Here are some features planned for future implementation:
 - **Paging:** Implement paging support for API endpoints that return collections.
 - **Client:** Implement a client that interacts with the API
 - **Launch (macOS/Unix):** Provide a shell script (e.g., `launch.sh`) similar to the Windows PowerShell script (`launch.ps1`) to automate environment checks and application startup for macOS and Linux users.
+- **Documentation:** Document the codebase with comments and explanations.
 
 ---
 
