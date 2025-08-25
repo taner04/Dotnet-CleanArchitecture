@@ -27,7 +27,7 @@ namespace Api.Controllers
             return MapResponse(result);
         }
 
-        [HttpGet("details")]
+        [HttpPost("details")]
         public async Task<IActionResult> GetProductDetailsAsync([FromBody] ProductDetailsByIdDto productDetailsById)
         {
             var result = await _productService.GetProductDetailsAsync(productDetailsById);
