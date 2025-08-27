@@ -10,8 +10,8 @@ public sealed class CartRepository(ApplicationDbContext dbContext)
     public Task<Cart?> GetCartByUserId(UserId userId)
     {
         return DbSet.Where(c => c.UserId == userId)
-                    .Include(c => c.CartItems)
-                        .ThenInclude(ci => ci.Product)
-                    .FirstOrDefaultAsync();
+            .Include(c => c.CartItems)
+            .ThenInclude(ci => ci.Product)
+            .FirstOrDefaultAsync();
     }
 }

@@ -1,9 +1,8 @@
 ﻿using MimeKit;
 
-namespace Application.Common.Interfaces.Infrastructure
+namespace Application.Common.Interfaces.Infrastructure;
+
+public interface IEmailSender
 {
-    public interface IEmailSender
-    {
-        Task SendAsync(MimeMessage mimeMessage, CancellationToken cancellationToken);
-    }
+    Task SendAsync(MimeMessage mimeMessage, CancellationToken cancellationToken);
 }

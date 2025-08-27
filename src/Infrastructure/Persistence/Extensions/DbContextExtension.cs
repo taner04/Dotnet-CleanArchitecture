@@ -13,9 +13,6 @@ public static class DbContextExtension
     /// <param name="dbContext">The <see cref="DbContext"/> instance to migrate.</param>
     public static void Migrate(this DbContext dbContext)
     {
-        if (dbContext.Database.GetPendingMigrations().Any())
-        {
-            dbContext.Database.Migrate();
-        }
+        if (dbContext.Database.GetPendingMigrations().Any()) dbContext.Database.Migrate();
     }
 }

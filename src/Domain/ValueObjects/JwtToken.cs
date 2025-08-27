@@ -1,16 +1,17 @@
 ﻿using Domain.Common.Interfaces;
 using Vogen;
 
-namespace Domain.ValueObjects
+namespace Domain.ValueObjects;
+
+[ValueObject<string>
+(fromPrimitiveCasting: CastOperator.Implicit,
+    toPrimitiveCasting: CastOperator.Implicit)]
+public partial class JwtToken
 {
-    [ValueObject<string>
-        (fromPrimitiveCasting: CastOperator.Implicit, 
-         toPrimitiveCasting: CastOperator.Implicit)]
-    public partial class JwtToken 
+    private static Validation Validate(string input)
     {
-        private static Validation Validate(string input)
-        {
-            return string.IsNullOrWhiteSpace(input) ? Validation.Invalid("The JWT token cannot be null or empty.") : Validation.Ok;
-        }
+        return string.IsNullOrWhiteSpace(input)
+            ? Validation.Invalid("The JWT token cannot be null or empty.")
+            : Validation.Ok;
     }
 }

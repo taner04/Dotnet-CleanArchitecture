@@ -1,10 +1,9 @@
 ﻿using Domain.Common.Interfaces;
 
-namespace Domain.Common.Base
+namespace Domain.Common.Base;
+
+public abstract class Entity<TId> : IEntity<TId>
+    where TId : struct
 {
-    public abstract class Entity<TId> : IEntity<TId> 
-        where TId : struct
-    {
-        public TId Id { get; init; }
-    }
+    public TId Id { get; init; }
 }

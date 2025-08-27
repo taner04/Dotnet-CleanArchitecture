@@ -2,12 +2,13 @@
 using Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence.Repository
+namespace Infrastructure.Persistence.Repository;
+
+public sealed class UserRepository(ApplicationDbContext dbContext)
+    : Repository<User, UserId>(dbContext), IUserRepository
 {
-    public sealed class UserRepository(ApplicationDbContext dbContext)
-        : Repository<User, UserId>(dbContext), IUserRepository
+    public Task<User?> GetByEmailAsync(string email)
     {
-        public Task<User?> GetByEmailAsync(string email) 
-            => DbSet.AsNoTracking().FirstOrDefaultAsync(user => user.Email == email);
+        return DbSet.AsNoTracking().FirstOrDefaultAsync(user => user.Email == email);
     }
 }

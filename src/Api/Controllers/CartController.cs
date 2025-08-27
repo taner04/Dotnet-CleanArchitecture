@@ -1,5 +1,9 @@
+using Application.CQRS.Cart.AddCartItem;
+using Application.CQRS.Cart.GetCart;
+using Application.CQRS.Cart.RemoveCartItem;
 using Application.Dtos.Cart;
 using Application.Dtos.CartItem;
+using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,31 +13,31 @@ namespace Api.Controllers;
 [Route("api/cart")]
 public sealed class CartController : ControllerBase
 {
-    private readonly ICartService _cartService;
-    
-    public CartController(ICartService cartService)
+    private readonly IMediator _mediator;
+
+    public CartController(IMediator mediator)
     {
-        _cartService = cartService;
+        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
     [HttpPost("user")]
-    public async Task<IActionResult> GetCartByUserAsync([FromBody] CartByUserDto cartByUserDto)
+    public async Task<IActionResult> GetCartByUserAsync([FromBody] GetCartByUserQuery query)
     {
-        var result = await _cartService.GetCartByUserId(cartByUserDto);
+        var result = await _mediator.Send(query);
         return MapResponse(result);
     }
 
     [HttpPost("item/add")]
-    public async Task<IActionResult> AddItemToCartAsync([FromBody] AddCartItemDto addCartItemDto)
+    public async Task<IActionResult> AddItemToCartAsync([FromBody] AddCartItemCommand command)
     {
-        var result = await _cartService.AddItemToCart(addCartItemDto);
+        var result = await _mediator.Send(command);
         return MapResponse(result);
     }
 
     [HttpDelete("item/remove")]
-    public async Task<IActionResult> RemoveItemFromCartAsync([FromBody] RemoveCartItemDto removeCartItem)
+    public async Task<IActionResult> RemoveItemFromCartAsync([FromBody] RemoveCartItemCommand command)
     {
-        var result = await _cartService.RemoveItemFromCart(removeCartItem);
+        var result = await _mediator.Send(command);
         return MapResponse(result);
     }
 }

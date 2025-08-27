@@ -15,7 +15,7 @@ public class Result
         IsSuccess = true;
         Error = null;
     }
-    
+
     /// <summary>
     /// Initializes a failed result with the specified error.
     /// </summary>
@@ -25,17 +25,17 @@ public class Result
         IsSuccess = false;
         Error = error;
     }
-    
+
     /// <summary>
     /// Gets a value indicating whether the result is successful.
     /// </summary>
     public bool IsSuccess { get; }
-    
+
     /// <summary>
     /// Gets the error associated with the result, if any.
     /// </summary>
     public Error? Error { get; }
-    
+
     /// <summary>
     /// Implicitly converts an <see cref="Error"/> to a failed <see cref="Result"/>.
     /// </summary>
@@ -44,15 +44,21 @@ public class Result
     {
         return new Result(error);
     }
-    
+
     /// <summary>
     /// Creates a successful result.
     /// </summary>
-    public static Result Success() => new();
-    
+    public static Result Success()
+    {
+        return new Result();
+    }
+
     /// <summary>
     /// Creates a failed result with the specified error.
     /// </summary>
     /// <param name="error">The error associated with the failure.</param>
-    public static Result Failure(Error error) => new(error);
+    public static Result Failure(Error error)
+    {
+        return new Result(error);
+    }
 }

@@ -2,17 +2,16 @@
 using Domain.Entities.Orders;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence.Repository
+namespace Infrastructure.Persistence.Repository;
+
+internal class OrderRepository(ApplicationDbContext dbContext)
+    : Repository<Order, OrderId>(dbContext), IOrderRepository
 {
-    internal class OrderRepository(ApplicationDbContext dbContext)
-        : Repository<Order, OrderId>(dbContext), IOrderRepository
+    public Task<List<Order>> OrdersByUserAsync(UserId userId)
     {
-        public Task<List<Order>> OrdersByUserAsync(UserId userId)
-        {
-            return DbSet.Where(order => order.UserId == userId)
-                        .Include(order => order.OrderItems)
-                            .ThenInclude(item => item.Product)
-                        .ToListAsync();
-        }
+        return DbSet.Where(order => order.UserId == userId)
+            .Include(order => order.OrderItems)
+            .ThenInclude(item => item.Product)
+            .ToListAsync();
     }
 }

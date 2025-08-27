@@ -1,37 +1,40 @@
-﻿using Application.Dtos.Product;
+﻿using Application.CQRS.Product.GetAll;
+using Application.CQRS.Product.GetProductByName;
+using Application.CQRS.Product.GetProductDetails;
+using Application.Dtos.Product;
+using Mediator;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers
+namespace Api.Controllers;
+
+[Route("api/products")]
+public class ProductController : ControllerBase
 {
-    [Route("api/products")]
-    public class ProductController : ControllerBase
+    private readonly IMediator _mediator;
+
+    public ProductController(IMediator mediator)
     {
-        private readonly IProductService _productService;
+        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+    }
 
-        public ProductController(IProductService productService)
-        {
-            _productService = productService;
-        }
+    [HttpGet]
+    public async Task<IActionResult> GetProductsAsync()
+    {
+        var result = await _mediator.Send(new GetAllProductsQuery());
+        return MapResponse(result);
+    }
 
-        [HttpGet]
-        public async Task<IActionResult> GetProductsAsync()
-        {
-            var result = await _productService.GetAllAsync();
-            return MapResponse(result);
-        }
+    [HttpPost("name")]
+    public async Task<IActionResult> GetProductByName([FromBody] GetProductByNameQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return MapResponse(result);
+    }
 
-        [HttpPost("name")]
-        public async Task<IActionResult> GetProductByName([FromBody] ProductByNameDto productByName)
-        {
-            var result = await _productService.SearchByNameAsync(productByName);
-            return MapResponse(result);
-        }
-
-        [HttpPost("details")]
-        public async Task<IActionResult> GetProductDetailsAsync([FromBody] ProductDetailsByIdDto productDetailsById)
-        {
-            var result = await _productService.GetProductDetailsAsync(productDetailsById);
-            return MapResponse(result);
-        }
+    [HttpPost("details")]
+    public async Task<IActionResult> GetProductDetailsAsync([FromBody] GetProductDetailsQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return MapResponse(result);
     }
 }
