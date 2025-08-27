@@ -42,13 +42,14 @@ src/
 
 ## 🧪 Used Dependencies
 
-- **BCrypt**
-- **FluentValidation**
-- **Vogen**
-- **Scalar**
-- **MailKit**
-- **DotNetEnv**
-- **Mediator**
+- [**BCrypt**](https://github.com/BcryptNet/bcrypt.net) – Used for hashing and validation of passwords.
+- [**FluentValidation**](https://github.com/FluentValidation/FluentValidation) – Used to validate DTOs.
+- [**Vogen**](https://github.com/SteveDunn/Vogen) – Value object generator for strongly-typed IDs and primitives.
+- [**Scalar**](https://github.com/scalar/scalar) – Used for the API documentation.
+- [**MailKit**](https://github.com/jstedfast/MailKit) – Used to send emails via IMAP, POP3, and SMTP protocols.
+- [**MimeKit**](https://github.com/jstedfast/MimeKit) – MIME parsing and generation library for handling email messages.
+- [**DotNetEnv**](https://github.com/tonerdo/dotnet-env) – Used for loading environment variables from `.env` files into .NET applications.
+- [**Mediator**](https://github.com/martinothamar/Mediator) – Used for handling domain events.
 
 ---
 
