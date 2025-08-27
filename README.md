@@ -27,15 +27,24 @@ The solution follows the **Clean Architecture** pattern:
 ## 📂 Project Structure
 
 ```
-src/
- ├── Api                   # Web API entry point
- ├── Application           # Application services, DTOs, validators
- ├── Domain                # Entities, value objects, domain events, interfaces
- ├── Infrastructure        # Data access, EF Core (if used), external service implementations
- ├── SharedKernel          # Common abstractions and utilities
- ├── eShop.AppHost         # Hosting project
- ├── eShop.ServiceDefaults # Shared service defaults and extensions
- └── eShop.sln             # Visual Studio solution file
+.
+├── Api
+├── Api.Test
+│
+├── Application
+├── Application.Test
+│
+├── Domain
+├── Domain.Test
+│
+├── eShop.AppHost
+├── eShop.ServiceDefaults
+│
+├── Infrastructure
+├── Infrastructure.Test
+│
+└── SharedKernel
+
 ```
 
 ---
@@ -97,7 +106,7 @@ Here are some features planned for future implementation:
 - **Caching:** Improve performance by adding caching strategies for frequently accessed data.
 - **Paging:** Implement paging support for API endpoints that return collections.
 - **Client:** Implement a client that interacts with the API
-- **Launch (macOS/Unix):** Provide a shell script (e.g., `launch.sh`) similar to the Windows PowerShell script (`launch.ps1`) to automate environment checks and application startup for macOS and Linux users.
+- **Unit-Tests:** Implement tests for each layer
 - **Documentation:** Document the codebase with comments and explanations.
 
 ---
