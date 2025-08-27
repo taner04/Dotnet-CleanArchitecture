@@ -40,6 +40,18 @@ src/
 
 ---
 
+## 🧪 Used Dependencies
+
+- **BCrypt**
+- **FluentValidation**
+- **Vogen**
+- **Scalar**
+- **MailKit**
+- **DotNetEnv**
+- **Mediator**
+
+---
+
 ## 🚀 Getting Started
 
 To get started, ensure you have the following prerequisites installed:
