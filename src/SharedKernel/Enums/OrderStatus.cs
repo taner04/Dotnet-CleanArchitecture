@@ -2,6 +2,9 @@
 
 namespace SharedKernel.Enums;
 
+/// <summary>
+/// Represents the status of an order.
+/// </summary>
 public enum OrderStatus
 {
     [Description("Order is currently pending and awaiting processing.")]

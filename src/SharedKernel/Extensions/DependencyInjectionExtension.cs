@@ -11,7 +11,7 @@ namespace SharedKernel.Extensions;
 public static class DependencyInjectionExtension
 {
     /// <summary>
-    /// Registers services from the specified assembly into the <see cref="IServiceCollection"/> based on the <see cref="ServiceInjectionAttribute"/>.
+    /// Registers services from the specified assembly into the <see cref="IServiceCollection"/> based on the <see cref="ServiceInjection"/>.
     /// </summary>
     /// <param name="services">The service collection to add services to.</param>
     /// <param name="assembly">The assembly to scan for service types.</param>
@@ -19,14 +19,14 @@ public static class DependencyInjectionExtension
     public static IServiceCollection AddServicesFromAssembly(this IServiceCollection services, Assembly assembly)
     {
         var types = assembly.GetTypes()
-            .Where(t => t.GetCustomAttribute<ServiceInjectionAttribute>() != null)
+            .Where(t => t.GetCustomAttribute<ServiceInjection>() != null)
             .ToList();
 
         if (types.Count == 0) return services;
 
         foreach (var item in types)
         {
-            var service = (ServiceInjectionAttribute)item.GetCustomAttributes(typeof(ServiceInjectionAttribute), true)
+            var service = (ServiceInjection)item.GetCustomAttributes(typeof(ServiceInjection), true)
                 .FirstOrDefault()!;
 
             switch (service.Scope)

@@ -11,24 +11,33 @@ using System.Reflection;
 
 namespace Infrastructure;
 
+/// <summary>
+/// Provides extension methods for registering infrastructure services and dependencies.
+/// </summary>
 public static class DependencyInjection
 {
+    /// <summary>
+    /// Registers infrastructure services, including database context, interceptors, and assembly services.
+    /// </summary>
+    /// <param name="services">The service collection to add services to.</param>
+    /// <param name="builder">The web application builder containing configuration and services.</param>
+    /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton<ISaveChangesInterceptor, AuditableInterceptor>();
-        builder.Services.AddSingleton<ISaveChangesInterceptor, SoftDeletableInterceptor>();
-        builder.Services.AddScoped<ISaveChangesInterceptor, AggregateRootInterceptor>();
-
-        builder.Services.AddDbContext<ApplicationDbContext>((sp, opt) =>
+        // Register save changes interceptors for auditing, soft deletion, and aggregate root handling.
+        services.AddSingleton<ISaveChangesInterceptor, AuditableInterceptor>();
+        services.AddSingleton<ISaveChangesInterceptor, SoftDeletableInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, AggregateRootInterceptor>();
+        // Register the application's database context and add interceptors.
+        services.AddDbContext<ApplicationDbContext>((sp, opt) =>
         {
             var interceptors = sp.GetServices<ISaveChangesInterceptor>().ToList();
             interceptors.ForEach(interceptor => { opt.AddInterceptors(interceptor); });
-
             opt.UseNpgsql(builder.Configuration.GetConnectionString("eshop"));
         });
-
+        // Enrich the database context with additional configuration.
         builder.EnrichNpgsqlDbContext<ApplicationDbContext>();
-
+        // Register services from the current assembly.
         services.AddServicesFromAssembly(Assembly.GetExecutingAssembly());
         return services;
     }
