@@ -2,14 +2,13 @@
 using Application.Extensions;
 using FluentValidation;
 
-namespace Application.Validator.Order
+namespace Application.Validator.Order;
+
+public sealed class OrderByUserValidator : AbstractValidator<OrderByUserDto>
 {
-    public sealed class OrderByUserValidator : AbstractValidator<OrderByUserDto>
+    public OrderByUserValidator()
     {
-        public OrderByUserValidator()
-        {
-            RuleFor(x => x.UserId).IsId()
-                .WithMessage("ID needs to be a valid Guid");
-        }
+        RuleFor(x => x.UserId).IsId()
+            .WithMessage("ID needs to be a valid Guid");
     }
 }

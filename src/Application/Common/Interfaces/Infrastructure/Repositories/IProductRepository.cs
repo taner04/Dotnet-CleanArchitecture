@@ -1,9 +1,8 @@
 ﻿using Domain.Entities.Products;
 
-namespace Application.Common.Interfaces.Infrastructure.Repositories
+namespace Application.Common.Interfaces.Infrastructure.Repositories;
+
+public interface IProductRepository : IRepository<Product, ProductId>
 {
-    public interface IProductRepository : IRepository<Product, ProductId>
-    {
-        Task<List<Product>> GetByNameAsync(string name);
-    }
+    Task<List<Product>> GetByNameAsync(string name);
 }

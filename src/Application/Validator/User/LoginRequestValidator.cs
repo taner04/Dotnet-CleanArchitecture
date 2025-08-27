@@ -1,21 +1,20 @@
 ﻿using Application.Dtos.User;
 using FluentValidation;
 
-namespace Application.Validator.User
-{
-    public sealed class LoginRequestValidator : AbstractValidator<LoginRequest>
-    {
-        public LoginRequestValidator()
-        {
-            RuleFor(x => x.Email)
-                .NotEmpty()
-                .WithMessage("Email is required.")
-                .EmailAddress()
-                .WithMessage("Invalid email format.");
+namespace Application.Validator.User;
 
-            RuleFor(x => x.Password)
-                .NotEmpty()
-                .WithMessage("Password is required.");
-        }
+public sealed class LoginRequestValidator : AbstractValidator<LoginRequest>
+{
+    public LoginRequestValidator()
+    {
+        RuleFor(x => x.Email)
+            .NotEmpty()
+            .WithMessage("Email is required.")
+            .EmailAddress()
+            .WithMessage("Invalid email format.");
+
+        RuleFor(x => x.Password)
+            .NotEmpty()
+            .WithMessage("Password is required.");
     }
 }

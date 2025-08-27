@@ -1,10 +1,9 @@
 ﻿using Domain.Common.Interfaces.DomainEvent;
 
-namespace Domain.Common.Interfaces
+namespace Domain.Common.Interfaces;
+
+public interface IAggregateRoot
 {
-    public interface IAggregateRoot
-    {
-        void AddDomainEvent(IDomainEvent domainEvent);
-        List<IDomainEvent> PopDomainEvents();
-    }
+    void AddDomainEvent(IDomainEvent domainEvent);
+    List<IDomainEvent> PopDomainEvents();
 }

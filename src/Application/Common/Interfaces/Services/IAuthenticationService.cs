@@ -2,12 +2,11 @@
 using Application.Dtos.User;
 using SharedKernel.Response;
 
-namespace Application.Common.Interfaces.Services
+namespace Application.Common.Interfaces.Services;
+
+public interface IAuthenticationService
 {
-    public interface IAuthenticationService
-    {
-        Task<ResultT<AuthResponse>> LoginAsync(LoginRequest user);
-        Task<Result> RegisterAsync(RegisterRequest user);
-        Task<ResultT<RefreshTokenResponse>> RefreshTokenAsync(RefreshTokenDto refreshToken);
-    }
+    Task<ResultT<AuthResponse>> LoginAsync(LoginRequest user);
+    Task<Result> RegisterAsync(RegisterRequest user);
+    Task<ResultT<RefreshTokenResponse>> RefreshTokenAsync(RefreshTokenDto refreshToken);
 }

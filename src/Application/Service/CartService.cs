@@ -28,18 +28,13 @@ public sealed class CartService : ICartService
     {
         var validationResult = _validatorFactory.GetResult(cartByUser);
         if (!validationResult.IsValid)
-        {
             return ResultT<CartDto>.Failure(
                 ErrorFactory.ValidationError(validationResult.ToDictionary())
             );
-        }
-        
+
         var cart = await _unitOfWork.CartRepository.GetCartByUserId(cartByUser.UserId);
-        if (cart != null)
-        {
-            return ResultT<CartDto>.Success(cart.ToDto());
-        }
-        
+        if (cart != null) return ResultT<CartDto>.Success(cart.ToDto());
+
         cart = Cart.TryCreate(Guid.CreateVersion7(), cartByUser.UserId);
         await _unitOfWork.SaveChangesAsync();
 
@@ -50,29 +45,25 @@ public sealed class CartService : ICartService
     {
         var validationResult = _validatorFactory.GetResult(addCartItem);
         if (!validationResult.IsValid)
-        {
             return Result.Failure(
                 ErrorFactory.ValidationError(validationResult.ToDictionary())
             );
-        }
-        
+
         var cart = await _unitOfWork.CartRepository.GetCartByUserId(addCartItem.UserId);
         if (cart == null)
         {
             cart = Cart.TryCreate(Guid.CreateVersion7(), addCartItem.UserId);
             _unitOfWork.CartRepository.Add(cart);
         }
-        
+
         if (await _unitOfWork.ProductRepository.GetByIdAsync(addCartItem.ProductId) == null)
-        {
             return Result.Failure(
                 ErrorFactory.NotFound("Product not found.")
             );
-        }
-        
+
         cart.AddCartItem(addCartItem.ProductId, addCartItem.Quantity);
         await _unitOfWork.SaveChangesAsync();
-        
+
         return Result.Success();
     }
 
@@ -80,28 +71,21 @@ public sealed class CartService : ICartService
     {
         var validationResult = _validatorFactory.GetResult(removeCartItem);
         if (!validationResult.IsValid)
-        {
             return Result.Failure(
                 ErrorFactory.ValidationError(validationResult.ToDictionary())
             );
-        }
-        
+
         var cart = await _unitOfWork.CartRepository.GetCartByUserId(removeCartItem.UserId);
         if (cart == null)
-        {
             return Result.Failure(
                 ErrorFactory.NotFound("Cart not found for the specified user.")
             );
-        }
-        
+
         var result = cart.TryRemoveCartItem(removeCartItem.CartItemId);
-        if (!result.IsSuccess)
-        {
-            return result;
-        }
-        
+        if (!result.IsSuccess) return result;
+
         await _unitOfWork.SaveChangesAsync();
-        
+
         return Result.Success();
     }
 }

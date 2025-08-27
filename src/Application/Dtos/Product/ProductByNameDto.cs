@@ -1,4 +1,3 @@
-﻿namespace Application.Dtos.Product
-{
-    public readonly record struct ProductByNameDto(string Name);
-}
+﻿namespace Application.Dtos.Product;
+
+public readonly record struct ProductByNameDto(string Name);

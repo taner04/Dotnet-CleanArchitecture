@@ -10,7 +10,7 @@ namespace Api.Controllers;
 public sealed class CartController : ControllerBase
 {
     private readonly ICartService _cartService;
-    
+
     public CartController(ICartService cartService)
     {
         _cartService = cartService;

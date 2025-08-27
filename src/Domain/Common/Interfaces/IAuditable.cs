@@ -1,8 +1,7 @@
-﻿namespace Domain.Common.Interfaces
+﻿namespace Domain.Common.Interfaces;
+
+public interface IAuditable
 {
-    public interface IAuditable
-    {
-        DateTime CreatedAt { get; set; }
-        DateTime? UpdatedAt { get; set; }
-    }
+    DateTime CreatedAt { get; set; }
+    DateTime? UpdatedAt { get; set; }
 }

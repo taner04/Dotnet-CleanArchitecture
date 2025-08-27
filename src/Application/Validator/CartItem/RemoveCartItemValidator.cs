@@ -11,7 +11,7 @@ public sealed class RemoveCartItemValidator : AbstractValidator<RemoveCartItemDt
         RuleFor(x => x.CartItemId)
             .IsId()
             .WithMessage("Cart item id is invalid");
-        
+
         RuleFor(x => x.UserId)
             .IsId()
             .WithMessage("User id is invalid");

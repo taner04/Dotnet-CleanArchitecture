@@ -1,12 +1,11 @@
 ﻿using Application.Dtos.Order;
 using SharedKernel.Response;
 
-namespace Application.Common.Interfaces.Services
+namespace Application.Common.Interfaces.Services;
+
+public interface IOrderService
 {
-    public interface IOrderService
-    {
-        Task<ResultT<List<OrderDto>>> GetOrdersByUserAsync(OrderByUserDto orderByUser);
-        Task<Result> CreateOrderAsync(CreateOrderRequest orderCreate);
-        Task<Result> CancelOrderAsync(CancelOrderRequest orderCancelDto);
-    }
+    Task<ResultT<List<OrderDto>>> GetOrdersByUserAsync(OrderByUserDto orderByUser);
+    Task<Result> CreateOrderAsync(CreateOrderRequest orderCreate);
+    Task<Result> CancelOrderAsync(CancelOrderRequest orderCancelDto);
 }

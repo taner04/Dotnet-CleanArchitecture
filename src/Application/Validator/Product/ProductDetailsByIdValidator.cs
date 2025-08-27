@@ -2,15 +2,14 @@
 using Application.Extensions;
 using FluentValidation;
 
-namespace Application.Validator.Product
+namespace Application.Validator.Product;
+
+public sealed class ProductDetailsByIdValidator : AbstractValidator<ProductDetailsByIdDto>
 {
-    public sealed class ProductDetailsByIdValidator : AbstractValidator<ProductDetailsByIdDto>
+    public ProductDetailsByIdValidator()
     {
-        public ProductDetailsByIdValidator()
-        {
-            RuleFor(x => x.ProductId)
-                .IsId()
-                .WithMessage("ID needs to be a valid Guid");
-        }
+        RuleFor(x => x.ProductId)
+            .IsId()
+            .WithMessage("ID needs to be a valid Guid");
     }
 }

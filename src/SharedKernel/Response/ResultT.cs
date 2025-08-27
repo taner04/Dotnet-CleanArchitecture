@@ -1,28 +1,39 @@
-﻿namespace SharedKernel.Response
+﻿namespace SharedKernel.Response;
+
+public sealed class ResultT<TValue> : Result
 {
-    public sealed class ResultT<TValue> : Result
+    private readonly TValue? _value;
+
+    private ResultT(TValue value) : base()
     {
-        private readonly TValue? _value;
+        _value = value;
+    }
 
-        private ResultT(TValue value) : base()
-        {
-            _value = value;
-        }
+    private ResultT(Error error) : base(error)
+    {
+        _value = default;
+    }
 
-        private ResultT(Error error) : base(error)
-        {
-            _value = default;
-        }
+    public TValue Value =>
+        IsSuccess ? _value! : throw new InvalidOperationException("Value can not be accessed when IsSuccess is false");
 
-        public TValue Value =>
-            IsSuccess ? _value! : throw new InvalidOperationException("Value can not be accessed when IsSuccess is false");
+    public static implicit operator ResultT<TValue>(Error error)
+    {
+        return new ResultT<TValue>(error);
+    }
 
-        public static implicit operator ResultT<TValue>(Error error) => new(error);
+    public static implicit operator ResultT<TValue>(TValue value)
+    {
+        return new ResultT<TValue>(value);
+    }
 
-        public static implicit operator ResultT<TValue>(TValue value) => new(value);
+    public static ResultT<TValue> Success(TValue value)
+    {
+        return new ResultT<TValue>(value);
+    }
 
-        public static ResultT<TValue> Success(TValue value) => new(value);
-
-        public static new ResultT<TValue> Failure(Error error) => new(error);
+    public new static ResultT<TValue> Failure(Error error)
+    {
+        return new ResultT<TValue>(error);
     }
 }

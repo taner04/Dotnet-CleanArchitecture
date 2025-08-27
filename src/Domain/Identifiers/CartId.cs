@@ -9,4 +9,4 @@ public readonly partial struct CartId
     {
         return cartId == Guid.Empty ? Validation.Invalid("The CartId cannot be an empty GUID.") : Validation.Ok;
     }
-} 
+}

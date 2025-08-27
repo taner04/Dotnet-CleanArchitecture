@@ -1,19 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace Infrastructure.Persistence
+namespace Infrastructure.Persistence;
+
+public class DbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 {
-    public class DbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    public ApplicationDbContext CreateDbContext(string[] args)
     {
-        public ApplicationDbContext CreateDbContext(string[] args)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+        var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
-            optionsBuilder.EnableDetailedErrors();
-            optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseNpgsql("Host=localhost;Database=eshop;Username=postgres;");
+        optionsBuilder.EnableDetailedErrors();
+        optionsBuilder.EnableSensitiveDataLogging();
+        optionsBuilder.UseNpgsql("Host=localhost;Database=eshop;Username=postgres;");
 
-            return new ApplicationDbContext(optionsBuilder.Options);
-        }
+        return new ApplicationDbContext(optionsBuilder.Options);
     }
 }
