@@ -14,6 +14,7 @@ public class ServiceInjection(Type @interface, ScopeType scope) : Attribute
     /// Gets the interface type to inject.
     /// </summary>
     public Type Interface => @interface;
+
     /// <summary>
     /// Gets the scope of the service.
     /// </summary>

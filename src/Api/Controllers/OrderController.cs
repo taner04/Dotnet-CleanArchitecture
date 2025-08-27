@@ -1,39 +1,42 @@
-﻿using Application.Dtos.Order;
+﻿using Application.CQRS.Order.CancelOrder;
+using Application.CQRS.Order.CreateOrder;
+using Application.CQRS.Order.GetOrders;
+using Application.Dtos.Order;
+using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers
+namespace Api.Controllers;
+
+[Authorize]
+[Route("api/orders")]
+public class OrderController : ControllerBase
 {
-    [Authorize]
-    [Route("api/orders")]
-    public class OrderController : ControllerBase
+    private readonly IMediator _mediator;
+
+    public OrderController(IMediator mediator)
     {
-        private readonly IOrderService _orderService;
+        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+    }
 
-        public OrderController(IOrderService orderService)
-        {
-            _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
-        }
+    [HttpPost("user")]
+    public async Task<IActionResult> GetOrdersByUserAsync([FromBody] GetOrdersQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return MapResponse(result);
+    }
 
-        [HttpPost("user")]
-        public async Task<IActionResult> GetOrdersByUserAsync([FromBody] OrderByUserDto orderByUserDto)
-        {
-            var result = await _orderService.GetOrdersByUserAsync(orderByUserDto);
-            return MapResponse(result);
-        }
+    [HttpPost("user/new-order")]
+    public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return MapResponse(result);
+    }
 
-        [HttpPost("user/new-order")]
-        public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderRequest orderCreateDto)
-        {
-            var result = await _orderService.CreateOrderAsync(orderCreateDto);
-            return MapResponse(result);
-        }
-
-        [HttpDelete("user/cancel")]
-        public async Task<IActionResult> CancelOrderAsync([FromBody] CancelOrderRequest orderCancelDto)
-        {
-            var result = await _orderService.CancelOrderAsync(orderCancelDto);
-            return MapResponse(result);
-        }
+    [HttpDelete("user/cancel")]
+    public async Task<IActionResult> CancelOrderAsync([FromBody] CancelOrderCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return MapResponse(result);
     }
 }

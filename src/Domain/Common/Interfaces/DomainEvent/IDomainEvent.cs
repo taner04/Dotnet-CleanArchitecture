@@ -1,6 +1,5 @@
 ﻿using Mediator;
 
-namespace Domain.Common.Interfaces.DomainEvent
-{
-    public interface IDomainEvent : INotification;
-}
+namespace Domain.Common.Interfaces.DomainEvent;
+
+public interface IDomainEvent : INotification;

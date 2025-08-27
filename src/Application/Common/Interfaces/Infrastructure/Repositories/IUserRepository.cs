@@ -1,9 +1,8 @@
 ﻿using Domain.Entities.Users;
 
-namespace Application.Common.Interfaces.Infrastructure.Repositories
+namespace Application.Common.Interfaces.Infrastructure.Repositories;
+
+public interface IUserRepository : IRepository<User, UserId>
 {
-    public interface IUserRepository : IRepository<User, UserId>
-    {
-        Task<User?> GetByEmailAsync(string email);
-    }
+    Task<User?> GetByEmailAsync(string email);
 }

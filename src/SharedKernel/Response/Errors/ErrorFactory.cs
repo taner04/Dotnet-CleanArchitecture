@@ -14,6 +14,7 @@ public static class ErrorFactory
     {
         return new Error(ErrorTitles.NotFound, message, 404);
     }
+
     /// <summary>
     /// Creates a BadRequest error (HTTP 400).
     /// </summary>
@@ -23,6 +24,7 @@ public static class ErrorFactory
     {
         return new Error(ErrorTitles.BadRequest, message, 400);
     }
+
     /// <summary>
     /// Creates an Unauthorized error (HTTP 401).
     /// </summary>
@@ -32,6 +34,7 @@ public static class ErrorFactory
     {
         return new Error(ErrorTitles.Unauthorized, message, 401);
     }
+
     /// <summary>
     /// Creates a Forbidden error (HTTP 403).
     /// </summary>
@@ -41,6 +44,7 @@ public static class ErrorFactory
     {
         return new Error(ErrorTitles.Forbidden, message, 403);
     }
+
     /// <summary>
     /// Creates an InternalServerError error (HTTP 500).
     /// </summary>
@@ -50,6 +54,7 @@ public static class ErrorFactory
     {
         return new Error(ErrorTitles.InternalServerError, message, 500);
     }
+
     /// <summary>
     /// Creates a ValidationError error (HTTP 422) with validation details.
     /// </summary>
@@ -59,6 +64,7 @@ public static class ErrorFactory
     {
         return new Error(ErrorTitles.ValidationError, "Some properties are missing", 422, validationErrors);
     }
+
     /// <summary>
     /// Creates a Conflict error (HTTP 409).
     /// </summary>

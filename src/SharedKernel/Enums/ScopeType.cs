@@ -1,9 +1,8 @@
-﻿namespace SharedKernel.Enums
+﻿namespace SharedKernel.Enums;
+
+public enum ScopeType
 {
-    public enum ScopeType
-    {
-        Singleton,
-        Scoped,
-        Transient
-    }
+    Singleton,
+    Scoped,
+    Transient
 }

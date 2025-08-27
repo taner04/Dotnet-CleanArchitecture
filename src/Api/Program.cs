@@ -8,15 +8,12 @@ using Infrastructure.Persistence.Extensions;
 using Scalar.AspNetCore;
 
 
-if (File.Exists(".env.dev"))
-{
-    Env.Load(".env.dev");
-}
+if (File.Exists(".env.dev")) Env.Load(".env.dev");
 
 var configuration = new ConfigurationBuilder()
-                            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                            .AddEnvironmentVariables()
-                            .Build();
+    .AddJsonFile("appsettings.json", false, true)
+    .AddEnvironmentVariables()
+    .Build();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,7 +49,7 @@ if (app.Environment.IsDevelopment())
     {
         opt.Layout = ScalarLayout.Classic;
         opt.Theme = ScalarTheme.Mars;
-        opt.DefaultHttpClient = new(ScalarTarget.CSharp, ScalarClient.Http11);
+        opt.DefaultHttpClient = new KeyValuePair<ScalarTarget, ScalarClient>(ScalarTarget.CSharp, ScalarClient.Http11);
     });
     app.Migrate();
 }

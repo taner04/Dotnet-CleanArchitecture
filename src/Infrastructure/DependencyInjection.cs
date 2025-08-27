@@ -9,31 +9,27 @@ using Microsoft.Extensions.Hosting;
 using SharedKernel.Extensions;
 using System.Reflection;
 
-namespace Infrastructure
+namespace Infrastructure;
+
+public static class DependencyInjection
 {
-    public static class DependencyInjection
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, WebApplicationBuilder builder)
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, WebApplicationBuilder builder)
+        builder.Services.AddSingleton<ISaveChangesInterceptor, AuditableInterceptor>();
+        builder.Services.AddSingleton<ISaveChangesInterceptor, SoftDeletableInterceptor>();
+        builder.Services.AddScoped<ISaveChangesInterceptor, AggregateRootInterceptor>();
+
+        builder.Services.AddDbContext<ApplicationDbContext>((sp, opt) =>
         {
-            builder.Services.AddSingleton<ISaveChangesInterceptor, AuditableInterceptor>();
-            builder.Services.AddSingleton<ISaveChangesInterceptor, SoftDeletableInterceptor>();
-            builder.Services.AddScoped<ISaveChangesInterceptor, AggregateRootInterceptor>();
+            var interceptors = sp.GetServices<ISaveChangesInterceptor>().ToList();
+            interceptors.ForEach(interceptor => { opt.AddInterceptors(interceptor); });
 
-            builder.Services.AddDbContext<ApplicationDbContext>((sp, opt) =>
-            {
-                var interceptors = sp.GetServices<ISaveChangesInterceptor>().ToList();
-                interceptors.ForEach(interceptor =>
-                {
-                    opt.AddInterceptors(interceptor);
-                });
+            opt.UseNpgsql(builder.Configuration.GetConnectionString("eshop"));
+        });
 
-                opt.UseNpgsql(builder.Configuration.GetConnectionString("eshop"));
-            });
+        builder.EnrichNpgsqlDbContext<ApplicationDbContext>();
 
-            builder.EnrichNpgsqlDbContext<ApplicationDbContext>();
-
-            services.AddServicesFromAssembly(Assembly.GetExecutingAssembly());
-            return services;
-        }
+        services.AddServicesFromAssembly(Assembly.GetExecutingAssembly());
+        return services;
     }
 }
