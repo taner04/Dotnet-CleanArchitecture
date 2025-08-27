@@ -1,10 +1,12 @@
 using Application.Common.Interfaces.Infrastructure.Repositories;
 using Application.CQRS.User.DeleteUser;
 using Mediator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
+[Authorize]
 [Route("api/user")]
 public sealed class UserController : ControllerBase
 {
