@@ -4,20 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repository
 {
-    public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId> 
-        where TEntity : class, IEntity<TId> 
+    public abstract class Repository<TEntity, TId>(ApplicationDbContext dbContext) : IRepository<TEntity, TId>
+        where TEntity : class, IEntity<TId>
         where TId : struct
     {
-        protected DbSet<TEntity> DbSet { get; init; }
-        public DbContext DbContext { get; init; }
-
-        protected Repository(ApplicationDbContext dbContext)
-        {
-            ArgumentNullException.ThrowIfNull(dbContext, nameof(dbContext));
-
-            DbContext = dbContext;
-            DbSet = dbContext.Set<TEntity>();
-        }
+        protected DbSet<TEntity> DbSet => dbContext.Set<TEntity>();
 
         public Task<TEntity?> GetByIdAsync(TId id) => DbSet.FirstOrDefaultAsync(entity => entity.Id.Equals(id));
         public Task<List<TEntity>> GetAllAsync() => DbSet.AsNoTracking().ToListAsync();

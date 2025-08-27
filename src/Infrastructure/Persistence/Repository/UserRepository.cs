@@ -4,10 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repository
 {
-    public sealed class UserRepository : Repository<User, UserId>, IUserRepository
+    public sealed class UserRepository(ApplicationDbContext dbContext)
+        : Repository<User, UserId>(dbContext), IUserRepository
     {
-        public UserRepository(ApplicationDbContext dbContext) : base(dbContext) { }
-
         public Task<User?> GetByEmailAsync(string email) 
             => DbSet.AsNoTracking().FirstOrDefaultAsync(user => user.Email == email);
     }

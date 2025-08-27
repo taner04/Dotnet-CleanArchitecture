@@ -4,12 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repository
 {
-    internal class OrderRepository : Repository<Order, OrderId>, IOrderRepository
+    internal class OrderRepository(ApplicationDbContext dbContext)
+        : Repository<Order, OrderId>(dbContext), IOrderRepository
     {
-        public OrderRepository(ApplicationDbContext dbContext) : base(dbContext)
-        {
-        }
-
         public Task<List<Order>> OrdersByUserAsync(UserId userId)
         {
             return DbSet.Where(order => order.UserId == userId)
