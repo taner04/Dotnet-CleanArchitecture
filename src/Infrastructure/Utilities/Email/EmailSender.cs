@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace Infrastructure.Utilities.Email
 {
-    [ServiceInjection(typeof(IEmailSender), ScopeType.AddTransient)]
+    [ServiceInjection(typeof(IEmailSender), ScopeType.Transient)]
     public class EmailSender : IEmailSender
     {
         //TODO: Maybe implement actual email sending logic using SMTP or any other service.

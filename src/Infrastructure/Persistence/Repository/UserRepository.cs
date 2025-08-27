@@ -1,9 +1,9 @@
-﻿using Domain.Entities.Users;
+﻿using Application.Common.Interfaces.Infrastructure.Repositories;
+using Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repository
 {
-    [ServiceInjection(typeof(IUserRepository), ScopeType.AddTransient)]
     public sealed class UserRepository : Repository<User, UserId>, IUserRepository
     {
         public UserRepository(ApplicationDbContext dbContext) : base(dbContext) { }

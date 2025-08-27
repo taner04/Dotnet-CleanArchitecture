@@ -5,7 +5,7 @@ using SharedKernel.Enums;
 
 namespace Application.Validator
 {
-    [ServiceInjection(typeof(IValidatorFactory), ScopeType.AddTransient)]
+    [ServiceInjection(typeof(IValidatorFactory), ScopeType.Transient)]
     public sealed class ValidatorFactory : IValidatorFactory
     {
         private readonly IServiceProvider _serviceProvider;

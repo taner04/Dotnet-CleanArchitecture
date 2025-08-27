@@ -2,8 +2,8 @@
 {
     public enum ScopeType
     {
-        AddSingleton,
-        AddScoped,
-        AddTransient
+        Singleton,
+        Scoped,
+        Transient
     }
 }

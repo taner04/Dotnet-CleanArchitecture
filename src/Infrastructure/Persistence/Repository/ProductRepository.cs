@@ -1,9 +1,9 @@
-﻿using Domain.Entities.Products;
+﻿using Application.Common.Interfaces.Infrastructure.Repositories;
+using Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repository
 {
-    [ServiceInjection(typeof(IProductRepository), ScopeType.AddTransient)]
     public sealed class ProductRepository : Repository<Product, ProductId>, IProductRepository
     {
         public ProductRepository(ApplicationDbContext dbContext) : base(dbContext) { }

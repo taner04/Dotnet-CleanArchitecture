@@ -9,7 +9,7 @@ namespace Application.Validator.Order
         public OrderByUserValidator()
         {
             RuleFor(x => x.UserId).IsId()
-                                  .WithMessage("ID needs to be a valid Guid");
+                .WithMessage("ID needs to be a valid Guid");
         }
     }
 }

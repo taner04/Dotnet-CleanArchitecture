@@ -1,4 +1,6 @@
-﻿namespace Domain.Common.Interfaces.DomainEvent
+﻿using Mediator;
+
+namespace Domain.Common.Interfaces.DomainEvent
 {
-    public interface IDomainEvent { }
+    public interface IDomainEvent : INotification;
 }

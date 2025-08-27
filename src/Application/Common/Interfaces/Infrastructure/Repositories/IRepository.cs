@@ -1,0 +1,13 @@
+﻿using Domain.Common.Interfaces;
+
+namespace Application.Common.Interfaces.Infrastructure.Repositories
+{
+    public interface IRepository<TEntity, TId> where TEntity : IEntity<TId> where TId : struct
+    {
+        Task<TEntity?> GetByIdAsync(TId id);
+        Task<List<TEntity>> GetAllAsync();
+        void Add(TEntity entity);
+        void Update(TEntity entity);
+        void Delete(TEntity entity);
+    }
+}

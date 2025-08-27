@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Infrastructure.Utilities.Token
 {
-    [ServiceInjection(typeof(ITokenService), ScopeType.AddTransient)]
+    [ServiceInjection(typeof(ITokenService), ScopeType.Transient)]
     public sealed class TokenService : ITokenService
     {
         private readonly IConfiguration _configuration;

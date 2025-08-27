@@ -7,7 +7,7 @@ namespace Domain.Common.Base
         where TId : struct
     {
         private readonly List<IDomainEvent> _domainEvents = [];
-
+        
         public void AddDomainEvent(IDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
 
         public List<IDomainEvent> PopDomainEvents()

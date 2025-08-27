@@ -1,18 +1,19 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Interfaces.Infrastructure;
-using Application.Common.Interfaces.Repositories;
 using Application.Common.Interfaces.Services;
+using Application.DomainEvents.User.Event;
 using Application.Dtos.Jwt;
 using Application.Dtos.User;
 using Application.Extensions;
 using Application.Mapper;
-using Domain.DomainEvents.User;
+using Domain.Entities.Users;
+using Mediator;
 using SharedKernel.Attributes;
 using SharedKernel.Response;
 
 namespace Application.Service
 {
-    [ServiceInjection(typeof(IAuthenticationService), SharedKernel.Enums.ScopeType.AddTransient)]
+    [ServiceInjection(typeof(IAuthenticationService), SharedKernel.Enums.ScopeType.Transient)]
     public sealed class AuthenticationService : IAuthenticationService
     {
         private readonly IUnitOfWork _unitOfWork;

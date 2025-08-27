@@ -1,8 +1,9 @@
-﻿using Domain.Exceptions;
+﻿using Domain.Common.Interfaces;
+using Domain.Exceptions;
 
 namespace Domain.Entities.Users
 {
-    public sealed class User : AggregateRoot<UserId>
+    public sealed class User : AggregateRoot<UserId>, IAuditable, ISoftDeletable
     {
 #pragma warning disable CS8618 
         private User() { } // for EF Core
@@ -60,5 +61,9 @@ namespace Domain.Entities.Users
         public string LastName { get; private set; }
         public string Email { get; private set; }
         public string PasswordHash { get; private set; }
+        
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

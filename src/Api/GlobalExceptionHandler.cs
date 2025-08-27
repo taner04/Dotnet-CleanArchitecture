@@ -26,7 +26,7 @@ namespace Api
                 ProblemDetails = new ProblemDetails
                 {
                     Type = exception.GetType().Name,
-                    Title = "An unexpected error occurred",
+                    Title = "Unexpected error",
                     Detail = "An unexpected error occurred while processing your request.",
                     Status = StatusCodes.Status500InternalServerError,
                     Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}"

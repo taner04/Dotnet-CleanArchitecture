@@ -1,9 +1,9 @@
-﻿using Domain.Entities.Orders;
+﻿using Application.Common.Interfaces.Infrastructure.Repositories;
+using Domain.Entities.Orders;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repository
 {
-    [ServiceInjection(typeof(IOrderRepository), ScopeType.AddTransient)]
     internal class OrderRepository : Repository<Order, OrderId>, IOrderRepository
     {
         public OrderRepository(ApplicationDbContext dbContext) : base(dbContext)

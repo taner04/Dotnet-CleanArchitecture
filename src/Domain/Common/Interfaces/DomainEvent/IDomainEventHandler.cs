@@ -1,12 +1,7 @@
-﻿namespace Domain.Common.Interfaces.DomainEvent
+﻿using Mediator;
+
+namespace Domain.Common.Interfaces.DomainEvent
 {
-    public interface IDomainEventHandler<TEvent> where TEvent : IDomainEvent
-    {
-        /// <summary>
-        /// Handles the specified domain event.
-        /// </summary>
-        /// <param name="domainEvent">The domain event to handle.</param>
-        /// <returns>A task representing the asynchronous operation.</returns>
-        Task HandleAsync(TEvent domainEvent, CancellationToken cancellationToken);
-    }
+    public interface IDomainEventHandler<in TEvent> : INotificationHandler<TEvent>
+        where TEvent : IDomainEvent;
 }

@@ -5,7 +5,7 @@
         protected Result()
         {
             IsSuccess = true;
-            Error = default;
+            Error = null;
         }
 
         protected Result(Error error)

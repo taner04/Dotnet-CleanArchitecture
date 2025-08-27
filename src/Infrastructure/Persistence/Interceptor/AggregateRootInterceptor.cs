@@ -1,5 +1,7 @@
 ﻿using Application.Common.Interfaces.Infrastructure;
 using Domain.Common.Interfaces;
+using Infrastructure.Persistence.Extensions;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -7,11 +9,11 @@ namespace Infrastructure.Persistence.Interceptor
 {
     public sealed class AggregateRootInterceptor : SaveChangesInterceptor
     {
-        private readonly IDomainEventDispatcher _domainEventDispatcher;
+        private readonly IMediator _mediator;
 
-        public AggregateRootInterceptor(IDomainEventDispatcher domainEventDispatcher)
+        public AggregateRootInterceptor(IMediator mediator)
         {
-            _domainEventDispatcher = domainEventDispatcher ?? throw new ArgumentNullException(nameof(domainEventDispatcher));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(
@@ -24,10 +26,10 @@ namespace Infrastructure.Persistence.Interceptor
                 await TriggerDomainEvents(eventData.Context, cancellationToken);
             }
 
-            return result;
+            return await base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
-        private async Task TriggerDomainEvents(DbContext context, CancellationToken cancellationToken)
+        private  async Task TriggerDomainEvents(DbContext context, CancellationToken cancellationToken)
         {
             var aggregateRoots = context.ChangeTracker
                                         .Entries()
@@ -35,11 +37,8 @@ namespace Infrastructure.Persistence.Interceptor
 
             foreach (var entry in aggregateRoots)
             {
-                if (entry.Entity is IAggregateRoot aggregateRoot)
-                {
-                    var domainEvents = aggregateRoot.PopDomainEvents();
-                    await _domainEventDispatcher.DispatchAsync(domainEvents, cancellationToken);
-                }
+                if (entry.Entity is not IAggregateRoot aggregateRoot) continue;
+                _mediator.PublishDomainEvents(aggregateRoot.PopDomainEvents(), cancellationToken);
             }
         }
     }

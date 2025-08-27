@@ -1,5 +1,5 @@
 ﻿using Application.Common.Interfaces;
-using Application.Common.Interfaces.Repositories;
+using Application.Common.Interfaces.Infrastructure;
 using Application.Common.Interfaces.Services;
 using Application.Dtos.Product;
 using Application.Extensions;
@@ -10,7 +10,7 @@ using SharedKernel.Response;
 
 namespace Application.Service
 {
-    [ServiceInjection(typeof(IProductService), ScopeType.AddTransient)]
+    [ServiceInjection(typeof(IProductService), ScopeType.Transient)]
     public sealed class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfWork;

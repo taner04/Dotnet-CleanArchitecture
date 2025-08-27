@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Utilities
 {
-    [ServiceInjection(typeof(IPasswordHasher), ScopeType.AddTransient)]
+    [ServiceInjection(typeof(IPasswordHasher), ScopeType.Transient)]
     public class PasswordHasher : IPasswordHasher
     {
         public string HashPassword(string password) 

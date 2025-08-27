@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using SharedKernel.Extensions;
 using System.Reflection;
+using Domain.Common.Interfaces.DomainEvent;
+using Mediator;
 
 namespace Application
 {
@@ -11,8 +13,15 @@ namespace Application
         {
             var assembly = Assembly.GetExecutingAssembly();
 
-            services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
+            services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true); 
             services.AddServicesFromAssembly(assembly);
+            services.AddMediator(
+                options =>
+                {
+                    options.ServiceLifetime = ServiceLifetime.Scoped;
+                }
+            );
+            
             return services;
         }
     }

@@ -1,15 +1,26 @@
-﻿using Domain.Entities.Orders;
+﻿using Domain.Common.Base;
+using Domain.Entities.Orders;
+using Infrastructure.Persistence.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
 {
-    public sealed class OrderConfiguration : AuditableConfiguration<Order>
+    public sealed class OrderConfiguration : AggregateConfiguration<Order>
     {
+        protected override string TabelName => nameof(Order);
+
         protected override void PostConfigure(EntityTypeBuilder<Order> builder)
         {
-            builder.ToTable("Order");
             builder.HasKey(o => o.Id);
+            
+            builder.Property(e => e.CreatedAt)
+                .IsRequired()
+                .HasColumnType(Postgres.TimestampWithTimeZone);
+            
+            builder.Property(e => e.UpdatedAt)
+                .IsRequired(required: false)
+                .HasColumnType(Postgres.TimestampWithTimeZone);
 
             builder.OwnsMany(o => o.OrderItems, orderItems =>
             {
@@ -33,6 +44,8 @@ namespace Infrastructure.Persistence.Configuration
                     .HasForeignKey(i => i.ProductId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
+            
+            builder.HasQueryFilter(p => p.IsDeleted == false);
         }
     }
 }

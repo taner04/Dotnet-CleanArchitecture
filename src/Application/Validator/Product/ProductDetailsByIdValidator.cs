@@ -8,8 +8,9 @@ namespace Application.Validator.Product
     {
         public ProductDetailsByIdValidator()
         {
-            RuleFor(x => x.ProductId).IsId()
-                                     .WithMessage("ID needs to be a valid Guid");
+            RuleFor(x => x.ProductId)
+                .IsId()
+                .WithMessage("ID needs to be a valid Guid");
         }
     }
 }

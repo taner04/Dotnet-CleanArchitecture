@@ -6,7 +6,7 @@ namespace Domain.ValueObjects
     [ValueObject<string>
         (fromPrimitiveCasting: CastOperator.Implicit, 
          toPrimitiveCasting: CastOperator.Implicit)]
-    public partial class JwtToken : IValueObject 
+    public partial class JwtToken 
     {
         private static Validation Validate(string input)
         {

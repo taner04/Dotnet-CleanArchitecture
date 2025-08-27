@@ -1,8 +1,10 @@
-﻿using Domain.Exceptions;
+﻿using Domain.Common.Interfaces;
+using Domain.Exceptions;
+using SharedKernel.Response;
 
 namespace Domain.Entities.Products
 {
-    public sealed class Product : AggregateRoot<ProductId>
+    public sealed class Product : AggregateRoot<ProductId>, IAuditable, ISoftDeletable
     {
 #pragma warning disable CS8618 
         private Product() { } // for EF Core
@@ -48,15 +50,38 @@ namespace Domain.Entities.Products
             Description = description;
             Price = price;
         }
-
-        public void UpdateQuantity(int amount)
+        
+        public Result TryReduceStock(int amount)
         {
-            if(Quantity + amount < 0)
+            if (amount <= 0)
             {
-                throw new ValueBelowMinimumException("Insufficient stock to update quantity.");
+                return Result.Failure(
+                    ErrorFactory.Conflict("Amount to reduce must be greater than zero.")
+                );
+            }
+
+            if (Quantity < amount)
+            {
+                return Result.Failure(
+                    ErrorFactory.Conflict("Insufficient stock to reduce the requested amount.")
+                );
+            }
+
+            Quantity -= amount;
+            return Result.Success();
+        }
+        
+        public Result TryIncreaseStock(int amount)
+        {
+            if (amount <= 0)
+            {
+                return Result.Failure(
+                    ErrorFactory.Conflict("Amount to increase must be greater than zero.")
+                );
             }
 
             Quantity += amount;
+            return Result.Success();
         }
 
         public bool HasSufficientStock(int amount) => Quantity >= amount;
@@ -65,5 +90,9 @@ namespace Domain.Entities.Products
         public string Description { get; private set; }
         public decimal Price { get; private set; }
         public int Quantity { get; private set; }
+        
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

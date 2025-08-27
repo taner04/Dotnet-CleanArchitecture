@@ -1,6 +1,6 @@
 ﻿using Domain.ValueObjects;
 
-namespace Domain.Entities
+namespace Domain.Entities.Users
 {
     public sealed class Jwt 
     {
@@ -17,7 +17,7 @@ namespace Domain.Entities
             var dateToday = DateTime.UtcNow;
 
             RefreshToken = refreshToken;
-            RefreshTokenExpiration = JwtTokenExpiration.From(dateToday.AddDays(RefreshTokenExpirationDays));
+            RefreshTokenExpiration = dateToday.AddDays(RefreshTokenExpirationDays);
         }
         
         public bool IsRefreshTokenExpired => DateTime.UtcNow >= RefreshTokenExpiration.Value;

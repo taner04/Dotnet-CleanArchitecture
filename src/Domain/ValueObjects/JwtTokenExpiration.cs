@@ -6,7 +6,7 @@ namespace Domain.ValueObjects
     [ValueObject<DateTime>
         (fromPrimitiveCasting: CastOperator.Implicit,
          toPrimitiveCasting: CastOperator.Implicit)]
-    public partial class JwtTokenExpiration : IValueObject 
+    public partial class JwtTokenExpiration  
     {
         private static Validation Validate(DateTime input)
         {

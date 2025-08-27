@@ -27,9 +27,9 @@ builder.AddServiceDefaults();
 
 builder.Services.AddBearerScheme(configuration);
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.Services.AddProblemDetails(confIG =>
+builder.Services.AddProblemDetails(config =>
 {
-    confIG.CustomizeProblemDetails = context =>
+    config.CustomizeProblemDetails = context =>
     {
         context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
     };

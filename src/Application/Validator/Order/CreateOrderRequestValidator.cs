@@ -9,7 +9,7 @@ namespace Application.Validator.Order
         public CreateOrderRequestValidator() 
         {
             RuleFor(order => order.UserId).IsId()
-                                          .WithMessage("ID needs to be a valid Guid");
+                .WithMessage("ID needs to be a valid Guid");
 
             RuleFor(order => order.Products)
                 .NotEmpty()

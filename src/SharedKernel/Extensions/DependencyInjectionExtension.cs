@@ -23,13 +23,13 @@ namespace SharedKernel.Extensions
 
                 switch(service.Scope)
                 {
-                    case ScopeType.AddSingleton:
+                    case ScopeType.Singleton:
                         services.AddSingleton(service.Interface, item);
                         break;
-                    case ScopeType.AddScoped:
+                    case ScopeType.Scoped:
                         services.AddScoped(service.Interface, item);
                         break;
-                    case ScopeType.AddTransient:
+                    case ScopeType.Transient:
                         services.AddTransient(service.Interface, item);
                         break;
                     default:

@@ -8,6 +8,8 @@ namespace Infrastructure.Persistence.Configuration
     [EfCoreConverter<OrderItemId>]
     [EfCoreConverter<ProductId>]
     [EfCoreConverter<UserId>]
+    [EfCoreConverter<CartId>]
+    [EfCoreConverter<CartItemId>]
     [EfCoreConverter<JwtToken>]
     [EfCoreConverter<JwtTokenExpiration>]
     [EfCoreConverter<Money>]

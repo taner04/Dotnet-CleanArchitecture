@@ -1,17 +1,26 @@
 ﻿using Domain.Entities.Users;
+using Infrastructure.Persistence.Configuration.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration
 {
-    public sealed class UserConfiguration : AuditableConfiguration<User>
+    public sealed class UserConfiguration : AggregateConfiguration<User>
     {
+        protected override string TabelName => nameof(User);
+
         protected override void PostConfigure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("User");
-
             builder.HasKey(u => u.Id);
-
+            
+            builder.Property(e => e.CreatedAt)
+                .IsRequired()
+                .HasColumnType(Postgres.TimestampWithTimeZone);
+            
+            builder.Property(e => e.UpdatedAt)
+                .IsRequired(required: false)
+                .HasColumnType(Postgres.TimestampWithTimeZone);
+            
             builder.Property(u => u.Email)
                 .IsRequired();
 
@@ -29,6 +38,8 @@ namespace Infrastructure.Persistence.Configuration
 
             builder.OwnsOne(u => u.Jwt, jwt =>
             {
+                jwt.ToTable("Jwt");
+                
                 jwt.Property(j => j.RefreshToken)
                     .IsRequired()
                     .HasColumnName("RefreshToken")
@@ -39,6 +50,8 @@ namespace Infrastructure.Persistence.Configuration
                     .HasColumnName("RefreshTokenExpiration")
                     .HasColumnType(Postgres.TimestampWithTimeZone);
             });
+            
+            builder.HasQueryFilter(u => u.IsDeleted == false);
         }
     }
 }

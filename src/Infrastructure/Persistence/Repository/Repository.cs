@@ -1,4 +1,5 @@
-﻿using Domain.Common.Interfaces;
+﻿using Application.Common.Interfaces.Infrastructure.Repositories;
+using Domain.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repository
@@ -18,7 +19,7 @@ namespace Infrastructure.Persistence.Repository
             DbSet = dbContext.Set<TEntity>();
         }
 
-        public Task<TEntity?> GetByIdAsync(TId id) => DbSet.AsNoTracking().FirstOrDefaultAsync(entity => entity.Id.Equals(id));
+        public Task<TEntity?> GetByIdAsync(TId id) => DbSet.FirstOrDefaultAsync(entity => entity.Id.Equals(id));
         public Task<List<TEntity>> GetAllAsync() => DbSet.AsNoTracking().ToListAsync();
         public void Add(TEntity entity) => DbSet.Add(entity);
         public void Update(TEntity entity) => DbSet.Update(entity);

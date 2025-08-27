@@ -1,4 +1,6 @@
-﻿using Application.Dtos.User;
+﻿using Application.Common.Interfaces.Infrastructure;
+using Application.Dtos.User;
+using Domain.Common.Interfaces.DomainEvent;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers

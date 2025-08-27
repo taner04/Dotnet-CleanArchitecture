@@ -24,5 +24,15 @@ namespace Application.Mapper
                 product.Quantity
             );
         }
+        
+        public static ProductCartDto ToProductCartDto(this Product product)
+        {
+            return new ProductCartDto(
+                product.Id.Value,
+                product.Name,
+                product.Price,
+                product.Quantity
+            );
+        }
     }
 }

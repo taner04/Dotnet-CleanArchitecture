@@ -1,4 +1,4 @@
-﻿using Application.Validator.Costum;
+﻿using Application.Validator.CostumRules;
 using FluentValidation;
 using FluentValidation.Results;
 

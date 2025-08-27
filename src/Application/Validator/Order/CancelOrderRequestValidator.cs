@@ -9,11 +9,10 @@ namespace Application.Validator.Order
         public CancelOrderRequestValidator()
         {
             RuleFor(x => x.OrderId).IsId()
-                                   .WithMessage("ID needs to be a valid Guid");
+                .WithMessage("ID needs to be a valid Guid");
 
             RuleFor(x => x.UserId).IsId()
-                                  .WithMessage("ID needs to be a valid Guid");
-
+                .WithMessage("ID needs to be a valid Guid");
         }
     }
 }

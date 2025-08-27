@@ -1,10 +1,10 @@
 ﻿using Application.Common.Interfaces;
-using Application.Common.Interfaces.Repositories;
+using Application.Common.Interfaces.Infrastructure;
 using Application.Common.Interfaces.Services;
+using Application.DomainEvents.Order.Event;
 using Application.Dtos.Order;
 using Application.Extensions;
 using Application.Mapper;
-using Domain.DomainEvents.Order;
 using Domain.Entities.Orders;
 using SharedKernel.Attributes;
 using SharedKernel.Enums;
@@ -12,18 +12,16 @@ using SharedKernel.Response;
 
 namespace Application.Service
 {
-    [ServiceInjection(typeof(IOrderService), ScopeType.AddTransient)]
+    [ServiceInjection(typeof(IOrderService), ScopeType.Transient)]
     public sealed class OrderService : IOrderService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserRepository _userRepository;
         private readonly IValidatorFactory _validatorFactory;
 
-        public OrderService(IUnitOfWork unitOfWork, IValidatorFactory validatorFactory, IUserRepository userRepository)
+        public OrderService(IUnitOfWork unitOfWork, IValidatorFactory validatorFactory)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _validatorFactory = validatorFactory ?? throw new ArgumentNullException(nameof(validatorFactory));
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         public async Task<ResultT<List<OrderDto>>> GetOrdersByUserAsync(OrderByUserDto orderByUserDto)
@@ -44,7 +42,7 @@ namespace Application.Service
 
             var userId = orderCreate.UserId;
 
-            var user = await _userRepository.GetByIdAsync(userId);
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
             if (user is null)
             {
                 return Result.Failure(
@@ -53,33 +51,24 @@ namespace Application.Service
             }
 
             var order = Order.TryCreate(Guid.CreateVersion7(), userId);
-            foreach (var product in orderCreate.Products)
+            foreach (var (productId, quantity) in orderCreate.Products)
             {
-                var productId = product.ProductId;
                 var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
                 
                 if (productEntity is null)
                 {
                     return Result.Failure(
-                        ErrorFactory.NotFound($"Product with ID {product.ProductId} not found.")
+                        ErrorFactory.NotFound($"Product with ID {productId} not found.")
                     );
                 }
 
-                if (!productEntity.HasSufficientStock(product.Quantity))
+                var result = productEntity.TryReduceStock(quantity);
+                if (!result.IsSuccess)
                 {
-                    return Result.Failure(
-                        ErrorFactory.Conflict($"Insufficient stock for product with ID {product.ProductId}.")
-                    );
+                    return result;
                 }
 
-                productEntity.UpdateQuantity(-product.Quantity);
-                _unitOfWork.ProductRepository.Update(productEntity);
-
-                order.AddOrderItem(
-                    productId, 
-                    product.Quantity, 
-                    productEntity.Price
-                );
+                order.AddOrderItem(productId, quantity, productEntity.Price);
             }
 
             order.AddDomainEvent(new OrderConfirmationDomainEvent(userId, order));
@@ -115,6 +104,26 @@ namespace Application.Service
                 );
             }
 
+            if (order.Status != OrderStatus.Pending)
+            {
+                return Result.Failure(
+                    ErrorFactory.Conflict("Only pending orders can be cancelled.")
+                );
+            }
+            
+            order.UpdateStatus(OrderStatus.Cancelled);
+            foreach (var orderItem in order.OrderItems)
+            {
+                var existingProduct = await _unitOfWork.ProductRepository.GetByIdAsync(orderItem.ProductId);
+                if(existingProduct == null) continue;
+                
+                var result = existingProduct.TryIncreaseStock(orderItem.Quantity);
+                if (!result.IsSuccess)
+                {
+                    return result; 
+                }
+            }
+            
             _unitOfWork.OrderRepository.Delete(order);
             await _unitOfWork.SaveChangesAsync();
 

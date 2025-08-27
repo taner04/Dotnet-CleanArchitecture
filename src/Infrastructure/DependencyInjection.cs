@@ -16,7 +16,8 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, WebApplicationBuilder builder)
         {
             builder.Services.AddSingleton<ISaveChangesInterceptor, AuditableInterceptor>();
-            builder.Services.AddSingleton<ISaveChangesInterceptor, AggregateRootInterceptor>();
+            builder.Services.AddSingleton<ISaveChangesInterceptor, SoftDeletableInterceptor>();
+            builder.Services.AddScoped<ISaveChangesInterceptor, AggregateRootInterceptor>();
 
             builder.Services.AddDbContext<ApplicationDbContext>((sp, opt) =>
             {

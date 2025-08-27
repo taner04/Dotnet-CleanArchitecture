@@ -22,6 +22,25 @@ namespace Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Entities.Carts.Cart", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cart", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.Orders.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -35,6 +54,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -219,18 +241,56 @@ namespace Infrastructure.Migrations
                     b.ToTable("User", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Carts.Cart", b =>
+                {
+                    b.OwnsMany("Domain.Entities.Carts.CartItem", "CartItems", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("CartId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<bool>("IsDeleted")
+                                .HasColumnType("boolean");
+
+                            b1.Property<Guid>("ProductId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("ProductId");
+
+                            b1.Property<int>("Quantity")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("ProductId");
+
+                            b1.HasIndex("CartId", "ProductId")
+                                .IsUnique();
+
+                            b1.ToTable("CartItems", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("CartId");
+
+                            b1.HasOne("Domain.Entities.Products.Product", "Product")
+                                .WithMany()
+                                .HasForeignKey("ProductId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
+
+                            b1.Navigation("Product");
+                        });
+
+                    b.Navigation("CartItems");
+                });
+
             modelBuilder.Entity("Domain.Entities.Orders.Order", b =>
                 {
                     b.OwnsMany("Domain.Entities.Orders.OrderItem", "OrderItems", b1 =>
                         {
                             b1.Property<Guid>("Id")
                                 .HasColumnType("uuid");
-
-                            b1.Property<DateTime>("CreatedAt")
-                                .HasColumnType("timestamp with time zone");
-
-                            b1.Property<bool>("IsDeleted")
-                                .HasColumnType("boolean");
 
                             b1.Property<Guid>("OrderId")
                                 .HasColumnType("uuid");
@@ -244,9 +304,6 @@ namespace Infrastructure.Migrations
 
                             b1.Property<decimal>("UnitPrice")
                                 .HasColumnType("decimal(18,2)");
-
-                            b1.Property<DateTime?>("UpdatedAt")
-                                .HasColumnType("timestamp with time zone");
 
                             b1.HasKey("Id");
 
@@ -289,7 +346,7 @@ namespace Infrastructure.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("User");
+                            b1.ToTable("Jwt", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
