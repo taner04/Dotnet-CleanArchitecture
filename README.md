@@ -24,31 +24,6 @@ The solution follows the **Clean Architecture** pattern:
 
 ---
 
-## 📂 Project Structure
-
-```
-.
-├── Api
-├── Api.Test
-│
-├── Application
-├── Application.Test
-│
-├── Domain
-├── Domain.Test
-│
-├── eShop.AppHost
-├── eShop.ServiceDefaults
-│
-├── Infrastructure
-├── Infrastructure.Test
-│
-└── SharedKernel
-
-```
-
----
-
 ## 🧪 Used Dependencies
 
 - [**BCrypt**](https://github.com/BcryptNet/bcrypt.net) – Used for hashing and validation of passwords.
