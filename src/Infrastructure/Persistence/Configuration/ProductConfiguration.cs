@@ -5,21 +5,32 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration;
 
+/// <summary>
+/// Entity Framework configuration for the <see cref="Product"/> aggregate.
+/// Defines table name, property mappings, constraints, and query filters.
+/// </summary>
 public sealed class ProductConfiguration : AggregateConfiguration<Product>
 {
-    protected override string TabelName => nameof(Product);
+    /// <summary>
+    /// Gets the table name for the <see cref="Product"/> entity.
+    /// </summary>
+    protected override string TableName => nameof(Product);
 
+    /// <summary>
+    /// Configures entity properties, keys, and query filters for <see cref="Product"/>.
+    /// </summary>
+    /// <param name="builder">The entity type builder for <see cref="Product"/>.</param>
     protected override void PostConfigure(EntityTypeBuilder<Product> builder)
     {
         builder.HasKey(p => p.Id);
 
         builder.Property(e => e.CreatedAt)
             .IsRequired()
-            .HasColumnType(Postgres.TimestampWithTimeZone);
+            .HasColumnType(PostgresTypes.TimestampWithTimeZone);
 
         builder.Property(e => e.UpdatedAt)
             .IsRequired(false)
-            .HasColumnType(Postgres.TimestampWithTimeZone);
+            .HasColumnType(PostgresTypes.TimestampWithTimeZone);
 
         builder.Property(p => p.Name)
             .IsRequired()

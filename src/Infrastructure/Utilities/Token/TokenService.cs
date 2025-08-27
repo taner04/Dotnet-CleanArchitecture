@@ -72,9 +72,7 @@ public sealed class TokenService : ITokenService
             var principal = _tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
 
             var scope = principal.Claims.FirstOrDefault(c => c.Type == "scope")?.Value;
-            if (!string.Equals(scope, "refresh", StringComparison.Ordinal)) return false;
-
-            return true;
+            return string.Equals(scope, "refresh", StringComparison.Ordinal);
         }
         catch (Exception)
         {
@@ -113,9 +111,9 @@ public sealed class TokenService : ITokenService
     private JwtSettings GetJwtSettings()
     {
         return new JwtSettings(
-            _configuration["JwtSettings:SecretKey"] ?? throw new ArgumentNullException("The SecretKey was null"),
-            _configuration["JwtSettings:Issuer"] ?? throw new ArgumentNullException("The Issuer was null"),
-            _configuration["JwtSettings:Audience"] ?? throw new ArgumentNullException("The Audience was null")
+            _configuration["JwtSettings:SecretKey"] ?? throw new ArgumentNullException($"The SecretKey was null"),
+            _configuration["JwtSettings:Issuer"] ?? throw new ArgumentNullException($"The Issuer was null"),
+            _configuration["JwtSettings:Audience"] ?? throw new ArgumentNullException($"The Audience was null")
         );
     }
 

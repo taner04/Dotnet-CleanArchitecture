@@ -5,8 +5,17 @@ using System.Reflection;
 
 namespace SharedKernel.Extensions;
 
+/// <summary>
+/// Provides extension methods for registering services in the dependency injection container.
+/// </summary>
 public static class DependencyInjectionExtension
 {
+    /// <summary>
+    /// Registers services from the specified assembly into the <see cref="IServiceCollection"/> based on the <see cref="ServiceInjectionAttribute"/>.
+    /// </summary>
+    /// <param name="services">The service collection to add services to.</param>
+    /// <param name="assembly">The assembly to scan for service types.</param>
+    /// <returns>The updated <see cref="IServiceCollection"/>.</returns>
     public static IServiceCollection AddServicesFromAssembly(this IServiceCollection services, Assembly assembly)
     {
         var types = assembly.GetTypes()
@@ -19,8 +28,6 @@ public static class DependencyInjectionExtension
         {
             var service = (ServiceInjectionAttribute)item.GetCustomAttributes(typeof(ServiceInjectionAttribute), true)
                 .FirstOrDefault()!;
-
-            if (service is null) continue;
 
             switch (service.Scope)
             {

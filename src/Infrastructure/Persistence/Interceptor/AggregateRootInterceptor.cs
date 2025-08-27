@@ -1,20 +1,13 @@
-﻿using Application.Common.Interfaces.Infrastructure;
-using Domain.Common.Interfaces;
-using Infrastructure.Persistence.Extensions;
+﻿using Domain.Common.Interfaces;
 using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Infrastructure.Persistence.Interceptor;
 
-public sealed class AggregateRootInterceptor : SaveChangesInterceptor
+public sealed class AggregateRootInterceptor(IMediator mediator) : SaveChangesInterceptor
 {
-    private readonly IMediator _mediator;
-
-    public AggregateRootInterceptor(IMediator mediator)
-    {
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-    }
+    private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
     public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(
         DbContextEventData eventData,
@@ -35,7 +28,12 @@ public sealed class AggregateRootInterceptor : SaveChangesInterceptor
         foreach (var entry in aggregateRoots)
         {
             if (entry.Entity is not IAggregateRoot aggregateRoot) continue;
-            _mediator.PublishDomainEvents(aggregateRoot.PopDomainEvents(), cancellationToken);
+            var domainEvents = aggregateRoot.PopDomainEvents();
+
+            foreach (var domainEvent in domainEvents)
+            {
+                await _mediator.Publish(domainEvent, cancellationToken);
+            }
         }
     }
 }

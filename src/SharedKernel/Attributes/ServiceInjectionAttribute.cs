@@ -3,14 +3,8 @@
 namespace SharedKernel.Attributes;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
-public class ServiceInjectionAttribute : Attribute
+public class ServiceInjectionAttribute(Type @interface, ScopeType scope) : Attribute
 {
-    public ServiceInjectionAttribute(Type @interface, ScopeType scope)
-    {
-        Interface = @interface;
-        Scope = scope;
-    }
-
-    public Type Interface { get; set; }
-    public ScopeType Scope { get; set; }
+    public Type Interface => @interface;
+    public ScopeType Scope => scope;
 }

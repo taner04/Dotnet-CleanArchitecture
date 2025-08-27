@@ -10,6 +10,8 @@ using Domain.Entities.Users;
 using Mediator;
 using SharedKernel.Attributes;
 using SharedKernel.Response;
+using SharedKernel.Response.Errors;
+using SharedKernel.Response.Results;
 
 namespace Application.Service;
 

@@ -5,9 +5,9 @@ using Infrastructure.Persistence.Repository;
 namespace Infrastructure.Persistence;
 
 [ServiceInjection(typeof(IUnitOfWork), ScopeType.Transient)]
-public sealed class UnitOfWork : IUnitOfWork
+public sealed class UnitOfWork(ApplicationDbContext dbContext) : IUnitOfWork
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly ApplicationDbContext _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 
     private IUserRepository? _userRepository;
     private IProductRepository? _productRepository;
@@ -15,11 +15,6 @@ public sealed class UnitOfWork : IUnitOfWork
     private ICartRepository? _cartRepository;
 
     private bool _disposedValue;
-
-    public UnitOfWork(ApplicationDbContext dbContext)
-    {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-    }
 
     public IUserRepository UserRepository => _userRepository ??= new UserRepository(_dbContext);
     public IProductRepository ProductRepository => _productRepository ??= new ProductRepository(_dbContext);

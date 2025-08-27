@@ -13,11 +13,10 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 
     protected Repository(ApplicationDbContext dbContext)
     {
-        ArgumentNullException.ThrowIfNull(dbContext, nameof(dbContext));
-
-        DbContext = dbContext;
+        DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         DbSet = dbContext.Set<TEntity>();
     }
+
 
     public Task<TEntity?> GetByIdAsync(TId id)
     {

@@ -15,11 +15,7 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
         services.AddServicesFromAssembly(assembly);
-        services.AddMediator(options =>
-            {
-                options.ServiceLifetime = ServiceLifetime.Scoped; 
-                
-            });
+        services.AddMediator(options => { options.ServiceLifetime = ServiceLifetime.Scoped; });
 
         return services;
     }

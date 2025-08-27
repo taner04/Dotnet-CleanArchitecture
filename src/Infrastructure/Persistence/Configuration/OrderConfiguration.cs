@@ -6,22 +6,34 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configuration;
 
+/// <summary>
+/// Entity Framework configuration for the <see cref="Order"/> aggregate.
+/// Defines table mapping, property configurations, owned entities, and query filters.
+/// </summary>
 public sealed class OrderConfiguration : AggregateConfiguration<Order>
 {
-    protected override string TabelName => nameof(Order);
+    /// <summary>
+    /// Gets the table name for the <see cref="Order"/> entity.
+    /// </summary>
+    protected override string TableName => nameof(Order);
 
+    /// <summary>
+    /// Configures the <see cref="Order"/> entity and its owned <see cref="OrderItem"/> entities.
+    /// </summary>
+    /// <param name="builder">The entity type builder for <see cref="Order"/>.</param>
     protected override void PostConfigure(EntityTypeBuilder<Order> builder)
     {
         builder.HasKey(o => o.Id);
 
         builder.Property(e => e.CreatedAt)
             .IsRequired()
-            .HasColumnType(Postgres.TimestampWithTimeZone);
+            .HasColumnType(PostgresTypes.TimestampWithTimeZone);
 
         builder.Property(e => e.UpdatedAt)
             .IsRequired(false)
-            .HasColumnType(Postgres.TimestampWithTimeZone);
+            .HasColumnType(PostgresTypes.TimestampWithTimeZone);
 
+        // Configure owned collection of OrderItems
         builder.OwnsMany(o => o.OrderItems, orderItems =>
         {
             orderItems.ToTable("OrderItems");
