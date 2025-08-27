@@ -4,12 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repository;
 
-public sealed class CartRepository : Repository<Cart, CartId>, ICartRepository
+public sealed class CartRepository(ApplicationDbContext dbContext)
+    : Repository<Cart, CartId>(dbContext), ICartRepository
 {
-    public CartRepository(ApplicationDbContext dbContext) : base(dbContext)
-    {
-    }
-
     public Task<Cart?> GetCartByUserId(UserId userId)
     {
         return DbSet.Where(c => c.UserId == userId)
