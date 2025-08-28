@@ -28,7 +28,7 @@ builder.Services.AddProblemDetails(config =>
 {
     config.CustomizeProblemDetails = context =>
     {
-        context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
+        context.ProblemDetails.Extensions.TryAdd("traceId", context.HttpContext.TraceIdentifier);
     };
 });
 

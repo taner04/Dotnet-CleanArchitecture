@@ -34,7 +34,6 @@ public sealed class GlobalExceptionHandler(IProblemDetailsService problemDetails
                     Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}",
                     Extensions =
                     {
-                        ["traceId"] = httpContext.TraceIdentifier,
                         ["validationErrors"] = error.ValidationErrors
                     }
                 };
