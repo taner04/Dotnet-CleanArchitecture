@@ -21,7 +21,7 @@ public static class DependencyInjection
                 options.ServiceLifetime = ServiceLifetime.Scoped;
                 options.PipelineBehaviors =
                 [
-                    typeof(ValidationBehavior<,>)
+                    typeof(FluentValidationBehavior<,>)
                 ];
             }
         );
