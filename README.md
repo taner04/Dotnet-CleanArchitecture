@@ -11,15 +11,12 @@ It is also intended to serve as inspiration for others looking to adopt Clean Ar
 
 ## 🏛 Architecture Overview
 
-The solution follows the **Clean Architecture** pattern:
-
-![Architecture Diagram](/png/architecture.png)
-
-- **Domain** – Contains the core business model and rules (entities, value objects, domain events, domain interfaces).
-- **Application** – Contains application services that orchestrate business operations, coordinate domain logic, and handle cross-cutting concerns.
-- **Infrastructure** – Handles persistence, external integrations, and technical concerns. Implements interfaces defined in the domain/application layers.
-- **Api** – Provides HTTP endpoints for clients, mapping requests to application services.
-- **SharedKernel** – Cross-cutting abstractions and utilities shared across projects.
+- **Domain** – Contains the core business model and rules (Entities, Value Objects, Domain Events, Domain Interfaces).
+- **Application** – Coordinates business processes, orchestrates domain logic, and handles cross-cutting concerns.
+- **Persistence** – Responsible for data persistence and access. Implements interfaces from the Domain and Application layers.
+- **Infrastructure** – Handles external integrations and technical concerns (e.g., email, logging, authentication) that are not directly related to data persistence.
+- **Api** – Exposes HTTP endpoints for clients and maps requests to Application services.
+- **SharedKernel** – Common abstractions and utilities shared across multiple projects.
 - **eShop.AppHost / eShop.ServiceDefaults** – Hosting and default configuration for running the application.
 
 ---
