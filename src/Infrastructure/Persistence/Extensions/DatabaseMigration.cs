@@ -12,11 +12,11 @@ public static class DatabaseMigration
 
         var services = scope.ServiceProvider;
         var dbContext = services.GetRequiredService<ApplicationDbContext>();
-
-        if (dbContext.Database.GetPendingMigrations().Any())
-        {
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.Migrate();
-        }
+        
+        var migrations = dbContext.Database.GetPendingMigrations();
+        if (!migrations.Any()) return;
+        
+        dbContext.Database.EnsureDeleted();
+        dbContext.Database.Migrate();
     }
 }

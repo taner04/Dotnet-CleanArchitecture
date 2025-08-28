@@ -35,7 +35,12 @@ public sealed class AggregateRootInterceptor : SaveChangesInterceptor
         foreach (var entry in aggregateRoots)
         {
             if (entry.Entity is not IAggregateRoot aggregateRoot) continue;
-            _mediator.PublishDomainEvents(aggregateRoot.PopDomainEvents(), cancellationToken);
+            
+            var domainEvents = aggregateRoot.PopDomainEvents();
+            foreach (var domainEvent in domainEvents)
+            {
+                await _mediator.Publish(domainEvent, cancellationToken);
+            }
         }
     }
 }
