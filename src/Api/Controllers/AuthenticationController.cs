@@ -1,9 +1,7 @@
-﻿using Application.Common.Interfaces.Infrastructure;
-using Application.CQRS.User.LoginUser;
+﻿using Application.CQRS.User.LoginUser;
 using Application.CQRS.User.RefreshUserToken;
 using Application.CQRS.User.RegisterUser;
 using Application.Dtos.User;
-using Domain.Common.Interfaces.DomainEvent;
 using Mediator;
 using Microsoft.AspNetCore.Mvc;
 

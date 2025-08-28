@@ -1,4 +1,4 @@
-using Domain.Common.Interfaces;
+using Domain.Entities.Base;
 using Domain.Entities.Products;
 using Domain.ValueObjects;
 

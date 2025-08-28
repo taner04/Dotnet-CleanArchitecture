@@ -1,5 +1,4 @@
-﻿using Domain.Common.Interfaces;
-using Vogen;
+﻿using Vogen;
 
 namespace Domain.ValueObjects;
 

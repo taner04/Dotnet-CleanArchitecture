@@ -1,4 +1,3 @@
-using Application.Common.Interfaces.Infrastructure.Repositories;
 using Application.CQRS.User.DeleteUser;
 using Mediator;
 using Microsoft.AspNetCore.Authorization;

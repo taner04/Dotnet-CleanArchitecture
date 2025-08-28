@@ -1,6 +1,6 @@
-﻿using Application.Common.Interfaces.Infrastructure;
+﻿using Application.Abstraction.Utils;
 using Application.DomainEvents.Order.Event;
-using Domain.Common.Interfaces.DomainEvent;
+using Domain.Abstraction.DomainEvent;
 using MimeKit;
 
 namespace Application.DomainEvents.Order.Handler;

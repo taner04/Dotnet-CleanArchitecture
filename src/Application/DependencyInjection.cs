@@ -2,8 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SharedKernel.Extensions;
 using System.Reflection;
-using Application.CQRS.Behaviors;
-using Domain.Common.Interfaces.DomainEvent;
+using Application.Behaviors;
 using Mediator;
 
 namespace Application;
@@ -21,6 +20,7 @@ public static class DependencyInjection
                 options.ServiceLifetime = ServiceLifetime.Scoped;
                 options.PipelineBehaviors =
                 [
+                    typeof(LoggingBehavior<,>),
                     typeof(FluentValidationBehavior<,>)
                 ];
             }

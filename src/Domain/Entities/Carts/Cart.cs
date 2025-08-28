@@ -1,4 +1,4 @@
-using Domain.Common.Interfaces;
+using Domain.Entities.Base;
 using Domain.Entities.Users;
 using Domain.ValueObjects;
 using SharedKernel.Response;

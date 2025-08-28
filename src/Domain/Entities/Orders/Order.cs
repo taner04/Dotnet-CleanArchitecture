@@ -1,4 +1,5 @@
-﻿using Domain.Common.Interfaces;
+﻿using Domain.Abstraction;
+using Domain.Entities.Base;
 using Domain.ValueObjects;
 using SharedKernel.Enums;
 

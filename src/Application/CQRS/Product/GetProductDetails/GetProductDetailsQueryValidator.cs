@@ -1,4 +1,4 @@
-﻿using Application.Extensions;
+﻿using Application.Validator;
 
 namespace Application.CQRS.Product.GetProductDetails;
 

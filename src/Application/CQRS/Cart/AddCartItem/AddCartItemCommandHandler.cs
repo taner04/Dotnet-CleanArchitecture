@@ -1,3 +1,5 @@
+using Application.Abstraction.Utils;
+
 namespace Application.CQRS.Cart.AddCartItem;
 
 public sealed class AddCartItemCommandHandler(IUnitOfWork unitOfWork) : ICommandHandler<AddCartItemCommand, Result>
