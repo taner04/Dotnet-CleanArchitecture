@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Products;
+﻿using Domain.Entities.Base;
+using Domain.Entities.Products;
 using Domain.Exceptions;
 using Domain.ValueObjects;
 

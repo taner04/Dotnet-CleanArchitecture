@@ -1,5 +1,4 @@
-﻿using Application.Extensions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Extensions;
 using SharedKernel.Response;
 

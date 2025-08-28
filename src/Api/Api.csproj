@@ -17,6 +17,7 @@
         <ProjectReference Include="..\Application\Application.csproj"/>
         <ProjectReference Include="..\eShop.ServiceDefaults\eShop.ServiceDefaults.csproj"/>
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
+        <ProjectReference Include="..\Persistence\Persistence.csproj" />
     </ItemGroup>
 
 </Project>

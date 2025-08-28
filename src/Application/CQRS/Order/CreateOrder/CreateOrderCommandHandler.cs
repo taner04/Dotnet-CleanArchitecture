@@ -1,3 +1,4 @@
+using Application.Abstraction.Utils;
 using Application.DomainEvents.Order.Event;
 
 namespace Application.CQRS.Order.CreateOrder;

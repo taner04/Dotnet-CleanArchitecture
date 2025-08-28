@@ -1,4 +1,5 @@
-﻿using Domain.Common.Interfaces;
+﻿using Domain.Abstraction;
+using Domain.Entities.Base;
 using Domain.Exceptions;
 using SharedKernel.Response;
 

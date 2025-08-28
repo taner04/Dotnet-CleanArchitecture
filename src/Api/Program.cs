@@ -1,10 +1,12 @@
-using Api;
+using Api.ExceptionHandler;
 using Api.Extensions;
 using Application;
 using DotNetEnv;
 using eShop.ServiceDefaults;
 using Infrastructure;
-using Infrastructure.Persistence.Extensions;
+using Persistence;
+using Persistence.Data;
+using Persistence.Extensions;
 using Scalar.AspNetCore;
 
 
@@ -16,9 +18,6 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
 
 builder.AddServiceDefaults();
 
@@ -34,6 +33,10 @@ builder.Services.AddProblemDetails(config =>
 
 builder.Services.AddInfrastructure(builder);
 builder.Services.AddApplication();
+builder.Services.AddPersistence(builder.Configuration.GetConnectionString("eshop") 
+                                ?? throw new InvalidOperationException("Connection string 'eshop' not found."));
+
+builder.EnrichNpgsqlDbContext<ApplicationDbContext>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();

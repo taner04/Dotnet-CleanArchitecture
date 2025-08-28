@@ -1,3 +1,4 @@
+using Application.Abstraction.Utils;
 using Application.DomainEvents.User.Event;
 using Application.Mapper;
 using Domain.Entities.Users;

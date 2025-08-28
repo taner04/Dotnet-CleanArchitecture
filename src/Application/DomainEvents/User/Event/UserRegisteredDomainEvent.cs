@@ -1,4 +1,4 @@
-﻿using Domain.Common.Interfaces.DomainEvent;
+﻿using Domain.Abstraction.DomainEvent;
 
 namespace Application.DomainEvents.User.Event;
 
