@@ -11,6 +11,6 @@ var migration = builder.AddProject<Projects.MigrationService>("migration-service
 builder.AddProject<Projects.Api>("api")
     .WithReference(eshopDb)
     .WaitFor(eshopDb)
-    .WaitFor(migration);
+    .WaitForCompletion(migration);
 
 builder.Build().Run();
