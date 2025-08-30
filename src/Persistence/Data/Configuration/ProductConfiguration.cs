@@ -1,26 +1,17 @@
 ﻿using Domain.Entities.Products;
+using Domain.Identifiers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.Data.Configuration.Base;
 
 namespace Persistence.Data.Configuration;
 
-public sealed class ProductConfiguration : AggregateConfiguration<Product>
+public sealed class ProductConfiguration : EntityConfiguration<Product, ProductId>
 {
     protected override string TabelName => nameof(Product);
 
     protected override void PostConfigure(EntityTypeBuilder<Product> builder)
     {
-        builder.HasKey(p => p.Id);
-
-        builder.Property(e => e.CreatedAt)
-            .IsRequired()
-            .HasColumnType(Postgres.TimestampWithTimeZone);
-
-        builder.Property(e => e.UpdatedAt)
-            .IsRequired(false)
-            .HasColumnType(Postgres.TimestampWithTimeZone);
-
         builder.Property(p => p.Name)
             .IsRequired()
             .HasMaxLength(200);

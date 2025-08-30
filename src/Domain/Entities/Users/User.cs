@@ -1,32 +1,43 @@
 ﻿using Domain.Abstraction;
 using Domain.Entities.Base;
 using Domain.Exceptions;
+using Domain.ValueObjects;
 
 namespace Domain.Entities.Users;
 
-public sealed class User : AggregateRoot<UserId>, IAuditable, ISoftDeletable
+public sealed class User : Entity<UserId>, ISoftDeletable
 {
+    public const int AccessTokenExpirationMinutes = 60; 
+    public const int RefreshTokenExpirationDays = 7;  
+
 #pragma warning disable CS8618
-    private User()
-    {
-    } // for EF Core
+    private User() { } // for EFC
 #pragma warning restore CS8618
 
-    private User(UserId userId, string firstName, string lastName, string email, string passwordHash)
+    private User(UserId userId, string firstName, string lastName, string email)
     {
         Id = userId;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
+        RefreshTokenExpiration = DateTime.UtcNow.AddDays(7);
+    }
+
+    public void SetRefreshToken(string refreshToken)
+    {
+        RefreshToken = refreshToken;
+        RefreshTokenExpiration = DateTime.UtcNow.AddDays(RefreshTokenExpirationDays);
+    }
+    
+    public void SetPasswordHash(string passwordHash)
+    {
+        if (string.IsNullOrWhiteSpace(passwordHash))
+            throw new ArgumentException("Password hash cannot be empty.", nameof(passwordHash));
+
         PasswordHash = passwordHash;
     }
 
-    public void SetJwt(Jwt jwt)
-    {
-        Jwt = jwt ?? throw new ArgumentNullException(nameof(jwt));
-    }
-
-    public static User TryCreate(UserId userId, string firstName, string lastName, string email, string passwordHash)
+    public static User TryCreate(UserId userId, string firstName, string lastName, string email)
     {
         if (userId == Guid.Empty) throw new InvalidIdException();
 
@@ -36,25 +47,19 @@ public sealed class User : AggregateRoot<UserId>, IAuditable, ISoftDeletable
         if (string.IsNullOrWhiteSpace(lastName))
             throw new ArgumentException("Last name cannot be empty.", nameof(lastName));
 
-        if (string.IsNullOrWhiteSpace(email)) throw new ArgumentException("Email cannot be empty.", nameof(email));
+        if (string.IsNullOrWhiteSpace(email)) 
+            throw new ArgumentException("Email cannot be empty.", nameof(email));
 
-        if (string.IsNullOrWhiteSpace(passwordHash))
-            throw new ArgumentException("Password hash cannot be empty.", nameof(passwordHash));
-
-        return new User(userId, firstName, lastName, email, passwordHash);
+        return new User(userId, firstName, lastName, email);
     }
 
-    public bool HasValidRefreshToken => !Jwt.IsRefreshTokenExpired;
-
-    public Jwt Jwt { get; private set; } =
-        null!; // This will be set by the repository or service layer after fetching the user details.
+    public bool HasValidRefreshToken => RefreshTokenExpiration > DateTime.UtcNow;
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public string Email { get; private set; }
-    public string PasswordHash { get; private set; }
-
-    public DateTime CreatedAt { get; set; }
-    public DateTime? UpdatedAt { get; set; }
+    public string PasswordHash { get; private set; } = null!;
+    public JwtToken RefreshToken { get; private set; } = null!;
+    public JwtTokenExpiration RefreshTokenExpiration { get; private set; }
     public bool IsDeleted { get; set; }
 }

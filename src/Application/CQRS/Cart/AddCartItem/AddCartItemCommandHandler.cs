@@ -11,7 +11,7 @@ public sealed class AddCartItemCommandHandler(IUnitOfWork unitOfWork) : ICommand
         var cart = await _unitOfWork.CartRepository.GetCartByUserId(command.UserId);
         if (cart == null)
         {
-            cart = Domain.Entities.Carts.Cart.TryCreate(Guid.CreateVersion7(), command.UserId);
+            cart = Domain.Entities.Carts.Cart.TryCreate(command.UserId);
             _unitOfWork.CartRepository.Add(cart);
         }
 

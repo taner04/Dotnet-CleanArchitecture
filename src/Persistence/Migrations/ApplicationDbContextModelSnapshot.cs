@@ -4,12 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Persistence;
 using Persistence.Data;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -234,6 +233,13 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("RefreshTokenExpiration")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -252,8 +258,8 @@ namespace Infrastructure.Migrations
                             b1.Property<Guid>("CartId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<bool>("IsDeleted")
-                                .HasColumnType("boolean");
+                            b1.Property<DateTime>("CreatedAt")
+                                .HasColumnType("timestamp with time zone");
 
                             b1.Property<Guid>("ProductId")
                                 .HasColumnType("uuid")
@@ -261,6 +267,9 @@ namespace Infrastructure.Migrations
 
                             b1.Property<int>("Quantity")
                                 .HasColumnType("integer");
+
+                            b1.Property<DateTime?>("UpdatedAt")
+                                .HasColumnType("timestamp with time zone");
 
                             b1.HasKey("Id");
 
@@ -293,6 +302,9 @@ namespace Infrastructure.Migrations
                             b1.Property<Guid>("Id")
                                 .HasColumnType("uuid");
 
+                            b1.Property<DateTime>("CreatedAt")
+                                .HasColumnType("timestamp with time zone");
+
                             b1.Property<Guid>("OrderId")
                                 .HasColumnType("uuid");
 
@@ -305,6 +317,9 @@ namespace Infrastructure.Migrations
 
                             b1.Property<decimal>("UnitPrice")
                                 .HasColumnType("decimal(18,2)");
+
+                            b1.Property<DateTime?>("UpdatedAt")
+                                .HasColumnType("timestamp with time zone");
 
                             b1.HasKey("Id");
 
@@ -327,34 +342,6 @@ namespace Infrastructure.Migrations
                         });
 
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Users.User", b =>
-                {
-                    b.OwnsOne("Domain.Entities.Users.Jwt", "Jwt", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("RefreshToken")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("RefreshToken");
-
-                            b1.Property<DateTime>("RefreshTokenExpiration")
-                                .HasColumnType("timestamp with time zone")
-                                .HasColumnName("RefreshTokenExpiration");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Jwt", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.Navigation("Jwt")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

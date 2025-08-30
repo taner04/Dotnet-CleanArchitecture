@@ -4,8 +4,13 @@ var db = builder.AddPostgres("db").WithPgAdmin();
 
 var eshopDb = db.AddDatabase("eshop");
 
-builder.AddProject<Projects.Api>("api")
+var migration = builder.AddProject<Projects.MigrationService>("migration-service")
     .WithReference(eshopDb)
     .WaitFor(eshopDb);
+
+builder.AddProject<Projects.Api>("api")
+    .WithReference(eshopDb)
+    .WaitFor(eshopDb)
+    .WaitFor(migration);
 
 builder.Build().Run();

@@ -1,26 +1,17 @@
 ﻿using Domain.Entities.Orders;
+using Domain.Identifiers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.Data.Configuration.Base;
 
 namespace Persistence.Data.Configuration;
 
-public sealed class OrderConfiguration : AggregateConfiguration<Order>
+public sealed class OrderConfiguration : EntityConfiguration<Order, OrderId>
 {
     protected override string TabelName => nameof(Order);
 
     protected override void PostConfigure(EntityTypeBuilder<Order> builder)
     {
-        builder.HasKey(o => o.Id);
-
-        builder.Property(e => e.CreatedAt)
-            .IsRequired()
-            .HasColumnType(Postgres.TimestampWithTimeZone);
-
-        builder.Property(e => e.UpdatedAt)
-            .IsRequired(false)
-            .HasColumnType(Postgres.TimestampWithTimeZone);
-
         builder.OwnsMany(o => o.OrderItems, orderItems =>
         {
             orderItems.ToTable("OrderItems");

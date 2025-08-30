@@ -6,7 +6,6 @@ using eShop.ServiceDefaults;
 using Infrastructure;
 using Persistence;
 using Persistence.Data;
-using Persistence.Extensions;
 using Scalar.AspNetCore;
 
 
@@ -54,7 +53,6 @@ if (app.Environment.IsDevelopment())
         opt.Theme = ScalarTheme.Mars;
         opt.DefaultHttpClient = new KeyValuePair<ScalarTarget, ScalarClient>(ScalarTarget.CSharp, ScalarClient.Http11);
     });
-    app.Migrate();
 }
 
 app.UseHttpsRedirection();

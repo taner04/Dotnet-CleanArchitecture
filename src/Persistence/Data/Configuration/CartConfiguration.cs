@@ -1,19 +1,17 @@
 using Domain.Entities.Carts;
+using Domain.Identifiers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.Data.Configuration.Base;
 
 namespace Persistence.Data.Configuration;
 
-public sealed class CartConfiguration : AggregateConfiguration<Cart>
+public sealed class CartConfiguration : EntityConfiguration<Cart, CartId>
 {
     protected override string TabelName => nameof(Cart);
 
     protected override void PostConfigure(EntityTypeBuilder<Cart> builder)
     {
-        builder.HasKey(c => c.Id);
-
-
         builder.OwnsMany(c => c.CartItems, cartItems =>
         {
             cartItems.ToTable("CartItems");

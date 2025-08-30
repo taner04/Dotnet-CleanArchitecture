@@ -28,11 +28,11 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
             return Result.Failure(
                 ErrorFactory.Conflict("The email is already registered")
             );
+        
+        var newUser = command.ToUser();
 
-        var newUser = command.ToUser(_passwordHasher.HashPassword(command.Password));
-
-        var refreshToken = _tokenService.GenerateRefreshToken(newUser);
-        newUser.SetJwt(new Jwt(refreshToken));
+        newUser.SetRefreshToken(_tokenService.GenerateRefreshToken(newUser));
+        newUser.SetPasswordHash(_passwordHasher.HashPassword(command.Password));
 
         newUser.AddDomainEvent(new UserRegisteredDomainEvent(newUser.FirstName, newUser.LastName, newUser.Email));
 

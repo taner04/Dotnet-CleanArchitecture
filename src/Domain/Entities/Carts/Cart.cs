@@ -10,23 +10,16 @@ public sealed class Cart : AggregateRoot<CartId>
     private readonly List<CartItem> _cartItems = [];
 
 #pragma warning disable CS8618
-    private Cart()
-    {
-    } // for EF Core
+    private Cart() { } // for EFC
 #pragma warning restore CS8618
 
-    private Cart(CartId id, UserId userId)
+    private Cart(UserId userId)
     {
-        Id = id;
+        Id = Guid.CreateVersion7();
         UserId = userId;
     }
 
-    public static Cart TryCreate(CartId id, UserId userId)
-    {
-        if (id == Guid.Empty || userId == Guid.Empty) throw new InvalidIdException();
-
-        return new Cart(id, userId);
-    }
+    public static Cart TryCreate(UserId userId) => new(userId);
 
     public void AddCartItem(ProductId productId, int quantity)
     {
@@ -36,7 +29,7 @@ public sealed class Cart : AggregateRoot<CartId>
         if (existingCartItem != null)
             existingCartItem.IncrementQuantity(quantity);
         else
-            _cartItems.Add(CartItem.TryCreate(Guid.CreateVersion7(), Id, productId, quantity));
+            _cartItems.Add(CartItem.TryCreate(Id, productId, quantity));
     }
 
     public Result TryRemoveCartItem(CartItemId cartItemId)
@@ -53,7 +46,4 @@ public sealed class Cart : AggregateRoot<CartId>
 
     public UserId UserId { get; set; }
     public IReadOnlyCollection<CartItem> CartItems => _cartItems.AsReadOnly();
-
-    public DateTime CreatedAt { get; set; }
-    public DateTime? UpdatedAt { get; set; }
 }

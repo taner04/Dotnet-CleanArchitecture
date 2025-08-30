@@ -7,7 +7,6 @@ namespace Application.CQRS.User.LoginUser;
 
 public class LoginUserQueryHandler : IQueryHandler<LoginUserQuery, ResultT<AuthResponse>>
 {
-    private readonly IValidator<LoginUserQuery> _validator;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPasswordHasher _passwordHasher;
     private readonly ITokenService _tokenService;
@@ -35,7 +34,7 @@ public class LoginUserQueryHandler : IQueryHandler<LoginUserQuery, ResultT<AuthR
         if (!existingUser.HasValidRefreshToken)
         {
             var refreshToken = _tokenService.GenerateRefreshToken(existingUser);
-            existingUser.SetJwt(new Jwt(refreshToken));
+            existingUser.SetRefreshToken(refreshToken);
 
             _unitOfWork.UserRepository.Update(existingUser);
             await _unitOfWork.SaveChangesAsync(cancellationToken);

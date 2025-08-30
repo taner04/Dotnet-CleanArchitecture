@@ -34,7 +34,7 @@ public sealed class TokenService : ITokenService
     public string GenerateAccessToken(User user)
     {
         var claims = GetClaims(user, "access");
-        var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddMinutes(Jwt.AccessTokenExpirationMinutes));
+        var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddMinutes(User.AccessTokenExpirationMinutes));
 
         return _tokenHandler.WriteToken(jwt);
     }
@@ -42,7 +42,7 @@ public sealed class TokenService : ITokenService
     public string GenerateRefreshToken(User user)
     {
         var claims = GetClaims(user, "refresh");
-        var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddDays(Jwt.RefreshTokenExpirationDays));
+        var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddDays(User.RefreshTokenExpirationDays));
 
         return _tokenHandler.WriteToken(jwt);
     }
@@ -72,9 +72,7 @@ public sealed class TokenService : ITokenService
             var principal = _tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
 
             var scope = principal.Claims.FirstOrDefault(c => c.Type == "scope")?.Value;
-            if (!string.Equals(scope, "refresh", StringComparison.Ordinal)) return false;
-
-            return true;
+            return string.Equals(scope, "refresh", StringComparison.Ordinal);
         }
         catch (Exception)
         {

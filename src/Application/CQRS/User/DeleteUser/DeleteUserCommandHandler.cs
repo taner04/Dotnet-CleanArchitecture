@@ -16,13 +16,19 @@ public sealed class DeleteUserCommandHandler(IUnitOfWork unitOfWork) : ICommandH
             );
 
         var orders = await _unitOfWork.OrderRepository.OrdersByUserAsync(command.UserId);
-        if (orders.Count > 0 && orders.Any(o => o.Status == OrderStatus.Pending))
+        if (orders.Any(o => o.Status == OrderStatus.Pending))
             return Result.Failure(
                 ErrorFactory.Conflict("User cannot be deleted while having pending orders.")
             );
-
-        _unitOfWork.OrderRepository.DeleteRange(orders);
-        _unitOfWork.CartRepository.Delete(await _unitOfWork.CartRepository.GetCartByUserId(command.UserId));
+        
+        _unitOfWork.OrderRepository.DeleteRange(orders);   
+        
+        var cart = await _unitOfWork.CartRepository.GetCartByUserId(command.UserId);
+        if (cart != null)
+        {
+            _unitOfWork.CartRepository.Delete(cart);   
+        }
+        
         _unitOfWork.UserRepository.Delete(user);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
