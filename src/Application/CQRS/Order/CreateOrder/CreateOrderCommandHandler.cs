@@ -15,7 +15,7 @@ public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork) : ICommand
                 ErrorFactory.NotFound($"User with ID {command.UserId} not found.")
             );
 
-        var order = Domain.Entities.Orders.Order.TryCreate(Guid.CreateVersion7(), command.UserId);
+        var order = Domain.Entities.Orders.Order.TryCreate(command.UserId);
         foreach (var (productId, quantity) in command.Products)
         {
             var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(productId);

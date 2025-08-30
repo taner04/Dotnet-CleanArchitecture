@@ -14,18 +14,17 @@ public static class UserMapper
             user.LastName,
             user.Email,
             accessToken,
-            user.Jwt.RefreshToken.Value
+            user.RefreshToken.Value
         );
     }
 
-    public static User ToUser(this RegisterUserCommand request, string hashedPwd)
+    public static User ToUser(this RegisterUserCommand request)
     {
         return User.TryCreate(
             UserId.From(Guid.CreateVersion7()),
             request.FirstName,
             request.LastName,
-            request.Email,
-            hashedPwd
+            request.Email
         );
     }
 }

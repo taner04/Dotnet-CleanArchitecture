@@ -8,30 +8,26 @@ namespace Domain.Entities.Orders;
 public sealed class OrderItem : Entity<OrderItemId>
 {
 #pragma warning disable CS8618
-    private OrderItem()
-    {
-    } // for EF
+    private OrderItem() { } // for EFC
 #pragma warning restore CS8618
 
-    private OrderItem(OrderItemId id, OrderId orderId, ProductId productId, int quantity, Money unitPrice)
+    private OrderItem(OrderId orderId, ProductId productId, int quantity, Money unitPrice)
     {
-        Id = id;
+        Id = Guid.CreateVersion7();
         OrderId = orderId;
         ProductId = productId;
         Quantity = quantity;
         UnitPrice = unitPrice;
     }
 
-    public static OrderItem TryCreate(OrderItemId id, OrderId orderId, ProductId productId, int quantity,
+    public static OrderItem TryCreate(OrderId orderId, ProductId productId, int quantity,
         Money unitPrice)
     {
-        if (id == Guid.Empty || productId == Guid.Empty || orderId == Guid.Empty) throw new InvalidIdException();
-
         if (quantity <= 0) throw new ValueBelowMinimumException("Quantity must be greater than zero.");
 
         if (unitPrice.Value <= 0) throw new ValueBelowMinimumException("Unit price must be greater than zero.");
 
-        return new OrderItem(id, orderId, productId, quantity, unitPrice);
+        return new OrderItem(orderId, productId, quantity, unitPrice);
     }
 
     public OrderId OrderId { get; private set; }

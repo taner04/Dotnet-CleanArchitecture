@@ -7,26 +7,22 @@ namespace Domain.Entities.Carts;
 public sealed class CartItem : Entity<CartItemId>
 {
 #pragma warning disable CS8618
-    private CartItem()
-    {
-    } // for EF Core
+    private CartItem() { } // for EFC
 #pragma warning restore CS8618
 
-    private CartItem(CartItemId id, CartId cartId, ProductId productId, int quantity)
+    private CartItem(CartId cartId, ProductId productId, int quantity)
     {
-        Id = id;
+        Id = Guid.CreateVersion7();
         CartId = cartId;
         ProductId = productId;
         Quantity = quantity;
     }
 
-    public static CartItem TryCreate(CartItemId id, CartId cartId, ProductId productId, int quantity)
+    public static CartItem TryCreate(CartId cartId, ProductId productId, int quantity)
     {
-        if (id == Guid.Empty || cartId == Guid.Empty || productId == Guid.Empty) throw new InvalidIdException();
-
         if (quantity <= 0) throw new ValueBelowMinimumException("Quantity must be greater than zero.");
 
-        return new CartItem(id, cartId, productId, quantity);
+        return new CartItem(cartId, productId, quantity);
     }
 
     public void IncrementQuantity(int amount)
@@ -40,6 +36,4 @@ public sealed class CartItem : Entity<CartItemId>
     public ProductId ProductId { get; private set; }
     public int Quantity { get; private set; }
     public Product Product { get; set; } = null!; // Navigation property
-
-    public bool IsDeleted { get; set; } = false;
 }

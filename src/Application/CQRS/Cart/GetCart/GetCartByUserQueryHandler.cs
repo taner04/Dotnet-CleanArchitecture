@@ -14,7 +14,7 @@ public sealed class GetCartByUserQueryHandler(IUnitOfWork unitOfWork)
         var cart = await _unitOfWork.CartRepository.GetCartByUserId(query.UserId);
         if (cart != null) return ResultT<CartDto>.Success(cart.ToDto());
 
-        cart = Domain.Entities.Carts.Cart.TryCreate(Guid.CreateVersion7(), query.UserId);
+        cart = Domain.Entities.Carts.Cart.TryCreate(query.UserId);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return ResultT<CartDto>.Success(cart.ToDto());
