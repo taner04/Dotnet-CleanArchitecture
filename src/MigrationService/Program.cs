@@ -1,5 +1,5 @@
 using MigrationService;
-using eShop.ServiceDefaults;
+using ServiceDefaults;
 using Persistence.Data;
 
 var builder = Host.CreateApplicationBuilder(args);

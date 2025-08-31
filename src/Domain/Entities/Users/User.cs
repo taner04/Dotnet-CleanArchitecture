@@ -5,7 +5,7 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities.Users;
 
-public sealed class User : Entity<UserId>, ISoftDeletable
+public sealed class User : AggregateRoot<UserId>, ISoftDeletable
 {
     public const int AccessTokenExpirationMinutes = 60; 
     public const int RefreshTokenExpirationDays = 7;  

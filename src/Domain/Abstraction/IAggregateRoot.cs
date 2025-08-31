@@ -5,5 +5,5 @@ namespace Domain.Abstraction;
 public interface IAggregateRoot
 {
     void AddDomainEvent(IDomainEvent domainEvent);
-    List<IDomainEvent> PopDomainEvents();
+    IReadOnlyCollection<IDomainEvent> PopDomainEvents();
 }

@@ -2,7 +2,7 @@ using Api.ExceptionHandler;
 using Api.Extensions;
 using Application;
 using DotNetEnv;
-using eShop.ServiceDefaults;
+using ServiceDefaults;
 using Infrastructure;
 using Persistence;
 using Persistence.Data;
