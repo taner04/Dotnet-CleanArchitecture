@@ -5,7 +5,7 @@ PORT=17266
 URL="https://localhost:${PORT}"
 
 SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
-PROJECT_PATH="${SCRIPT_DIR}/src/eShop.AppHost"
+PROJECT_PATH="${SCRIPT_DIR}/src/AppHost"
 
 missing_deps=""
 
@@ -15,9 +15,13 @@ add_missing() {
 
 show_missing_table() {
   if command -v tput >/dev/null 2>&1; then
-    C_WHITE="$(tput setaf 7)"; C_BLUE="$(tput setaf 4)"; C_RESET="$(tput sgr0)"
+    C_WHITE="$(tput setaf 7)"
+    C_BLUE="$(tput setaf 4)"
+    C_RESET="$(tput sgr0)"
   else
-    C_WHITE=""; C_BLUE=""; C_RESET=""
+    C_WHITE=""
+    C_BLUE=""
+    C_RESET=""
   fi
 
   printf "\n"
@@ -56,7 +60,7 @@ start_docker_if_possible() {
     fi
   fi
 
-  deadline=$(( $(date +%s) + 60 ))
+  deadline=$(($(date +%s) + 60))
   while [ "$(date +%s)" -lt "$deadline" ]; do
     if docker_running; then
       return 0
@@ -68,17 +72,20 @@ start_docker_if_possible() {
 }
 
 wait_for_port_and_open() {
-  port="$1"; url="$2"
+  port="$1"
+  url="$2"
 
   open_cmd=""
-  if have_cmd open; then open_cmd="open"
-  elif have_cmd xdg-open; then open_cmd="xdg-open"
+  if have_cmd open; then
+    open_cmd="open"
+  elif have_cmd xdg-open; then
+    open_cmd="xdg-open"
   fi
 
-  deadline=$(( $(date +%s) + 60 ))
+  deadline=$(($(date +%s) + 60))
   while [ "$(date +%s)" -lt "$deadline" ]; do
     if (command -v nc >/dev/null 2>&1 && nc -z localhost "$port" 2>/dev/null) ||
-       (command -v lsof >/dev/null 2>&1 && lsof -iTCP:"$port" -sTCP:LISTEN >/dev/null 2>&1); then
+      (command -v lsof >/dev/null 2>&1 && lsof -iTCP:"$port" -sTCP:LISTEN >/dev/null 2>&1); then
       [ -n "$open_cmd" ] && "$open_cmd" "$url" >/dev/null 2>&1 || true
       break
     fi
