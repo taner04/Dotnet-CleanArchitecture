@@ -71,18 +71,6 @@ Alternatively, run the provided script from the root directory:
 
 ---
 
-## 💡 Future Ideas
-
-Here are some features planned for future implementation:
-
-- **Caching:** Improve performance by adding caching strategies for frequently accessed data.
-- **Paging:** Implement paging support for API endpoints that return collections.
-- **Client:** Implement a client that interacts with the API
-- **Unit-Tests:** Implement tests for each layer
-- **Documentation:** Document the codebase with comments and explanations.
-
----
-
 ## 📝 License
 
 This project is licensed under the [MIT License](/LICENSE)
