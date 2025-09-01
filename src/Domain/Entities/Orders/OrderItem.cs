@@ -2,6 +2,9 @@
 using Domain.Entities.Products;
 using Domain.Exceptions;
 using Domain.ValueObjects;
+using OrderId = Domain.ValueObjects.Identifiers.OrderId;
+using OrderItemId = Domain.ValueObjects.Identifiers.OrderItemId;
+using ProductId = Domain.ValueObjects.Identifiers.ProductId;
 
 namespace Domain.Entities.Orders;
 

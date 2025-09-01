@@ -1,6 +1,7 @@
 ﻿using Application.CQRS.User.RegisterUser;
 using Application.Dtos.User;
 using Domain.Entities.Users;
+using UserId = Domain.ValueObjects.Identifiers.UserId;
 
 namespace Application.Mapper;
 

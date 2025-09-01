@@ -1,8 +1,8 @@
 ﻿using Domain.Entities.Products;
-using Domain.Identifiers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.Data.Configuration.Base;
+using ProductId = Domain.ValueObjects.Identifiers.ProductId;
 
 namespace Persistence.Data.Configuration;
 

@@ -2,6 +2,7 @@
 using Domain.Entities.Base;
 using Domain.Exceptions;
 using SharedKernel.Response;
+using ProductId = Domain.ValueObjects.Identifiers.ProductId;
 
 namespace Domain.Entities.Products;
 

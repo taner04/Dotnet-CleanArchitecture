@@ -1,8 +1,8 @@
 ﻿using Domain.Entities.Users;
-using Domain.Identifiers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.Data.Configuration.Base;
+using UserId = Domain.ValueObjects.Identifiers.UserId;
 
 namespace Persistence.Data.Configuration;
 

@@ -2,6 +2,7 @@
 using Domain.Entities.Base;
 using Domain.Exceptions;
 using Domain.ValueObjects;
+using UserId = Domain.ValueObjects.Identifiers.UserId;
 
 namespace Domain.Entities.Users;
 

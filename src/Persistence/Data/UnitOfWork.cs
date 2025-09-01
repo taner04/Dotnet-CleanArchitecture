@@ -1,6 +1,6 @@
 ﻿using Application.Abstraction.Repositories;
 using Application.Abstraction.Utils;
-using Persistence.Data.Repository;
+using Persistence.Data.Repositories;
 using SharedKernel.Attributes;
 using SharedKernel.Enums;
 

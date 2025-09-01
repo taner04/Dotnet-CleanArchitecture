@@ -1,8 +1,8 @@
 using Domain.Entities.Carts;
-using Domain.Identifiers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.Data.Configuration.Base;
+using CartId = Domain.ValueObjects.Identifiers.CartId;
 
 namespace Persistence.Data.Configuration;
 

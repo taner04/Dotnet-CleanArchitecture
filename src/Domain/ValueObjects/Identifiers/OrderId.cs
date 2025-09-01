@@ -1,4 +1,4 @@
-namespace Domain.Identifiers;
+namespace Domain.ValueObjects.Identifiers;
 
 [ValueObject<Guid>
 (fromPrimitiveCasting: CastOperator.Implicit,

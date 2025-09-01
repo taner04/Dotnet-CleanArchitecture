@@ -2,6 +2,10 @@ using Domain.Entities.Base;
 using Domain.Entities.Users;
 using Domain.ValueObjects;
 using SharedKernel.Response;
+using CartId = Domain.ValueObjects.Identifiers.CartId;
+using CartItemId = Domain.ValueObjects.Identifiers.CartItemId;
+using ProductId = Domain.ValueObjects.Identifiers.ProductId;
+using UserId = Domain.ValueObjects.Identifiers.UserId;
 
 namespace Domain.Entities.Carts;
 

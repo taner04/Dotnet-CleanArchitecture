@@ -2,6 +2,9 @@
 using Domain.Entities.Base;
 using Domain.ValueObjects;
 using SharedKernel.Enums;
+using OrderId = Domain.ValueObjects.Identifiers.OrderId;
+using ProductId = Domain.ValueObjects.Identifiers.ProductId;
+using UserId = Domain.ValueObjects.Identifiers.UserId;
 
 namespace Domain.Entities.Orders;
 

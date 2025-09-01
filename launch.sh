@@ -5,7 +5,7 @@ PORT=17266
 URL="https://localhost:${PORT}"
 
 SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
-PROJECT_PATH="${SCRIPT_DIR}/src/AppHost"
+PROJECT_PATH="${SCRIPT_DIR}/tools/AppHost"
 
 missing_deps=""
 

@@ -1,9 +1,9 @@
 ﻿using Application.Abstraction.Repositories;
 using Domain.Entities.Products;
-using Domain.Identifiers;
+using Domain.ValueObjects.Identifiers;
 using Microsoft.EntityFrameworkCore;
 
-namespace Persistence.Data.Repository;
+namespace Persistence.Data.Repositories;
 
 public sealed class ProductRepository(ApplicationDbContext dbContext)
     : Repository<Product, ProductId>(dbContext), IProductRepository

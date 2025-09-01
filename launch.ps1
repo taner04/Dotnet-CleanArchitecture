@@ -5,7 +5,7 @@
 
 $ErrorActionPreference = 'Stop'
 
-$projectPath = Join-Path $PSScriptRoot 'src/AppHost'
+$projectPath = Join-Path $PSScriptRoot 'tools/AppHost'
 $port = 17266
 $url  = "https://localhost:$port"
 

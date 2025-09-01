@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Products;
+using ProductId = Domain.ValueObjects.Identifiers.ProductId;
 
 namespace Application.Abstraction.Repositories;
 

@@ -2,7 +2,7 @@
 using Domain.Abstraction;
 using Microsoft.EntityFrameworkCore;
 
-namespace Persistence.Data.Repository;
+namespace Persistence.Data.Repositories;
 
 public abstract class Repository<TEntity, TId>(ApplicationDbContext dbContext) : IRepository<TEntity, TId>
     where TEntity : class, IEntity<TId>

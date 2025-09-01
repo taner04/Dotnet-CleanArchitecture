@@ -1,4 +1,6 @@
 ﻿using Domain.Entities.Orders;
+using OrderId = Domain.ValueObjects.Identifiers.OrderId;
+using UserId = Domain.ValueObjects.Identifiers.UserId;
 
 namespace Application.Abstraction.Repositories;
 

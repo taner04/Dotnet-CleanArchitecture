@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Users;
+using UserId = Domain.ValueObjects.Identifiers.UserId;
 
 namespace Application.Abstraction.Repositories;
 

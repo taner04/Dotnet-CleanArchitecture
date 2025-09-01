@@ -1,8 +1,8 @@
 ﻿using Domain.Entities.Orders;
-using Domain.Identifiers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.Data.Configuration.Base;
+using OrderId = Domain.ValueObjects.Identifiers.OrderId;
 
 namespace Persistence.Data.Configuration;
 

@@ -1,6 +1,9 @@
 using Domain.Entities.Base;
 using Domain.Entities.Products;
 using Domain.ValueObjects;
+using CartId = Domain.ValueObjects.Identifiers.CartId;
+using CartItemId = Domain.ValueObjects.Identifiers.CartItemId;
+using ProductId = Domain.ValueObjects.Identifiers.ProductId;
 
 namespace Domain.Entities.Carts;
 

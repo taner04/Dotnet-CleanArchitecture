@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
@@ -137,23 +135,6 @@ namespace Persistence.Migrations
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Product",
-                columns: new[] { "Id", "CreatedAt", "Description", "IsDeleted", "Name", "Price", "Quantity", "UpdatedAt" },
-                values: new object[,]
-                {
-                    { new Guid("0cb16e4a-467c-7dcd-86ff-542d3ca37d8b"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Flagship Android smartphone", false, "Samsung Galaxy S23", 949.00m, 15, null },
-                    { new Guid("125daedf-2ed9-7fc0-be1c-ab4125fc0dbe"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Portable charger 20100mAh", false, "Anker PowerCore 20100", 49.95m, 25, null },
-                    { new Guid("4f2b3e8f-b137-7962-abce-cae1c62489d5"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "27-inch 4K monitor", false, "Dell UltraSharp U2723QE", 679.99m, 8, null },
-                    { new Guid("51336668-7448-7081-b4e8-7ff9c92d6731"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "E-reader with 32GB storage and warm light", false, "Kindle Paperwhite Signature", 189.99m, 14, null },
-                    { new Guid("84fa579c-057b-7bf2-b85d-1aeb218bf2b4"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Handheld gaming console with OLED screen", false, "Nintendo Switch OLED", 349.99m, 18, null },
-                    { new Guid("97449bb7-8e90-72fc-a5af-177f62554331"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Advanced wireless mouse", false, "Logitech MX Master 3S", 99.99m, 20, null },
-                    { new Guid("9d10c1bb-b729-74b9-919e-5996eaa4feab"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Smart speaker with Alexa", false, "Amazon Echo Dot (5th Gen)", 49.99m, 30, null },
-                    { new Guid("bcf74560-1f6c-7962-aa83-8c1cf0e90fef"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Noise-cancelling over-ear headphones", false, "Sony WH-1000XM5", 349.99m, 5, null },
-                    { new Guid("e807f68c-e98c-7348-9b4e-8a24a62f0e15"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lightweight laptop with Apple's M2 chip", false, "Apple MacBook Air M2", 1199.99m, 10, null },
-                    { new Guid("ee1bda8b-ab9d-79ae-972b-5d598e3d4ed1"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Full-frame mirrorless camera", false, "Canon EOS R6", 2499.00m, 12, null }
                 });
 
             migrationBuilder.CreateIndex(
