@@ -7,6 +7,6 @@ public static class CartMapper
 {
     public static CartDto ToDto(this Cart cart)
     {
-        return new CartDto(cart.Id, cart.CartItems.Select(ci => ci.ToDto()).ToList());
+        return new CartDto(cart.Id.Value, cart.CartItems.Select(ci => ci.ToDto()).ToList());
     }
 }

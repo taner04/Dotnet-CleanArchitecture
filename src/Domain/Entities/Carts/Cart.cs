@@ -19,7 +19,7 @@ public sealed class Cart : AggregateRoot<CartId>
 
     private Cart(UserId userId)
     {
-        Id = Guid.CreateVersion7();
+        Id = CartId.New();
         UserId = userId;
     }
 

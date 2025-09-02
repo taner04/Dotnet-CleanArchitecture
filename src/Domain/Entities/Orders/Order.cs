@@ -19,7 +19,7 @@ public sealed class Order : AggregateRoot<OrderId>, ISoftDeletable
 
     private Order(UserId userId, OrderStatus orderStatus)
     {
-        Id = Guid.CreateVersion7();
+        Id = OrderId.New();;
         UserId = userId;
         OrderDate = DateTime.UtcNow;
         Status = orderStatus;

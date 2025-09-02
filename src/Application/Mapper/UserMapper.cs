@@ -22,7 +22,6 @@ public static class UserMapper
     public static User ToUser(this RegisterUserCommand request)
     {
         return User.TryCreate(
-            UserId.From(Guid.CreateVersion7()),
             request.FirstName,
             request.LastName,
             request.Email

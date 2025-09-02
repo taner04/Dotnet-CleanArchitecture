@@ -10,7 +10,7 @@ public static class ProductMapper
         return new ProductSnapshotDto(
             product.Name,
             product.Description,
-            product.Price
+            product.Price.Value
         );
     }
 
@@ -20,7 +20,7 @@ public static class ProductMapper
             product.Id.Value,
             product.Name,
             product.Description,
-            product.Price,
+            product.Price.Value,
             product.Quantity
         );
     }
@@ -30,7 +30,7 @@ public static class ProductMapper
         return new ProductCartDto(
             product.Id.Value,
             product.Name,
-            product.Price,
+            product.Price.Value,
             product.Quantity
         );
     }

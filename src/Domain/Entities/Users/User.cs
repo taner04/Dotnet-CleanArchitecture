@@ -15,19 +15,19 @@ public sealed class User : AggregateRoot<UserId>, ISoftDeletable
     private User() { } // for EFC
 #pragma warning restore CS8618
 
-    private User(UserId userId, string firstName, string lastName, string email)
+    private User(string firstName, string lastName, string email)
     {
-        Id = userId;
+        Id = UserId.New();
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        RefreshTokenExpiration = DateTime.UtcNow.AddDays(7);
+        RefreshTokenExpiration = JwtTokenExpiration.From(DateTime.UtcNow.AddDays(7));
     }
 
     public void SetRefreshToken(string refreshToken)
     {
-        RefreshToken = refreshToken;
-        RefreshTokenExpiration = DateTime.UtcNow.AddDays(RefreshTokenExpirationDays);
+        RefreshToken = JwtToken.From(refreshToken);
+        RefreshTokenExpiration = JwtTokenExpiration.From(DateTime.UtcNow.AddDays(7));
     }
     
     public void SetPasswordHash(string passwordHash)
@@ -38,10 +38,8 @@ public sealed class User : AggregateRoot<UserId>, ISoftDeletable
         PasswordHash = passwordHash;
     }
 
-    public static User TryCreate(UserId userId, string firstName, string lastName, string email)
+    public static User TryCreate(string firstName, string lastName, string email)
     {
-        if (userId == Guid.Empty) throw new InvalidIdException();
-
         if (string.IsNullOrWhiteSpace(firstName))
             throw new ArgumentException("First name cannot be empty.", nameof(firstName));
 
@@ -51,16 +49,16 @@ public sealed class User : AggregateRoot<UserId>, ISoftDeletable
         if (string.IsNullOrWhiteSpace(email)) 
             throw new ArgumentException("Email cannot be empty.", nameof(email));
 
-        return new User(userId, firstName, lastName, email);
+        return new User(firstName, lastName, email);
     }
 
-    public bool HasValidRefreshToken => RefreshTokenExpiration > DateTime.UtcNow;
+    public bool HasValidRefreshToken => RefreshTokenExpiration.Value > DateTime.UtcNow;
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public string Email { get; private set; }
     public string PasswordHash { get; private set; } = null!;
-    public JwtToken RefreshToken { get; private set; } = null!;
+    public JwtToken RefreshToken { get; private set; } 
     public JwtTokenExpiration RefreshTokenExpiration { get; private set; }
     public bool IsDeleted { get; set; }
 }

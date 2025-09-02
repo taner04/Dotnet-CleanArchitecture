@@ -1,4 +1,5 @@
 using Application.Abstraction.Utils;
+using Domain.ValueObjects.Identifiers;
 using SharedKernel.Enums;
 
 namespace Application.CQRS.Order.CancelOrder;
@@ -9,7 +10,7 @@ public sealed class CancelOrderCommandHandler(IUnitOfWork unitOfWork) : ICommand
 
     public async ValueTask<Result> Handle(CancelOrderCommand command, CancellationToken cancellationToken)
     {
-        var order = await _unitOfWork.OrderRepository.GetByIdAsync(command.OrderId);
+        var order = await _unitOfWork.OrderRepository.GetByIdAsync(OrderId.From(command.OrderId));
         if (order is null)
             return Result.Failure(
                 ErrorFactory.NotFound($"Order with ID {command.OrderId} not found.")

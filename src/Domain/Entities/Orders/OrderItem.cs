@@ -16,7 +16,7 @@ public sealed class OrderItem : Entity<OrderItemId>
 
     private OrderItem(OrderId orderId, ProductId productId, int quantity, Money unitPrice)
     {
-        Id = Guid.CreateVersion7();
+        Id = OrderItemId.New();
         OrderId = orderId;
         ProductId = productId;
         Quantity = quantity;

@@ -1,4 +1,5 @@
 using Application.Abstraction.Utils;
+using Domain.ValueObjects.Identifiers;
 using SharedKernel.Enums;
 
 namespace Application.CQRS.User.DeleteUser;
@@ -9,13 +10,14 @@ public sealed class DeleteUserCommandHandler(IUnitOfWork unitOfWork) : ICommandH
 
     public async ValueTask<Result> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
     {
-        var user = await _unitOfWork.UserRepository.GetByIdAsync(command.UserId);
+        var userId = UserId.From(command.UserId);
+        var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
         if (user is null)
             return Result.Failure(
-                ErrorFactory.NotFound($"User with ID {command.UserId} not found.")
+                ErrorFactory.NotFound($"User with ID {userId.Value} not found.")
             );
 
-        var orders = await _unitOfWork.OrderRepository.OrdersByUserAsync(command.UserId);
+        var orders = await _unitOfWork.OrderRepository.OrdersByUserAsync(userId);
         if (orders.Any(o => o.Status == OrderStatus.Pending))
             return Result.Failure(
                 ErrorFactory.Conflict("User cannot be deleted while having pending orders.")
@@ -23,7 +25,7 @@ public sealed class DeleteUserCommandHandler(IUnitOfWork unitOfWork) : ICommandH
         
         _unitOfWork.OrderRepository.DeleteRange(orders);   
         
-        var cart = await _unitOfWork.CartRepository.GetCartByUserId(command.UserId);
+        var cart = await _unitOfWork.CartRepository.GetCartByUserId(userId);
         if (cart != null)
         {
             _unitOfWork.CartRepository.Delete(cart);   

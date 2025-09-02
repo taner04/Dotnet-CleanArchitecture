@@ -15,7 +15,7 @@ public sealed class CartItem : Entity<CartItemId>
 
     private CartItem(CartId cartId, ProductId productId, int quantity)
     {
-        Id = Guid.CreateVersion7();
+        Id = CartItemId.New();
         CartId = cartId;
         ProductId = productId;
         Quantity = quantity;

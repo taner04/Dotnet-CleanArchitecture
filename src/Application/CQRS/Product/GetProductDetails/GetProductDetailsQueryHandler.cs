@@ -1,6 +1,7 @@
 using Application.Abstraction.Utils;
 using Application.Dtos.Product;
 using Application.Mapper;
+using Domain.ValueObjects.Identifiers;
 
 namespace Application.CQRS.Product.GetProductDetails;
 
@@ -12,7 +13,8 @@ public sealed class GetProductDetailsQueryHandler(IUnitOfWork unitOfWork)
     public async ValueTask<ResultT<ProductDto>> Handle(GetProductDetailsQuery query,
         CancellationToken cancellationToken)
     {
-        var product = await _unitOfWork.ProductRepository.GetByIdAsync(query.ProductId);
+        var productId = ProductId.From(query.ProductId);
+        var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
 
         if (product is null)
             return ResultT<ProductDto>.Failure(

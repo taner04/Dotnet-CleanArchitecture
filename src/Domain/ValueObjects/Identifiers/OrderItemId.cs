@@ -1,10 +1,10 @@
 namespace Domain.ValueObjects.Identifiers;
 
-[ValueObject<Guid>
-(fromPrimitiveCasting: CastOperator.Implicit,
-    toPrimitiveCasting: CastOperator.Implicit)]
+[ValueObject<Guid>]
 public readonly partial struct OrderItemId
 {
+    public static OrderItemId New() => From(Guid.CreateVersion7());
+    
     public static Validation Validate(Guid orderItemId)
     {
         return orderItemId == Guid.Empty

@@ -1,6 +1,7 @@
 using Application.Abstraction.Utils;
 using Application.Dtos.Order;
 using Application.Mapper;
+using Domain.ValueObjects.Identifiers;
 
 namespace Application.CQRS.Order.GetOrders;
 
@@ -11,7 +12,8 @@ public sealed class GetOrdersQueryHandler(IUnitOfWork unitOfWork)
 
     public async ValueTask<ResultT<List<OrderDto>>> Handle(GetOrdersQuery command, CancellationToken cancellationToken)
     {
-        var orders = await _unitOfWork.OrderRepository.OrdersByUserAsync(command.UserId);
+        var userId = UserId.From(command.UserId);
+        var orders = await _unitOfWork.OrderRepository.OrdersByUserAsync(userId);
         return ResultT<List<OrderDto>>.Success([.. orders.Select(o => o.ToOrderDto())]);
     }
 }

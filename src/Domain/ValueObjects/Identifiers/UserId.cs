@@ -1,10 +1,10 @@
 namespace Domain.ValueObjects.Identifiers;
 
-[ValueObject<Guid>
-(fromPrimitiveCasting: CastOperator.Implicit,
-    toPrimitiveCasting: CastOperator.Implicit)]
+[ValueObject<Guid>]
 public readonly partial struct UserId
 {
+    public static UserId New() => From(Guid.CreateVersion7());
+    
     public static Validation Validate(Guid userId)
     {
         return userId == Guid.Empty ? Validation.Invalid("The UserId cannot be an empty GUID.") : Validation.Ok;

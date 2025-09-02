@@ -1,6 +1,7 @@
 using Application.Abstraction.Utils;
 using Application.Dtos.Cart;
 using Application.Mapper;
+using Domain.ValueObjects.Identifiers;
 
 namespace Application.CQRS.Cart.GetCart;
 
@@ -11,10 +12,11 @@ public sealed class GetCartByUserQueryHandler(IUnitOfWork unitOfWork)
 
     public async ValueTask<ResultT<CartDto>> Handle(GetCartByUserQuery query, CancellationToken cancellationToken)
     {
-        var cart = await _unitOfWork.CartRepository.GetCartByUserId(query.UserId);
+        var userId = UserId.From(query.UserId);
+        var cart = await _unitOfWork.CartRepository.GetCartByUserId(userId);
         if (cart != null) return ResultT<CartDto>.Success(cart.ToDto());
 
-        cart = Domain.Entities.Carts.Cart.TryCreate(query.UserId);
+        cart = Domain.Entities.Carts.Cart.TryCreate(userId);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return ResultT<CartDto>.Success(cart.ToDto());

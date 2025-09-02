@@ -1,11 +1,11 @@
 namespace Domain.ValueObjects.Identifiers;
 
-[ValueObject<Guid>
-(fromPrimitiveCasting: CastOperator.Implicit,
-    toPrimitiveCasting: CastOperator.Implicit)]
+[ValueObject<Guid>]
 public readonly partial struct CartItemId
 {
-    public static Validation Validate(CartItemId cartItemId)
+    public static CartItemId New() => From(Guid.CreateVersion7());
+    
+    public static Validation Validate(Guid cartItemId)
     {
         return cartItemId == Guid.Empty ? Validation.Invalid("The CartItemId cannot be an empty GUID.") : Validation.Ok;
     }

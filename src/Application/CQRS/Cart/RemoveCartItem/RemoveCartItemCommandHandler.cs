@@ -1,4 +1,5 @@
 using Application.Abstraction.Utils;
+using Domain.ValueObjects.Identifiers;
 
 namespace Application.CQRS.Cart.RemoveCartItem;
 
@@ -9,13 +10,14 @@ public sealed class RemoveCartItemCommandHandler(IUnitOfWork unitOfWork)
 
     public async ValueTask<Result> Handle(RemoveCartItemCommand command, CancellationToken cancellationToken)
     {
-        var cart = await _unitOfWork.CartRepository.GetCartByUserId(command.UserId);
+        var userId = UserId.From(command.UserId);
+        var cart = await _unitOfWork.CartRepository.GetCartByUserId(userId);
         if (cart == null)
             return Result.Failure(
                 ErrorFactory.NotFound("Cart not found for the specified user.")
             );
 
-        var result = cart.TryRemoveCartItem(command.CartItemId);
+        var result = cart.TryRemoveCartItem(CartItemId.From(command.CartItemId));
         if (!result.IsSuccess) return result;
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
