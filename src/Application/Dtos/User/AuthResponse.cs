@@ -1,9 +1,8 @@
 ﻿namespace Application.Dtos.User;
 
 public record AuthResponse(
-    Guid Id,
     string Firstname,
     string Lastname,
-    string Mail,
+    string Email,
     string AccessToken,
     string RefreshToken);

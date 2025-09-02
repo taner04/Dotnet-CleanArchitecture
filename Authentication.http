@@ -1,0 +1,21 @@
+@baseUrl = https://localhost:7255
+
+### Register 
+POST {{baseUrl}}/api/authentication/register
+Content-Type: application/json
+
+{
+  "firstname": "John",
+  "lastname": "Doe",
+  "email": "doe@mail.com",
+  "password": "Test123!"
+}
+
+### Login 
+POST {{baseUrl}}/api/authentication/login
+Content-Type: application/json
+
+{
+  "email": "doe@mail.com",
+  "password": "Test123!"
+}

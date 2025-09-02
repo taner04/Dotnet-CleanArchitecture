@@ -24,7 +24,7 @@ public sealed class UserConfiguration : EntityConfiguration<User, UserId>
         builder.Property(u => u.Email)
             .IsRequired();
 
-        builder.Property(u => u.PasswordHash)
+        builder.Property(u => u.Password)
             .IsRequired();
 
         builder.Property(u => u.RefreshToken)

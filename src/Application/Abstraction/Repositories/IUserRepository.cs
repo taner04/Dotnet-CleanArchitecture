@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Users;
+using Domain.ValueObjects;
 using UserId = Domain.ValueObjects.Identifiers.UserId;
 
 namespace Application.Abstraction.Repositories;
@@ -16,5 +17,5 @@ public interface IUserRepository : IRepository<User, UserId>
     /// A <see cref="Task"/> representing the asynchronous operation, 
     /// with a result of the <see cref="User"/> if found; otherwise, <c>null</c>.
     /// </returns>
-    Task<User?> GetByEmailAsync(string email);
+    Task<User?> GetByEmailAsync(Email email);
 }

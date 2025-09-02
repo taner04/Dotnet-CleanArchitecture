@@ -2,7 +2,6 @@
 using Domain.Entities.Base;
 using Domain.Entities.Carts;
 using Domain.Entities.Orders;
-using Domain.Exceptions;
 using Domain.ValueObjects;
 using UserId = Domain.ValueObjects.Identifiers.UserId;
 
@@ -22,7 +21,7 @@ public sealed class User : AggregateRoot<UserId>, ISoftDeletable
         Id = UserId.New();
         FirstName = firstName;
         LastName = lastName;
-        Email = email;
+        Email = Email.From(email);
         RefreshTokenExpiration = JwtTokenExpiration.From(DateTime.UtcNow.AddDays(7));
     }
 
@@ -32,24 +31,12 @@ public sealed class User : AggregateRoot<UserId>, ISoftDeletable
         RefreshTokenExpiration = JwtTokenExpiration.From(DateTime.UtcNow.AddDays(7));
     }
     
-    public void SetPasswordHash(string passwordHash)
-    {
-        if (string.IsNullOrWhiteSpace(passwordHash))
-            throw new ArgumentException("Password hash cannot be empty.", nameof(passwordHash));
-
-        PasswordHash = passwordHash;
-    }
+    public void SetPasswordHash(string password) => Password = Password.From(password);
 
     public static User TryCreate(string firstName, string lastName, string email)
     {
-        if (string.IsNullOrWhiteSpace(firstName))
-            throw new ArgumentException("First name cannot be empty.", nameof(firstName));
-
-        if (string.IsNullOrWhiteSpace(lastName))
-            throw new ArgumentException("Last name cannot be empty.", nameof(lastName));
-
-        if (string.IsNullOrWhiteSpace(email)) 
-            throw new ArgumentException("Email cannot be empty.", nameof(email));
+        if (string.IsNullOrWhiteSpace(firstName)) throw new DomainException("First name cannot be empty.");
+        if (string.IsNullOrWhiteSpace(lastName)) throw new DomainException("Last name cannot be empty.");
 
         return new User(firstName, lastName, email);
     }
@@ -58,12 +45,12 @@ public sealed class User : AggregateRoot<UserId>, ISoftDeletable
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
-    public string Email { get; private set; }
-    public string PasswordHash { get; private set; } = null!;
+    public Email Email { get; private set; }
+    public Password Password { get; private set; } 
     public JwtToken RefreshToken { get; private set; } 
     public JwtTokenExpiration RefreshTokenExpiration { get; private set; }
     public bool IsDeleted { get; set; }
     
-    public Cart Cart { get; set; } = null!; // Navigation property
-    public List<Order> Orders { get; set; } // Navigation property
+    public Cart Cart { get; private set; }  // Navigation property
+    public List<Order> Orders { get; private set; } // Navigation property
 }

@@ -13,29 +13,20 @@ public sealed class CancelOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUs
     {
         var order = await _unitOfWork.OrderRepository.GetByIdAsync(OrderId.From(command.OrderId));
         if (order is null)
+        {
             return Result.Failure(
                 ErrorFactory.NotFound($"Order with ID {command.OrderId} not found.")
             );
+        }
 
         if (order.UserId != _currentUserService.GetUserId())
+        {
             return Result.Failure(
                 ErrorFactory.Unauthorized("You cannot cancel an order that does not belong to you.")
             );
-
-        if (order.Status != OrderStatus.Pending)
-            return Result.Failure(
-                ErrorFactory.Conflict("Only pending orders can be cancelled.")
-            );
-
-        order.UpdateStatus(OrderStatus.Cancelled);
-        foreach (var orderItem in order.OrderItems)
-        {
-            var existingProduct = await _unitOfWork.ProductRepository.GetByIdAsync(orderItem.ProductId);
-            if (existingProduct == null) continue;
-
-            var result = existingProduct.TryIncreaseStock(orderItem.Quantity);
-            if (!result.IsSuccess) return result;
         }
+
+        order.Cancel();
 
         _unitOfWork.OrderRepository.Delete(order);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

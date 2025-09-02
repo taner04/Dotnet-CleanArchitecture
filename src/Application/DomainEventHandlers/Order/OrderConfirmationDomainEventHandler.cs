@@ -19,11 +19,12 @@ public sealed class OrderConfirmationDomainEventHandler : IDomainEventHandler<Or
     public async ValueTask Handle(OrderConfirmationDomainEvent notification, CancellationToken cancellationToken)
     {
         var user = await _unitOfWork.UserRepository.GetByIdAsync(notification.UserId);
+        if (user is null) return;
 
         var mimeMessage = new MimeMessage();
 
         mimeMessage.From.Add(new MailboxAddress("eShop", "eshop@mail.com"));
-        mimeMessage.To.Add(new MailboxAddress($"{user!.FirstName} {user!.LastName}", user!.Email));
+        mimeMessage.To.Add(new MailboxAddress($"{user.FirstName} {user.LastName}", user.Email.Value));
 
         mimeMessage.Subject = "Order Confirmation";
         mimeMessage.Body = new TextPart("plain")

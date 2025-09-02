@@ -14,9 +14,11 @@ public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUs
         var userId = _currentUserService.GetUserId();
         var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
         if (user is null)
+        {
             return Result.Failure(
                 ErrorFactory.NotFound($"User with ID {userId.Value} not found.")
             );
+        }
 
         var order = Domain.Entities.Orders.Order.TryCreate(userId);
         foreach (var product in command.Products)
@@ -25,19 +27,19 @@ public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUs
             var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
 
             if (productEntity is null)
+            {
                 return Result.Failure(
                     ErrorFactory.NotFound($"Product with ID {productId} not found.")
                 );
+            }
 
-            var result = productEntity.TryReduceStock(product.Quantity);
-            if (!result.IsSuccess) return result;
+            productEntity.ReduceStock(product.Quantity);
+            _unitOfWork.ProductRepository.Update(productEntity);
 
             order.AddOrderItem(productId, product.Quantity, productEntity.Price);
         }
 
-        order.AddDomainEvent(new OrderConfirmationDomainEvent(userId, order));
         _unitOfWork.OrderRepository.Add(order);
-
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();

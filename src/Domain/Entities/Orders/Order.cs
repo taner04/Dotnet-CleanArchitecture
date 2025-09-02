@@ -1,11 +1,11 @@
 ﻿using Domain.Abstraction;
 using Domain.Entities.Base;
+using Domain.Entities.Orders.DomainEvents;
 using Domain.Entities.Users;
+using Domain.Exceptions.Order;
 using Domain.ValueObjects;
+using Domain.ValueObjects.Identifiers;
 using SharedKernel.Enums;
-using OrderId = Domain.ValueObjects.Identifiers.OrderId;
-using ProductId = Domain.ValueObjects.Identifiers.ProductId;
-using UserId = Domain.ValueObjects.Identifiers.UserId;
 
 namespace Domain.Entities.Orders;
 
@@ -24,16 +24,31 @@ public sealed class Order : AggregateRoot<OrderId>, ISoftDeletable
         UserId = userId;
         OrderDate = DateTime.UtcNow;
         Status = orderStatus;
+
+        AddDomainEvent(new OrderConfirmationDomainEvent(userId, this));
     }
 
     public void AddOrderItem(ProductId productId, int quantity, Money unitPrice)
     {
+        if (Status != OrderStatus.Pending)
+        {
+            throw new OrderModificationException("Cannot add items to an order that is not pending.");
+        }
+
         _orderItems.Add(OrderItem.TryCreate(Id, productId, quantity, unitPrice));
     }
 
-    public void UpdateStatus(OrderStatus status)
+    public void Cancel()
     {
-        Status = status;
+        if (Status != OrderStatus.Pending)
+        {
+            throw new OrderCancelException();
+        }
+
+        AddDomainEvent(new OrderCancelledDomainEvent(
+            _orderItems.ToDictionary(e => e.ProductId, e => e.Quantity)));
+        
+        Status = OrderStatus.Cancelled;
     }
 
     public static Order TryCreate(UserId userId) => new (userId, OrderStatus.Pending);
@@ -43,7 +58,7 @@ public sealed class Order : AggregateRoot<OrderId>, ISoftDeletable
     public DateTime OrderDate { get; private set; }
     public UserId UserId { get; private set; }
     public OrderStatus Status { get; private set; }
-    public decimal TotalPrice => _orderItems.Sum(i => i.TotalPrice.Value);
+    public Money TotalPrice => Money.From(_orderItems.Sum(i => i.TotalPrice.Value));
     public bool IsDeleted { get; set; }
     
     public User User { get; private set; } = null!; // Navigation property

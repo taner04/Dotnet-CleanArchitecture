@@ -2,6 +2,7 @@ using Application.Abstraction.Utils;
 using Application.Dtos.User;
 using Application.Mapper;
 using Domain.Entities.Users;
+using Domain.ValueObjects;
 
 namespace Application.CQRS.User.LoginUser;
 
@@ -20,16 +21,18 @@ public class LoginUserQueryHandler : IQueryHandler<LoginUserQuery, ResultT<AuthR
 
     public async ValueTask<ResultT<AuthResponse>> Handle(LoginUserQuery query, CancellationToken cancellationToken)
     {
-        var existingUser = await _unitOfWork.UserRepository.GetByEmailAsync(query.Email);
+        var existingUser = await _unitOfWork.UserRepository.GetByEmailAsync(Email.From(query.Email));
         if (existingUser is null)
             return ResultT<AuthResponse>.Failure(
                 ErrorFactory.NotFound("User not found")
             );
 
-        if (!_passwordHasher.VerifyPassword(query.Password, existingUser.PasswordHash))
+        if (!_passwordHasher.VerifyPassword(query.Password, existingUser.Password.Value))
+        {
             return ResultT<AuthResponse>.Failure(
                 ErrorFactory.Unauthorized("Invalid password")
             );
+        }
 
         if (!existingUser.HasValidRefreshToken)
         {

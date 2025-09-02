@@ -23,8 +23,7 @@ public sealed class OrderItem : Entity<OrderItemId>
         UnitPrice = unitPrice;
     }
 
-    public static OrderItem TryCreate(OrderId orderId, ProductId productId, int quantity,
-        Money unitPrice)
+    public static OrderItem TryCreate(OrderId orderId, ProductId productId, int quantity, Money unitPrice)
     {
         if (quantity <= 0) throw new ValueBelowMinimumException("Quantity must be greater than zero.");
 

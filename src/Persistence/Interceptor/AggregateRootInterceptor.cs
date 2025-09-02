@@ -28,7 +28,8 @@ public sealed class AggregateRootInterceptor : SaveChangesInterceptor
     {
         var aggregateRoots = context.ChangeTracker
             .Entries()
-            .Where(e => e.Entity is IAggregateRoot);
+            .Where(e => e.Entity is IAggregateRoot)
+            .ToList();
 
         foreach (var entry in aggregateRoots)
         {

@@ -9,7 +9,7 @@ public static class OrderMapper
     {
         return new OrderDto(
             order.Id.Value,
-            order.TotalPrice,
+            order.TotalPrice.Value,
             [.. order.OrderItems.Select(oi => oi.ToOrderItemOrderDto())]
         );
     }
