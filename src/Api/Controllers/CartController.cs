@@ -20,10 +20,10 @@ public sealed class CartController : ControllerBase
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
-    [HttpPost("user")]
-    public async Task<IActionResult> GetCartByUserAsync([FromBody] GetCartByUserQuery query)
+    [HttpGet("user")]
+    public async Task<IActionResult> GetCartByUserAsync()
     {
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(new GetCartByUserQuery());
         return MapResponse(result);
     }
 

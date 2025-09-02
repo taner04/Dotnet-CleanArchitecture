@@ -1,5 +1,6 @@
 ﻿using Domain.Abstraction;
 using Domain.Entities.Base;
+using Domain.Entities.Users;
 using Domain.ValueObjects;
 using SharedKernel.Enums;
 using OrderId = Domain.ValueObjects.Identifiers.OrderId;
@@ -44,4 +45,6 @@ public sealed class Order : AggregateRoot<OrderId>, ISoftDeletable
     public OrderStatus Status { get; private set; }
     public decimal TotalPrice => _orderItems.Sum(i => i.TotalPrice.Value);
     public bool IsDeleted { get; set; }
+    
+    public User User { get; private set; } = null!; // Navigation property
 }

@@ -4,17 +4,18 @@ using Domain.ValueObjects.Identifiers;
 
 namespace Application.CQRS.Order.CreateOrder;
 
-public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork) : ICommandHandler<CreateOrderCommand, Result>
+public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : ICommandHandler<CreateOrderCommand, Result>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+    private readonly ICurrentUserService _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
 
     public async ValueTask<Result> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
     {
-        var userId = UserId.From(command.UserId);
+        var userId = _currentUserService.GetUserId();
         var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
         if (user is null)
             return Result.Failure(
-                ErrorFactory.NotFound($"User with ID {command.UserId} not found.")
+                ErrorFactory.NotFound($"User with ID {userId.Value} not found.")
             );
 
         var order = Domain.Entities.Orders.Order.TryCreate(userId);

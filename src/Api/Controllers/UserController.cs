@@ -17,9 +17,9 @@ public sealed class UserController : ControllerBase
     }
 
     [HttpDelete("delete-account")]
-    public async Task<IActionResult> DeleteUserAccountAsync([FromBody] DeleteUserCommand command)
+    public async Task<IActionResult> DeleteUserAccountAsync()
     {
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(new DeleteUserCommand());
         return MapResponse(result);
     }
 }

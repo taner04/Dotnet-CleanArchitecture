@@ -1,5 +1,7 @@
 ﻿using Domain.Abstraction;
 using Domain.Entities.Base;
+using Domain.Entities.Carts;
+using Domain.Entities.Orders;
 using Domain.Exceptions;
 using Domain.ValueObjects;
 using UserId = Domain.ValueObjects.Identifiers.UserId;
@@ -61,4 +63,7 @@ public sealed class User : AggregateRoot<UserId>, ISoftDeletable
     public JwtToken RefreshToken { get; private set; } 
     public JwtTokenExpiration RefreshTokenExpiration { get; private set; }
     public bool IsDeleted { get; set; }
+    
+    public Cart Cart { get; set; } = null!; // Navigation property
+    public List<Order> Orders { get; set; } // Navigation property
 }

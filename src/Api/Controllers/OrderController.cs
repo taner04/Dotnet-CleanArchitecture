@@ -19,10 +19,10 @@ public class OrderController : ControllerBase
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
-    [HttpPost("user")]
-    public async Task<IActionResult> GetOrdersByUserAsync([FromBody] GetOrdersQuery query)
+    [HttpGet("user")]
+    public async Task<IActionResult> GetOrdersByUserAsync()
     {
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(new GetOrdersQuery());
         return MapResponse(result);
     }
 

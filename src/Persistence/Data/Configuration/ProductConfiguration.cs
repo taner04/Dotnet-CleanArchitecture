@@ -8,7 +8,7 @@ namespace Persistence.Data.Configuration;
 
 public sealed class ProductConfiguration : EntityConfiguration<Product, ProductId>
 {
-    protected override string TabelName => nameof(Product);
+    protected override string TableName => nameof(Product);
 
     protected override void PostConfigure(EntityTypeBuilder<Product> builder)
     {

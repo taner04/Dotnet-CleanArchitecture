@@ -23,13 +23,6 @@ public interface ITokenService
     string GenerateRefreshToken(User user);
 
     /// <summary>
-    /// Extracts all claims from the specified JWT token.
-    /// </summary>
-    /// <param name="token">The JWT token from which to extract claims.</param>
-    /// <returns>A list of claims contained in the token.</returns>
-    List<Claim> GetClaims(string token);
-
-    /// <summary>
     /// Extracts a specific claim from the specified JWT token.
     /// </summary>
     /// <param name="token">The JWT token from which to extract the claim.</param>

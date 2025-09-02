@@ -6,9 +6,6 @@ public sealed class CreateOrderValidator : AbstractValidator<CreateOrderCommand>
 {
     public CreateOrderValidator()
     {
-        RuleFor(order => order.UserId).IsId()
-            .WithMessage("ID needs to be a valid Guid");
-
         RuleFor(order => order.Products)
             .NotEmpty()
             .WithMessage("Order items cannot be empty.")

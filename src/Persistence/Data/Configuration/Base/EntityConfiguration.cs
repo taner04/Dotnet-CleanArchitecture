@@ -8,11 +8,11 @@ public abstract class EntityConfiguration<TEntity, TId> : IEntityTypeConfigurati
     where TEntity : class, IAuditable, IEntity<TId>
     where TId : struct
 {
-    protected abstract string TabelName { get; }
+    protected abstract string TableName { get; }
 
     public void Configure(EntityTypeBuilder<TEntity> builder)
     {
-        builder.ToTable(TabelName);
+        builder.ToTable(TableName);
         
         builder.HasKey(e => e.Id);
         

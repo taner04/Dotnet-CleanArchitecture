@@ -4,10 +4,11 @@ using SharedKernel.Enums;
 
 namespace Application.CQRS.Order.CancelOrder;
 
-public sealed class CancelOrderCommandHandler(IUnitOfWork unitOfWork) : ICommandHandler<CancelOrderCommand, Result>
+public sealed class CancelOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : ICommandHandler<CancelOrderCommand, Result>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-
+    private readonly ICurrentUserService _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
+    
     public async ValueTask<Result> Handle(CancelOrderCommand command, CancellationToken cancellationToken)
     {
         var order = await _unitOfWork.OrderRepository.GetByIdAsync(OrderId.From(command.OrderId));
@@ -16,7 +17,7 @@ public sealed class CancelOrderCommandHandler(IUnitOfWork unitOfWork) : ICommand
                 ErrorFactory.NotFound($"Order with ID {command.OrderId} not found.")
             );
 
-        if (order.UserId != command.UserId)
+        if (order.UserId != _currentUserService.GetUserId())
             return Result.Failure(
                 ErrorFactory.Unauthorized("You cannot cancel an order that does not belong to you.")
             );

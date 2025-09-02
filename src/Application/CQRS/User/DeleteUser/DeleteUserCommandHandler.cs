@@ -4,13 +4,14 @@ using SharedKernel.Enums;
 
 namespace Application.CQRS.User.DeleteUser;
 
-public sealed class DeleteUserCommandHandler(IUnitOfWork unitOfWork) : ICommandHandler<DeleteUserCommand, Result>
+public sealed class DeleteUserCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : ICommandHandler<DeleteUserCommand, Result>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-
+    private readonly ICurrentUserService _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
+    
     public async ValueTask<Result> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
     {
-        var userId = UserId.From(command.UserId);
+        var userId = _currentUserService.GetUserId();
         var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
         if (user is null)
             return Result.Failure(

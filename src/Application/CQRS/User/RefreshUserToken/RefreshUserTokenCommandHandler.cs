@@ -8,29 +8,34 @@ public class RefreshUserTokenCommandHandler : ICommandHandler<RefreshUserTokenCo
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ITokenService _tokenService;
+    private readonly ICurrentUserService _currentUserService;
 
-    public RefreshUserTokenCommandHandler(IUnitOfWork unitOfWork, ITokenService tokenService)
+    public RefreshUserTokenCommandHandler(IUnitOfWork unitOfWork, ITokenService tokenService, ICurrentUserService currentUserService)
     {
-        _unitOfWork = unitOfWork;
-        _tokenService = tokenService;
+        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
+        _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
     }
 
     public async ValueTask<ResultT<RefreshTokenResponse>> Handle(RefreshUserTokenCommand command,
         CancellationToken cancellationToken)
     {
-        if (!_tokenService.IsRefreshTokenValid(command.RefreshToken))
-            return ResultT<RefreshTokenResponse>.Failure(
-                ErrorFactory.Unauthorized("Invalid refresh token"));
-
-        var emailClaim = _tokenService.GetClaim(command.RefreshToken, "email");
-
-        var user = await _unitOfWork.UserRepository.GetByEmailAsync(emailClaim.Value);
+        var userId = _currentUserService.GetUserId();
+        
+        var user = await _unitOfWork.UserRepository.GetByIdAsync(_currentUserService.GetUserId());
         if (user is null)
             return ResultT<RefreshTokenResponse>.Failure(
                 ErrorFactory.NotFound("User not found"));
 
-        var subClaim = _tokenService.GetClaim(command.AccessToken, "sub");
-        if (user.RefreshToken.Value != command.RefreshToken || user.Id != Guid.Parse(subClaim.Value))
+        if (!_tokenService.IsRefreshTokenValid(user.RefreshToken.Value))
+            return ResultT<RefreshTokenResponse>.Failure(
+                ErrorFactory.Unauthorized("Invalid refresh token"));
+
+        var emailClaim = _tokenService.GetClaim(user.RefreshToken.Value, "email");
+
+
+        var subClaim = _tokenService.GetClaim(_currentUserService.GetAccessToken(), "sub");
+        if (user.Id != userId)
             return ResultT<RefreshTokenResponse>.Failure(
                 ErrorFactory.Unauthorized("Refresh token does not match the user's token"));
 

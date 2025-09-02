@@ -12,7 +12,7 @@ using Persistence.Data;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250901173110_InitialCreate")]
+    [Migration("20250902074820_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -41,6 +41,9 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("Cart", (string)null);
                 });
 
@@ -68,6 +71,8 @@ namespace Persistence.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Order", (string)null);
                 });
@@ -151,6 +156,12 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Carts.Cart", b =>
                 {
+                    b.HasOne("Domain.Entities.Users.User", "User")
+                        .WithOne("Cart")
+                        .HasForeignKey("Domain.Entities.Carts.Cart", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.OwnsMany("Domain.Entities.Carts.CartItem", "CartItems", b1 =>
                         {
                             b1.Property<Guid>("Id")
@@ -194,10 +205,18 @@ namespace Persistence.Migrations
                         });
 
                     b.Navigation("CartItems");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Orders.Order", b =>
                 {
+                    b.HasOne("Domain.Entities.Users.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.OwnsMany("Domain.Entities.Orders.OrderItem", "OrderItems", b1 =>
                         {
                             b1.Property<Guid>("Id")
@@ -243,6 +262,16 @@ namespace Persistence.Migrations
                         });
 
                     b.Navigation("OrderItems");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Users.User", b =>
+                {
+                    b.Navigation("Cart")
+                        .IsRequired();
+
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

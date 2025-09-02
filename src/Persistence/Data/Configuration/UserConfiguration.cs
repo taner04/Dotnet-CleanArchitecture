@@ -8,7 +8,7 @@ namespace Persistence.Data.Configuration;
 
 public sealed class UserConfiguration : EntityConfiguration<User, UserId>
 {
-    protected override string TabelName => nameof(User);
+    protected override string TableName => nameof(User);
 
     protected override void PostConfigure(EntityTypeBuilder<User> builder)
     {
@@ -34,6 +34,14 @@ public sealed class UserConfiguration : EntityConfiguration<User, UserId>
         builder.Property(u => u.RefreshTokenExpiration)
             .IsRequired()
             .HasColumnType(PostgresTypes.TimestampWithTimeZone);
+        
+        builder.HasMany(u => u.Orders)
+            .WithOne(o => o.User)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        builder.HasOne(u => u.Cart)
+            .WithOne(c => c.User)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasQueryFilter(u => u.IsDeleted == false);
     }

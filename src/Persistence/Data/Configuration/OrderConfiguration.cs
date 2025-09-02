@@ -8,7 +8,7 @@ namespace Persistence.Data.Configuration;
 
 public sealed class OrderConfiguration : EntityConfiguration<Order, OrderId>
 {
-    protected override string TabelName => nameof(Order);
+    protected override string TableName => nameof(Order);
 
     protected override void PostConfigure(EntityTypeBuilder<Order> builder)
     {

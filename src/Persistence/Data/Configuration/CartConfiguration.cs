@@ -8,7 +8,7 @@ namespace Persistence.Data.Configuration;
 
 public sealed class CartConfiguration : EntityConfiguration<Cart, CartId>
 {
-    protected override string TabelName => nameof(Cart);
+    protected override string TableName => nameof(Cart);
 
     protected override void PostConfigure(EntityTypeBuilder<Cart> builder)
     {
