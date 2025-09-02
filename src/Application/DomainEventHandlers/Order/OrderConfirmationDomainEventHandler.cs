@@ -1,9 +1,9 @@
 ﻿using Application.Abstraction.Utils;
-using Application.DomainEvents.Order.Event;
 using Domain.Abstraction.DomainEvent;
+using Domain.Entities.Orders.DomainEvents;
 using MimeKit;
 
-namespace Application.DomainEvents.Order.Handler;
+namespace Application.DomainEventHandlers.Order;
 
 public sealed class OrderConfirmationDomainEventHandler : IDomainEventHandler<OrderConfirmationDomainEvent>
 {

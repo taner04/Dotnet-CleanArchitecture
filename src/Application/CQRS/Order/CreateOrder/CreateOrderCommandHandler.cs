@@ -1,5 +1,5 @@
 using Application.Abstraction.Utils;
-using Application.DomainEvents.Order.Event;
+using Domain.Entities.Orders.DomainEvents;
 using Domain.ValueObjects.Identifiers;
 
 namespace Application.CQRS.Order.CreateOrder;

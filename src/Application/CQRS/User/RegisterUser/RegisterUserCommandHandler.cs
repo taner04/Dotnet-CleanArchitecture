@@ -1,7 +1,7 @@
 using Application.Abstraction.Utils;
-using Application.DomainEvents.User.Event;
 using Application.Mapper;
 using Domain.Entities.Users;
+using Domain.Entities.Users.DomainEvents;
 
 namespace Application.CQRS.User.RegisterUser;
 

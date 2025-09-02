@@ -1,9 +1,9 @@
 ﻿using Application.Abstraction.Utils;
-using Application.DomainEvents.User.Event;
 using Domain.Abstraction.DomainEvent;
+using Domain.Entities.Users.DomainEvents;
 using MimeKit;
 
-namespace Application.DomainEvents.User.Handler;
+namespace Application.DomainEventHandlers.User;
 
 public sealed class UserRegisteredDomainEventHandler : IDomainEventHandler<UserRegisteredDomainEvent>
 {

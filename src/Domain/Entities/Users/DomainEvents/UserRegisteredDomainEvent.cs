@@ -1,5 +1,5 @@
 ﻿using Domain.Abstraction.DomainEvent;
 
-namespace Application.DomainEvents.User.Event;
+namespace Domain.Entities.Users.DomainEvents;
 
 public readonly record struct UserRegisteredDomainEvent(string FirstName, string LastName, string Email) : IDomainEvent;
