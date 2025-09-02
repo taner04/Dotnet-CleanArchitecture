@@ -1,6 +1,5 @@
-using Application.CQRS.Cart.AddCartItem;
-using Application.CQRS.Cart.GetCart;
-using Application.CQRS.Cart.RemoveCartItem;
+using Application.CQRS.Cart.Commands;
+using Application.CQRS.Cart.Queries;
 using Application.Dtos.Cart;
 using Application.Dtos.CartItem;
 using Mediator;

@@ -13,7 +13,10 @@ public static class DependencyInjectionExtension
             .Where(t => t.GetCustomAttribute<ServiceInjection>() != null)
             .ToList();
 
-        if (types.Count == 0) return services;
+        if (types.Count == 0)
+        {
+            return services;
+        }
 
         foreach (var item in types)
         {

@@ -11,7 +11,10 @@ public sealed class SoftDeletableInterceptor : SaveChangesInterceptor
         InterceptionResult<int> result,
         CancellationToken cancellationToken = default)
     {
-        if (eventData.Context is not null) SetSoftDeleteProperties(eventData.Context);
+        if (eventData.Context is not null)
+        {
+            SetSoftDeleteProperties(eventData.Context);
+        }
 
         return base.SavingChangesAsync(eventData, result, cancellationToken);
     }
@@ -23,7 +26,9 @@ public sealed class SoftDeletableInterceptor : SaveChangesInterceptor
             .Where(e => e.Entity is ISoftDeletable);
 
         foreach (var entry in softDeletableEntities)
+        {
             if (entry.Entity is ISoftDeletable softDeletable)
+            {
                 switch (entry.State)
                 {
                     case EntityState.Deleted:
@@ -38,5 +43,7 @@ public sealed class SoftDeletableInterceptor : SaveChangesInterceptor
                     default:
                         break;
                 }
+            }
+        }
     }
 }

@@ -13,14 +13,17 @@ public sealed class Order : AggregateRoot<OrderId>, ISoftDeletable
 {
     private readonly List<OrderItem> _orderItems = [];
 
-    
+
 #pragma warning disable CS8618
-    private Order() { } // for EFC
+    private Order()
+    {
+    } // for EFC
 #pragma warning restore CS8618
 
     private Order(UserId userId, OrderStatus orderStatus)
     {
-        Id = OrderId.New();;
+        Id = OrderId.New();
+        ;
         UserId = userId;
         OrderDate = DateTime.UtcNow;
         Status = orderStatus;
@@ -47,12 +50,15 @@ public sealed class Order : AggregateRoot<OrderId>, ISoftDeletable
 
         AddDomainEvent(new OrderCancelledDomainEvent(
             _orderItems.ToDictionary(e => e.ProductId, e => e.Quantity)));
-        
+
         Status = OrderStatus.Cancelled;
     }
 
-    public static Order TryCreate(UserId userId) => new (userId, OrderStatus.Pending);
-    
+    public static Order TryCreate(UserId userId)
+    {
+        return new Order(userId, OrderStatus.Pending);
+    }
+
 
     public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
     public DateTime OrderDate { get; private set; }
@@ -60,6 +66,6 @@ public sealed class Order : AggregateRoot<OrderId>, ISoftDeletable
     public OrderStatus Status { get; private set; }
     public Money TotalPrice => Money.From(_orderItems.Sum(i => i.TotalPrice.Value));
     public bool IsDeleted { get; set; }
-    
+
     public User User { get; private set; } = null!; // Navigation property
 }

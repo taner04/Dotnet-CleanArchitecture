@@ -1,4 +1,4 @@
-using Application.CQRS.User.DeleteUser;
+using Application.CQRS.User.Commands;
 using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

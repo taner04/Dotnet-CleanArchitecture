@@ -1,4 +1,4 @@
-﻿using Application.CQRS.User.RegisterUser;
+﻿using Application.CQRS.User.Commands;
 using Application.Dtos.User;
 using Domain.Entities.Users;
 

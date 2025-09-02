@@ -3,20 +3,12 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Behaviors;
 
-public sealed class FluentValidationBehavior<TMessage, TResponse> : IPipelineBehavior<TMessage, TResponse>
+public sealed class FluentValidationBehavior<TMessage, TResponse>(IServiceProvider serviceProvider)
+    : IPipelineBehavior<TMessage, TResponse>
     where TMessage : IMessage
 {
-    private readonly IServiceProvider _serviceProvider;
-    
-    private readonly ILogger<IPipelineBehavior<TMessage, TResponse>> _logger;
-
-    public FluentValidationBehavior(
-        IServiceProvider serviceProvider, 
-        ILogger<IPipelineBehavior<TMessage, TResponse>> logger)
-    {
-        _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
+    private readonly IServiceProvider _serviceProvider =
+        serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
 
     public async ValueTask<TResponse> Handle(
         TMessage message,
@@ -29,19 +21,20 @@ public sealed class FluentValidationBehavior<TMessage, TResponse> : IPipelineBeh
         }
 
         var context = new ValidationContext<TMessage>(message);
-        
-        _logger.LogInformation("Validating message {@Message} with {Validator}", message, validator.GetType().Name);
+
         var validationResult = await validator.ValidateAsync(context, cancellationToken);
 
-        if (validationResult.IsValid) return await next(message, cancellationToken);
-        
-        _logger.LogError("Validation failed for message {@Message} with errors: {Errors}", message, validationResult.Errors);
-        
+        if (validationResult.IsValid)
+        {
+            return await next(message, cancellationToken);
+        }
+
+
         return CreateFailureResponse(
             ErrorFactory.ValidationError(validationResult.ToDictionary())
         );
     }
-    
+
     private static TResponse CreateFailureResponse(Error error)
     {
         if (typeof(TResponse) == typeof(Result))
@@ -59,6 +52,7 @@ public sealed class FluentValidationBehavior<TMessage, TResponse> : IPipelineBeh
             return (TResponse)failure!;
         }
 
-        throw new InvalidOperationException($"TResponse must be Result or ResultT<T>, but was {typeof(TResponse).Name}");
+        throw new InvalidOperationException(
+            $"TResponse must be Result or ResultT<T>, but was {typeof(TResponse).Name}");
     }
 }

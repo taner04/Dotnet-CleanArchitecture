@@ -16,8 +16,8 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\Application\Application.csproj"/>
         <ProjectReference Include="..\..\src\Infrastructure\Infrastructure.csproj"/>
-        <ProjectReference Include="..\..\src\Persistence\Persistence.csproj" />
-        <ProjectReference Include="..\..\tools\ServiceDefaults\ServiceDefaults.csproj" />
+        <ProjectReference Include="..\..\src\Persistence\Persistence.csproj"/>
+        <ProjectReference Include="..\..\tools\ServiceDefaults\ServiceDefaults.csproj"/>
     </ItemGroup>
 
 </Project>

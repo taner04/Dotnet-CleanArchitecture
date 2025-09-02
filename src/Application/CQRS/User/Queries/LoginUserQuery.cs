@@ -1,10 +1,10 @@
-using Application.Abstraction.Utils;
 using Application.Dtos.User;
 using Application.Mapper;
-using Domain.Entities.Users;
 using Domain.ValueObjects;
 
-namespace Application.CQRS.User.LoginUser;
+namespace Application.CQRS.User.Queries;
+
+public readonly record struct LoginUserQuery(string Email, string Password) : IQuery<ResultT<AuthResponse>>;
 
 public class LoginUserQueryHandler : IQueryHandler<LoginUserQuery, ResultT<AuthResponse>>
 {
@@ -42,6 +42,22 @@ public class LoginUserQueryHandler : IQueryHandler<LoginUserQuery, ResultT<AuthR
         }
 
         var accessToken = _tokenService.GenerateAccessToken(existingUser);
-        return ResultT<AuthResponse>.Success(existingUser.ToAuthResponse(accessToken));
+        return existingUser.ToAuthResponse(accessToken);
+    }
+}
+
+public sealed class LoginUserQueryValidator : AbstractValidator<LoginUserQuery>
+{
+    public LoginUserQueryValidator()
+    {
+        RuleFor(x => x.Email)
+            .NotEmpty()
+            .WithMessage("Email is required.")
+            .EmailAddress()
+            .WithMessage("Invalid email format.");
+
+        RuleFor(x => x.Password)
+            .NotEmpty()
+            .WithMessage("Password is required.");
     }
 }

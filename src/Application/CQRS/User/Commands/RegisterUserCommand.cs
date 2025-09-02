@@ -1,10 +1,11 @@
-using Application.Abstraction.Utils;
 using Application.Mapper;
-using Domain.Entities.Users;
 using Domain.Entities.Users.DomainEvents;
 using Domain.ValueObjects;
 
-namespace Application.CQRS.User.RegisterUser;
+namespace Application.CQRS.User.Commands;
+
+public readonly record struct RegisterUserCommand(string FirstName, string LastName, string Email, string Password)
+    : ICommand<Result>;
 
 public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, Result>
 {
@@ -29,7 +30,7 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
         {
             return ErrorFactory.Conflict("The email is already registered");
         }
-        
+
         var newUser = command.ToUser();
 
         newUser.SetRefreshToken(_tokenService.GenerateRefreshToken(newUser));
@@ -41,5 +42,38 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
+    }
+}
+
+public sealed class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
+{
+    public RegisterUserCommandValidator()
+    {
+        RuleFor(x => x.FirstName)
+            .NotEmpty()
+            .WithMessage("Firstname is required.")
+            .MaximumLength(50)
+            .WithMessage("Firstname must not exceed 50 characters.");
+
+        RuleFor(x => x.LastName)
+            .NotEmpty()
+            .WithMessage("Lastname is required.")
+            .MaximumLength(50)
+            .WithMessage("Lastname must not exceed 50 characters.");
+
+        RuleFor(x => x.Email)
+            .NotEmpty()
+            .WithMessage("Email is required.")
+            .EmailAddress()
+            .WithMessage("Email must be a valid email address.")
+            .MaximumLength(256);
+
+        RuleFor(x => x.Password)
+            .NotEmpty()
+            .WithMessage("Password is required.")
+            .MinimumLength(8)
+            .WithMessage("Password must be at least 8 characters long.")
+            .MaximumLength(256)
+            .WithMessage("Password must not exceed 256 characters.");
     }
 }

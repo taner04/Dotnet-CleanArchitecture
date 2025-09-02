@@ -13,13 +13,13 @@ public abstract class EntityConfiguration<TEntity, TId> : IEntityTypeConfigurati
     public void Configure(EntityTypeBuilder<TEntity> builder)
     {
         builder.ToTable(TableName);
-        
+
         builder.HasKey(e => e.Id);
-        
+
         builder.Property(e => e.CreatedAt)
             .IsRequired()
             .HasColumnType(PostgresTypes.TimestampWithTimeZone);
-        
+
         builder.Property(e => e.UpdatedAt)
             .HasColumnType(PostgresTypes.TimestampWithTimeZone);
 

@@ -10,7 +10,9 @@ namespace Domain.Entities.Carts;
 public sealed class CartItem : Entity<CartItemId>
 {
 #pragma warning disable CS8618
-    private CartItem() { } // for EFC
+    private CartItem()
+    {
+    } // for EFC
 #pragma warning restore CS8618
 
     private CartItem(CartId cartId, ProductId productId, int quantity)
@@ -23,14 +25,20 @@ public sealed class CartItem : Entity<CartItemId>
 
     public static CartItem TryCreate(CartId cartId, ProductId productId, int quantity)
     {
-        if (quantity <= 0) throw new ValueBelowMinimumException("Quantity must be greater than zero.");
+        if (quantity <= 0)
+        {
+            throw new ValueBelowMinimumException("Quantity must be greater than zero.");
+        }
 
         return new CartItem(cartId, productId, quantity);
     }
 
     public void IncrementQuantity(int amount)
     {
-        if (amount <= 0) throw new ValueBelowMinimumException("Increment amount must be greater than zero.");
+        if (amount <= 0)
+        {
+            throw new ValueBelowMinimumException("Increment amount must be greater than zero.");
+        }
 
         Quantity += amount;
     }

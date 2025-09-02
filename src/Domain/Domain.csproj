@@ -7,18 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="Exceptions\NewFolder\**" />
-      <EmbeddedResource Remove="Exceptions\NewFolder\**" />
-      <None Remove="Exceptions\NewFolder\**" />
+        <Compile Remove="Exceptions\NewFolder\**"/>
+        <EmbeddedResource Remove="Exceptions\NewFolder\**"/>
+        <None Remove="Exceptions\NewFolder\**"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Mediator.Abstractions" Version="3.0.1" />
-        <PackageReference Include="Vogen" Version="8.0.1" />
+        <PackageReference Include="Mediator.Abstractions" Version="3.0.1"/>
+        <PackageReference Include="Vogen" Version="8.0.1"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\SharedKernel\SharedKernel.csproj" />
+        <ProjectReference Include="..\..\src\SharedKernel\SharedKernel.csproj"/>
     </ItemGroup>
 
 </Project>

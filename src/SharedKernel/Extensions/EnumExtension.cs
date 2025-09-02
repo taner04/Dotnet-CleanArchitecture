@@ -5,7 +5,11 @@ public static class EnumExtension
     public static string GetDescription(this Enum value)
     {
         var fieldInfo = value.GetType().GetField(value.ToString());
-        if (fieldInfo == null) return value.ToString();
+        if (fieldInfo == null)
+        {
+            return value.ToString();
+        }
+
         var attributes =
             (System.ComponentModel.DescriptionAttribute[])fieldInfo.GetCustomAttributes(
                 typeof(System.ComponentModel.DescriptionAttribute), false);
@@ -22,8 +26,12 @@ public static class EnumExtension
     {
         var enums = Enum.GetValues(typeof(T));
         foreach (var enumValue in enums)
+        {
             if ((int)enumValue == value)
+            {
                 return (Enum)enumValue;
+            }
+        }
 
         throw new ArgumentException($"No enum value found for {value} in {typeof(T).Name}");
     }

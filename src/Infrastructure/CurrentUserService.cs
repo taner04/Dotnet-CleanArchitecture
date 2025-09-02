@@ -9,11 +9,13 @@ namespace Infrastructure;
 [ServiceInjection(typeof(ICurrentUserService), ScopeType.Scoped)]
 public sealed class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService
 {
-    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
-    
+    private readonly IHttpContextAccessor _httpContextAccessor =
+        httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+
     public UserId GetUserId()
     {
-        var userIdString = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        var userIdString = _httpContextAccessor.HttpContext?.User.Claims
+            .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
         if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userIdGuid))
         {
@@ -30,11 +32,11 @@ public sealed class CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
             throw new UnauthorizedAccessException("Authorization header is missing or invalid.");
         }
-        
+
         var token = authorizationHeader.Split(" ").Last();
         var handler = new JsonWebTokenHandler();
         var jwtToken = handler.ReadJsonWebToken(token);
-        
+
         return jwtToken == null ? throw new UnauthorizedAccessException("Invalid JWT token.") : token;
     }
 }

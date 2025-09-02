@@ -12,7 +12,6 @@ namespace Persistence.Data.Configuration;
 [EfCoreConverter<CartItemId>]
 public sealed partial class EfcIdConverter;
 
-
 [EfCoreConverter<JwtToken>]
 [EfCoreConverter<JwtTokenExpiration>]
 [EfCoreConverter<Money>]

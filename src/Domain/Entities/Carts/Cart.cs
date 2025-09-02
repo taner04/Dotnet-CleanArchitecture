@@ -14,7 +14,9 @@ public sealed class Cart : AggregateRoot<CartId>
     private readonly List<CartItem> _cartItems = [];
 
 #pragma warning disable CS8618
-    private Cart() { } // for EFC
+    private Cart()
+    {
+    } // for EFC
 #pragma warning restore CS8618
 
     private Cart(UserId userId)
@@ -23,11 +25,17 @@ public sealed class Cart : AggregateRoot<CartId>
         UserId = userId;
     }
 
-    public static Cart TryCreate(UserId userId) => new(userId);
+    public static Cart TryCreate(UserId userId)
+    {
+        return new Cart(userId);
+    }
 
     public void AddCartItem(ProductId productId, int quantity)
     {
-        if (quantity <= 0) throw new ValueBelowMinimumException("Add amount must be greater than zero.");
+        if (quantity <= 0)
+        {
+            throw new ValueBelowMinimumException("Add amount must be greater than zero.");
+        }
 
         var existingCartItem = _cartItems.FirstOrDefault(ci => ci.ProductId == productId);
         if (existingCartItem != null)
@@ -53,6 +61,6 @@ public sealed class Cart : AggregateRoot<CartId>
 
     public UserId UserId { get; set; }
     public IReadOnlyCollection<CartItem> CartItems => _cartItems.AsReadOnly();
-    
+
     public User User { get; set; } = null!; // Navigation property
 }

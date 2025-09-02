@@ -35,7 +35,9 @@ public abstract class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
         };
 
         if (error?.ValidationErrors is { Count: > 0 })
+        {
             problemDetails.Extensions["validationErrors"] = error?.ValidationErrors;
+        }
 
         return new ObjectResult(problemDetails)
         {

@@ -11,7 +11,9 @@ namespace Domain.Entities.Orders;
 public sealed class OrderItem : Entity<OrderItemId>
 {
 #pragma warning disable CS8618
-    private OrderItem() { } // for EFC
+    private OrderItem()
+    {
+    } // for EFC
 #pragma warning restore CS8618
 
     private OrderItem(OrderId orderId, ProductId productId, int quantity, Money unitPrice)
@@ -25,9 +27,15 @@ public sealed class OrderItem : Entity<OrderItemId>
 
     public static OrderItem TryCreate(OrderId orderId, ProductId productId, int quantity, Money unitPrice)
     {
-        if (quantity <= 0) throw new ValueBelowMinimumException("Quantity must be greater than zero.");
+        if (quantity <= 0)
+        {
+            throw new ValueBelowMinimumException("Quantity must be greater than zero.");
+        }
 
-        if (unitPrice.Value <= 0) throw new ValueBelowMinimumException("Unit price must be greater than zero.");
+        if (unitPrice.Value <= 0)
+        {
+            throw new ValueBelowMinimumException("Unit price must be greater than zero.");
+        }
 
         return new OrderItem(orderId, productId, quantity, unitPrice);
     }

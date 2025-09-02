@@ -1,9 +1,10 @@
-using Application.Abstraction.Utils;
 using Application.Dtos.Product;
 using Application.Mapper;
-using Domain.ValueObjects.Identifiers;
+using Application.Validator;
 
-namespace Application.CQRS.Product.GetProductDetails;
+namespace Application.CQRS.Product.Queries;
+
+public readonly record struct GetProductDetailsQuery(Guid ProductId) : IQuery<ResultT<ProductDto>>;
 
 public sealed class GetProductDetailsQueryHandler(IUnitOfWork unitOfWork)
     : IQueryHandler<GetProductDetailsQuery, ResultT<ProductDto>>
@@ -21,6 +22,16 @@ public sealed class GetProductDetailsQueryHandler(IUnitOfWork unitOfWork)
             ErrorFactory.NotFound($"Product with ID {query.ProductId} not found.");
         }
 
-        return ResultT<ProductDto>.Success(product.ToProductDto());
+        return product.ToProductDto();
+    }
+}
+
+public sealed class GetProductDetailsQueryValidator : AbstractValidator<GetProductDetailsQuery>
+{
+    public GetProductDetailsQueryValidator()
+    {
+        RuleFor(x => x.ProductId)
+            .IsId()
+            .WithMessage("ID needs to be a valid Guid");
     }
 }

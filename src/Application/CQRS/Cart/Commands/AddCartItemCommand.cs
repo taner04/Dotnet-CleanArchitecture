@@ -1,12 +1,16 @@
-using Application.Abstraction.Utils;
-using Domain.ValueObjects.Identifiers;
+using Application.Validator;
 
-namespace Application.CQRS.Cart.AddCartItem;
+namespace Application.CQRS.Cart.Commands;
 
-public sealed class AddCartItemCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : ICommandHandler<AddCartItemCommand, Result>
+public readonly record struct AddCartItemCommand(Guid ProductId, int Quantity) : ICommand<Result>;
+
+public sealed class AddCartItemCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+    : ICommandHandler<AddCartItemCommand, Result>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-    private readonly ICurrentUserService _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
+
+    private readonly ICurrentUserService _currentUserService =
+        currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
 
     public async ValueTask<Result> Handle(AddCartItemCommand command, CancellationToken cancellationToken)
     {
@@ -28,5 +32,15 @@ public sealed class AddCartItemCommandHandler(IUnitOfWork unitOfWork, ICurrentUs
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
+    }
+}
+
+public sealed class AddCartItemValidator : AbstractValidator<AddCartItemCommand>
+{
+    public AddCartItemValidator()
+    {
+        RuleFor(x => x.ProductId)
+            .IsId()
+            .WithMessage("ID needs to be a valid Guid");
     }
 }

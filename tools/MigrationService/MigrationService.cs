@@ -26,7 +26,7 @@ public class MigrationService : BackgroundService
         try
         {
             using var scope = _serviceProvider.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<Persistence.Data.ApplicationDbContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             await RunMigrationAsync(dbContext, stoppingToken);
             await SeedDataAsync(dbContext, stoppingToken);
@@ -41,14 +41,11 @@ public class MigrationService : BackgroundService
             _applicationLifetime.StopApplication();
         }
     }
-    
+
     private static async Task RunMigrationAsync(ApplicationDbContext dbContext, CancellationToken cancellationToken)
     {
         var strategy = dbContext.Database.CreateExecutionStrategy();
-        await strategy.ExecuteAsync(async () =>
-        {
-            await dbContext.Database.MigrateAsync(cancellationToken);
-        });
+        await strategy.ExecuteAsync(async () => { await dbContext.Database.MigrateAsync(cancellationToken); });
     }
 
     private static async Task SeedDataAsync(ApplicationDbContext dbContext, CancellationToken cancellationToken)

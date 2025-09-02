@@ -1,14 +1,17 @@
-using Application.Abstraction.Utils;
-using Domain.ValueObjects.Identifiers;
 using SharedKernel.Enums;
 
-namespace Application.CQRS.User.DeleteUser;
+namespace Application.CQRS.User.Commands;
 
-public sealed class DeleteUserCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : ICommandHandler<DeleteUserCommand, Result>
+public readonly record struct DeleteUserCommand : ICommand<Result>;
+
+public sealed class DeleteUserCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+    : ICommandHandler<DeleteUserCommand, Result>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-    private readonly ICurrentUserService _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
-    
+
+    private readonly ICurrentUserService _currentUserService =
+        currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
+
     public async ValueTask<Result> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
     {
         var userId = _currentUserService.GetUserId();
@@ -23,15 +26,15 @@ public sealed class DeleteUserCommandHandler(IUnitOfWork unitOfWork, ICurrentUse
         {
             ErrorFactory.Conflict("User cannot be deleted while having pending orders.");
         }
-        
-        _unitOfWork.OrderRepository.DeleteRange(orders);   
-        
+
+        _unitOfWork.OrderRepository.DeleteRange(orders);
+
         var cart = await _unitOfWork.CartRepository.GetCartByUserId(userId);
         if (cart != null)
         {
-            _unitOfWork.CartRepository.Delete(cart);   
+            _unitOfWork.CartRepository.Delete(cart);
         }
-        
+
         _unitOfWork.UserRepository.Delete(user);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

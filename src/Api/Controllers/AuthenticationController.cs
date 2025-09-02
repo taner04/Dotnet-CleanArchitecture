@@ -1,6 +1,5 @@
-﻿using Application.CQRS.User.LoginUser;
-using Application.CQRS.User.RefreshUserToken;
-using Application.CQRS.User.RegisterUser;
+﻿using Application.CQRS.User.Commands;
+using Application.CQRS.User.Queries;
 using Application.Dtos.User;
 using Mediator;
 using Microsoft.AspNetCore.Mvc;

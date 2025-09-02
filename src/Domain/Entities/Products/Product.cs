@@ -1,5 +1,6 @@
 ﻿using Domain.Abstraction;
 using Domain.Entities.Base;
+using Domain.Exceptions.Product;
 using Domain.ValueObjects;
 using Domain.ValueObjects.Identifiers;
 
@@ -8,7 +9,9 @@ namespace Domain.Entities.Products;
 public sealed class Product : AggregateRoot<ProductId>, ISoftDeletable
 {
 #pragma warning disable CS8618
-    private Product() { } // for EFC
+    private Product()
+    {
+    } // for EFC
 #pragma warning restore CS8618
 
     private Product(string name, string description, decimal price, int quantity)

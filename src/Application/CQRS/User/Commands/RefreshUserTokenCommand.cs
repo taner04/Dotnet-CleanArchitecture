@@ -1,8 +1,8 @@
-using Application.Abstraction.Utils;
 using Application.Dtos.Jwt;
-using Domain.Entities.Users;
 
-namespace Application.CQRS.User.RefreshUserToken;
+namespace Application.CQRS.User.Commands;
+
+public readonly record struct RefreshUserTokenCommand : ICommand<ResultT<RefreshTokenResponse>>;
 
 public class RefreshUserTokenCommandHandler : ICommandHandler<RefreshUserTokenCommand, ResultT<RefreshTokenResponse>>
 {
@@ -10,7 +10,8 @@ public class RefreshUserTokenCommandHandler : ICommandHandler<RefreshUserTokenCo
     private readonly ITokenService _tokenService;
     private readonly ICurrentUserService _currentUserService;
 
-    public RefreshUserTokenCommandHandler(IUnitOfWork unitOfWork, ITokenService tokenService, ICurrentUserService currentUserService)
+    public RefreshUserTokenCommandHandler(IUnitOfWork unitOfWork, ITokenService tokenService,
+        ICurrentUserService currentUserService)
     {
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
@@ -21,7 +22,7 @@ public class RefreshUserTokenCommandHandler : ICommandHandler<RefreshUserTokenCo
         CancellationToken cancellationToken)
     {
         var userId = _currentUserService.GetUserId();
-        
+
         var user = await _unitOfWork.UserRepository.GetByIdAsync(_currentUserService.GetUserId());
         if (user is null)
         {
@@ -32,10 +33,7 @@ public class RefreshUserTokenCommandHandler : ICommandHandler<RefreshUserTokenCo
         {
             return ErrorFactory.Unauthorized("Invalid refresh token");
         }
-        
-        var emailClaim = _tokenService.GetClaim(user.RefreshToken.Value, "email");
 
-        var subClaim = _tokenService.GetClaim(_currentUserService.GetAccessToken(), "sub");
         if (user.Id != userId)
         {
             return ErrorFactory.Unauthorized("Refresh token does not match the user's token");
@@ -49,8 +47,6 @@ public class RefreshUserTokenCommandHandler : ICommandHandler<RefreshUserTokenCo
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return ResultT<RefreshTokenResponse>.Success(new RefreshTokenResponse(
-            newAccessToken,
-            newRefreshToken));
+        return new RefreshTokenResponse(newAccessToken, newRefreshToken);
     }
 }

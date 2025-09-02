@@ -25,7 +25,7 @@ public static class DependencyInjection
 
             opt.UseNpgsql(connectionString);
         });
-        
+
         services.AddServicesFromAssembly(Assembly.GetExecutingAssembly());
         return services;
     }

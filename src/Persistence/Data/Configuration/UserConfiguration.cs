@@ -34,11 +34,11 @@ public sealed class UserConfiguration : EntityConfiguration<User, UserId>
         builder.Property(u => u.RefreshTokenExpiration)
             .IsRequired()
             .HasColumnType(PostgresTypes.TimestampWithTimeZone);
-        
+
         builder.HasMany(u => u.Orders)
             .WithOne(o => o.User)
             .OnDelete(DeleteBehavior.Restrict);
-        
+
         builder.HasOne(u => u.Cart)
             .WithOne(c => c.User)
             .OnDelete(DeleteBehavior.Restrict);

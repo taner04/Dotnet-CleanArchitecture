@@ -1,13 +1,16 @@
-using Application.Abstraction.Utils;
-using Domain.Entities.Orders.DomainEvents;
-using Domain.ValueObjects.Identifiers;
+using Application.Dtos.Product;
 
-namespace Application.CQRS.Order.CreateOrder;
+namespace Application.CQRS.Order.Commands;
 
-public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : ICommandHandler<CreateOrderCommand, Result>
+public readonly record struct CreateOrderCommand(List<ProductOrderCreateDto> Products) : ICommand<Result>;
+
+public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+    : ICommandHandler<CreateOrderCommand, Result>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-    private readonly ICurrentUserService _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
+
+    private readonly ICurrentUserService _currentUserService =
+        currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
 
     public async ValueTask<Result> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
     {
@@ -39,5 +42,17 @@ public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUs
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
+    }
+}
+
+public sealed class CreateOrderValidator : AbstractValidator<CreateOrderCommand>
+{
+    public CreateOrderValidator()
+    {
+        RuleFor(order => order.Products)
+            .NotEmpty()
+            .WithMessage("Order items cannot be empty.")
+            .Must(items => items.Count > 0)
+            .WithMessage("At least one order item is required.");
     }
 }

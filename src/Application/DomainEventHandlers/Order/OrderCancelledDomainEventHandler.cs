@@ -18,7 +18,10 @@ public sealed class OrderCancelledDomainEventHandler : IDomainEventHandler<Order
         foreach (var (productId, quantity) in notification.Products)
         {
             var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
-            if (product is null) continue;
+            if (product is null)
+            {
+                continue;
+            }
 
             product.IncreaseStock(quantity);
             _unitOfWork.ProductRepository.Update(product);

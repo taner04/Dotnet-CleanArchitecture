@@ -35,9 +35,15 @@ public sealed class UnitOfWork : IUnitOfWork
 
     private void Dispose(bool disposing)
     {
-        if (_disposedValue) return;
+        if (_disposedValue)
+        {
+            return;
+        }
 
-        if (disposing) _dbContext.Dispose();
+        if (disposing)
+        {
+            _dbContext.Dispose();
+        }
 
         _disposedValue = true;
     }

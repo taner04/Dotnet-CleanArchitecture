@@ -9,7 +9,10 @@ using Persistence.Data;
 using Scalar.AspNetCore;
 
 
-if (File.Exists(".env.dev")) Env.Load(".env.dev");
+if (File.Exists(".env.dev"))
+{
+    Env.Load(".env.dev");
+}
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", false, true)
@@ -33,7 +36,7 @@ builder.Services.AddProblemDetails(config =>
 
 builder.Services.AddInfrastructure(builder);
 builder.Services.AddApplication();
-builder.Services.AddPersistence(builder.Configuration.GetConnectionString("eshop") 
+builder.Services.AddPersistence(builder.Configuration.GetConnectionString("eshop")
                                 ?? throw new InvalidOperationException("Connection string 'eshop' not found."));
 
 builder.EnrichNpgsqlDbContext<ApplicationDbContext>();

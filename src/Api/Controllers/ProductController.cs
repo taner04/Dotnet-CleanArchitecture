@@ -1,6 +1,4 @@
-﻿using Application.CQRS.Product.GetAll;
-using Application.CQRS.Product.GetProductByName;
-using Application.CQRS.Product.GetProductDetails;
+﻿using Application.CQRS.Product.Queries;
 using Application.Dtos.Product;
 using Mediator;
 using Microsoft.AspNetCore.Mvc;

@@ -1,14 +1,17 @@
-using Application.Abstraction.Utils;
-using Domain.ValueObjects.Identifiers;
-using SharedKernel.Enums;
+using Application.Validator;
 
-namespace Application.CQRS.Order.CancelOrder;
+namespace Application.CQRS.Order.Commands;
 
-public sealed class CancelOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService) : ICommandHandler<CancelOrderCommand, Result>
+public readonly record struct CancelOrderCommand(Guid OrderId) : ICommand<Result>;
+
+public sealed class CancelOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+    : ICommandHandler<CancelOrderCommand, Result>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-    private readonly ICurrentUserService _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
-    
+
+    private readonly ICurrentUserService _currentUserService =
+        currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
+
     public async ValueTask<Result> Handle(CancelOrderCommand command, CancellationToken cancellationToken)
     {
         var order = await _unitOfWork.OrderRepository.GetByIdAsync(OrderId.From(command.OrderId));
@@ -28,5 +31,14 @@ public sealed class CancelOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUs
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
+    }
+}
+
+public sealed class CancelOrderValidator : AbstractValidator<CancelOrderCommand>
+{
+    public CancelOrderValidator()
+    {
+        RuleFor(x => x.OrderId).IsId()
+            .WithMessage("ID needs to be a valid Guid");
     }
 }

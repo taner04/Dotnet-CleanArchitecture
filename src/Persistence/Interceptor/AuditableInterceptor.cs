@@ -11,7 +11,10 @@ public sealed class AuditableInterceptor : SaveChangesInterceptor
         InterceptionResult<int> result,
         CancellationToken cancellationToken = default)
     {
-        if (eventData.Context is not null) SetAuditableProperties(eventData.Context);
+        if (eventData.Context is not null)
+        {
+            SetAuditableProperties(eventData.Context);
+        }
 
         return base.SavingChangesAsync(eventData, result, cancellationToken);
     }
@@ -25,7 +28,9 @@ public sealed class AuditableInterceptor : SaveChangesInterceptor
             .Where(e => e.Entity is IAuditable);
 
         foreach (var entry in auditableEntities)
+        {
             if (entry.Entity is IAuditable auditable)
+            {
                 switch (entry.State)
                 {
                     case EntityState.Added:
@@ -43,5 +48,7 @@ public sealed class AuditableInterceptor : SaveChangesInterceptor
                     default:
                         break;
                 }
+            }
+        }
     }
 }

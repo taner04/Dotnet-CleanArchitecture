@@ -19,7 +19,10 @@ public sealed class OrderConfirmationDomainEventHandler : IDomainEventHandler<Or
     public async ValueTask Handle(OrderConfirmationDomainEvent notification, CancellationToken cancellationToken)
     {
         var user = await _unitOfWork.UserRepository.GetByIdAsync(notification.UserId);
-        if (user is null) return;
+        if (user is null)
+        {
+            return;
+        }
 
         var mimeMessage = new MimeMessage();
 

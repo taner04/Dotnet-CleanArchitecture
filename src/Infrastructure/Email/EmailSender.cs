@@ -10,7 +10,10 @@ public class EmailSender : IEmailSender
     //TODO: Maybe implement actual email sending logic using SMTP or any other service.
     public Task SendAsync(MimeMessage mimeMessage, CancellationToken cancellationToken)
     {
-        if (mimeMessage is null) throw new ArgumentNullException(nameof(mimeMessage), "MimeMessage cannot be null.");
+        if (mimeMessage is null)
+        {
+            throw new ArgumentNullException(nameof(mimeMessage), "MimeMessage cannot be null.");
+        }
 
         Debug.WriteLine($"\n\tEmail send to: {mimeMessage.To.First()}", "Domain-Event");
         return Task.CompletedTask;

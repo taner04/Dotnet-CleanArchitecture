@@ -14,7 +14,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         base.ConfigureConventions(configurationBuilder);
-        
+
         configurationBuilder.RegisterAllInEfcIdConverter();
         configurationBuilder.RegisterAllInEfcValueObjectConverter();
     }

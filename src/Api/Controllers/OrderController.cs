@@ -1,6 +1,5 @@
-﻿using Application.CQRS.Order.CancelOrder;
-using Application.CQRS.Order.CreateOrder;
-using Application.CQRS.Order.GetOrders;
+﻿using Application.CQRS.Order.Commands;
+using Application.CQRS.Order.Queries;
 using Application.Dtos.Order;
 using Mediator;
 using Microsoft.AspNetCore.Authorization;

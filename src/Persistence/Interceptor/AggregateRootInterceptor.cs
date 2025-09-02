@@ -19,7 +19,10 @@ public sealed class AggregateRootInterceptor : SaveChangesInterceptor
         InterceptionResult<int> result,
         CancellationToken cancellationToken = default)
     {
-        if (eventData.Context is not null) await TriggerDomainEvents(eventData.Context, cancellationToken);
+        if (eventData.Context is not null)
+        {
+            await TriggerDomainEvents(eventData.Context, cancellationToken);
+        }
 
         return await base.SavingChangesAsync(eventData, result, cancellationToken);
     }
@@ -33,8 +36,11 @@ public sealed class AggregateRootInterceptor : SaveChangesInterceptor
 
         foreach (var entry in aggregateRoots)
         {
-            if (entry.Entity is not IAggregateRoot aggregateRoot) continue;
-            
+            if (entry.Entity is not IAggregateRoot aggregateRoot)
+            {
+                continue;
+            }
+
             var domainEvents = aggregateRoot.PopDomainEvents();
             foreach (var domainEvent in domainEvents)
             {
