@@ -7,6 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Exceptions\NewFolder\**" />
+      <EmbeddedResource Remove="Exceptions\NewFolder\**" />
+      <None Remove="Exceptions\NewFolder\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Mediator.Abstractions" Version="3.0.1" />
         <PackageReference Include="Vogen" Version="8.0.1" />
     </ItemGroup>

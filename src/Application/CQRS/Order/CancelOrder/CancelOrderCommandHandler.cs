@@ -14,16 +14,12 @@ public sealed class CancelOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUs
         var order = await _unitOfWork.OrderRepository.GetByIdAsync(OrderId.From(command.OrderId));
         if (order is null)
         {
-            return Result.Failure(
-                ErrorFactory.NotFound($"Order with ID {command.OrderId} not found.")
-            );
+            return ErrorFactory.NotFound($"Order with ID {command.OrderId} not found.");
         }
 
         if (order.UserId != _currentUserService.GetUserId())
         {
-            return Result.Failure(
-                ErrorFactory.Unauthorized("You cannot cancel an order that does not belong to you.")
-            );
+            return ErrorFactory.Unauthorized("You cannot cancel an order that does not belong to you.");
         }
 
         order.Cancel();

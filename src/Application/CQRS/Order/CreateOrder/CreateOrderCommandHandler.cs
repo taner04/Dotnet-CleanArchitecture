@@ -15,9 +15,7 @@ public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUs
         var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
         if (user is null)
         {
-            return Result.Failure(
-                ErrorFactory.NotFound($"User with ID {userId.Value} not found.")
-            );
+            return ErrorFactory.NotFound($"User with ID {userId.Value} not found.");
         }
 
         var order = Domain.Entities.Orders.Order.TryCreate(userId);
@@ -28,9 +26,7 @@ public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUs
 
             if (productEntity is null)
             {
-                return Result.Failure(
-                    ErrorFactory.NotFound($"Product with ID {productId} not found.")
-                );
+                return ErrorFactory.NotFound($"Product with ID {productId} not found.");
             }
 
             productEntity.ReduceStock(product.Quantity);

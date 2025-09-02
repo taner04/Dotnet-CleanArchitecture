@@ -31,21 +31,24 @@ public sealed class Cart : AggregateRoot<CartId>
 
         var existingCartItem = _cartItems.FirstOrDefault(ci => ci.ProductId == productId);
         if (existingCartItem != null)
+        {
             existingCartItem.IncrementQuantity(quantity);
+        }
         else
+        {
             _cartItems.Add(CartItem.TryCreate(Id, productId, quantity));
+        }
     }
 
-    public Result TryRemoveCartItem(CartItemId cartItemId)
+    public void RemoveCartItem(CartItemId cartItemId)
     {
         var cartItem = _cartItems.FirstOrDefault(ci => ci.Id == cartItemId);
         if (cartItem == null)
-            return Result.Failure(
-                ErrorFactory.NotFound($"Cart item with ID {cartItemId} not found in cart.")
-            );
+        {
+            throw new DomainException($"Cart item with ID {cartItemId} not found in cart.");
+        }
 
         _cartItems.Remove(cartItem);
-        return Result.Success();
     }
 
     public UserId UserId { get; set; }

@@ -27,9 +27,7 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
         var existingUser = await _unitOfWork.UserRepository.GetByEmailAsync(Email.From(command.Email));
         if (existingUser is not null)
         {
-            return Result.Failure(
-                ErrorFactory.Conflict("The email is already registered")
-            );
+            return ErrorFactory.Conflict("The email is already registered");
         }
         
         var newUser = command.ToUser();

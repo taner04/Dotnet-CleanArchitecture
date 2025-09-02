@@ -17,9 +17,9 @@ public sealed class GetProductDetailsQueryHandler(IUnitOfWork unitOfWork)
         var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
 
         if (product is null)
-            return ResultT<ProductDto>.Failure(
-                ErrorFactory.NotFound($"Product with ID {query.ProductId} not found.")
-            );
+        {
+            ErrorFactory.NotFound($"Product with ID {query.ProductId} not found.");
+        }
 
         return ResultT<ProductDto>.Success(product.ToProductDto());
     }

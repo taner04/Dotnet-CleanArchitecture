@@ -14,15 +14,15 @@ public sealed class DeleteUserCommandHandler(IUnitOfWork unitOfWork, ICurrentUse
         var userId = _currentUserService.GetUserId();
         var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
         if (user is null)
-            return Result.Failure(
-                ErrorFactory.NotFound($"User with ID {userId.Value} not found.")
-            );
+        {
+            ErrorFactory.NotFound($"User with ID {userId.Value} not found.");
+        }
 
         var orders = await _unitOfWork.OrderRepository.OrdersByUserAsync(userId);
         if (orders.Any(o => o.Status == OrderStatus.Pending))
-            return Result.Failure(
-                ErrorFactory.Conflict("User cannot be deleted while having pending orders.")
-            );
+        {
+            ErrorFactory.Conflict("User cannot be deleted while having pending orders.");
+        }
         
         _unitOfWork.OrderRepository.DeleteRange(orders);   
         

@@ -15,12 +15,11 @@ public sealed class RemoveCartItemCommandHandler(IUnitOfWork unitOfWork, ICurren
         
         var cart = await _unitOfWork.CartRepository.GetCartByUserId(userId);
         if (cart == null)
-            return Result.Failure(
-                ErrorFactory.NotFound("Cart not found for the specified user.")
-            );
+        {
+            return ErrorFactory.NotFound("Cart not found for the specified user.");
+        }
 
-        var result = cart.TryRemoveCartItem(CartItemId.From(command.CartItemId));
-        if (!result.IsSuccess) return result;
+        cart.RemoveCartItem(CartItemId.From(command.CartItemId));
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

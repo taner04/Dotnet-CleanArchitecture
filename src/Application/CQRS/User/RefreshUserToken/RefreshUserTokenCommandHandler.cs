@@ -24,20 +24,22 @@ public class RefreshUserTokenCommandHandler : ICommandHandler<RefreshUserTokenCo
         
         var user = await _unitOfWork.UserRepository.GetByIdAsync(_currentUserService.GetUserId());
         if (user is null)
-            return ResultT<RefreshTokenResponse>.Failure(
-                ErrorFactory.NotFound("User not found"));
+        {
+            return ErrorFactory.NotFound("User not found");
+        }
 
         if (!_tokenService.IsRefreshTokenValid(user.RefreshToken.Value))
-            return ResultT<RefreshTokenResponse>.Failure(
-                ErrorFactory.Unauthorized("Invalid refresh token"));
-
+        {
+            return ErrorFactory.Unauthorized("Invalid refresh token");
+        }
+        
         var emailClaim = _tokenService.GetClaim(user.RefreshToken.Value, "email");
-
 
         var subClaim = _tokenService.GetClaim(_currentUserService.GetAccessToken(), "sub");
         if (user.Id != userId)
-            return ResultT<RefreshTokenResponse>.Failure(
-                ErrorFactory.Unauthorized("Refresh token does not match the user's token"));
+        {
+            return ErrorFactory.Unauthorized("Refresh token does not match the user's token");
+        }
 
         var newAccessToken = _tokenService.GenerateAccessToken(user);
         var newRefreshToken = _tokenService.GenerateRefreshToken(user);

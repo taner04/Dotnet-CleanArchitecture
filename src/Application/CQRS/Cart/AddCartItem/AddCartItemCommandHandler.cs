@@ -20,9 +20,9 @@ public sealed class AddCartItemCommandHandler(IUnitOfWork unitOfWork, ICurrentUs
 
         var productId = ProductId.From(command.ProductId);
         if (await _unitOfWork.ProductRepository.GetByIdAsync(productId) == null)
-            return Result.Failure(
-                ErrorFactory.NotFound("Product not found.")
-            );
+        {
+            return ErrorFactory.NotFound("Product not found.");
+        }
 
         cart.AddCartItem(productId, command.Quantity);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
