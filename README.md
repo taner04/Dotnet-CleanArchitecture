@@ -48,7 +48,7 @@ Once prerequisites are installed, you can clone the repository and follow the se
 To launch the application:
 
 1. **Start Docker** to ensure all required containers and services can run.
-2. Run the `eShop.AppHost` project. This will orchestrate the startup of all necessary services and dependencies.
+2. Run the `AppHost` project. This will orchestrate the startup of all necessary services and dependencies.
 
 Alternatively, run the provided script from the root directory:
 
