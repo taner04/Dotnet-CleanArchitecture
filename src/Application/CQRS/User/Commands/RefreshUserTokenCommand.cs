@@ -1,4 +1,8 @@
+using Application.Abstraction;
 using Application.Dtos.Jwt;
+using Ardalis.Specification.EntityFrameworkCore;
+using Domain.Entities.Users;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.User.Commands;
 
@@ -6,14 +10,14 @@ public readonly record struct RefreshUserTokenCommand : ICommand<ResultT<Refresh
 
 public class RefreshUserTokenCommandHandler : ICommandHandler<RefreshUserTokenCommand, ResultT<RefreshTokenResponse>>
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IApplicationDbContext _dbContext;
     private readonly ITokenService _tokenService;
     private readonly ICurrentUserService _currentUserService;
 
-    public RefreshUserTokenCommandHandler(IUnitOfWork unitOfWork, ITokenService tokenService,
+    public RefreshUserTokenCommandHandler(IApplicationDbContext dbContext, ITokenService tokenService,
         ICurrentUserService currentUserService)
     {
-        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
         _currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
     }
@@ -22,8 +26,8 @@ public class RefreshUserTokenCommandHandler : ICommandHandler<RefreshUserTokenCo
         CancellationToken cancellationToken)
     {
         var userId = _currentUserService.GetUserId();
-
-        var user = await _unitOfWork.UserRepository.GetByIdAsync(_currentUserService.GetUserId());
+        
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
         if (user is null)
         {
             return ErrorFactory.NotFound("User not found");
@@ -43,9 +47,9 @@ public class RefreshUserTokenCommandHandler : ICommandHandler<RefreshUserTokenCo
         var newRefreshToken = _tokenService.GenerateRefreshToken(user);
 
         user.SetRefreshToken(newRefreshToken);
-        _unitOfWork.UserRepository.Update(user);
+        _dbContext.Users.Update(user);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         return new RefreshTokenResponse(newAccessToken, newRefreshToken);
     }

@@ -1,34 +1,32 @@
+using Application.Abstraction;
 using Application.Validator;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.Order.Commands;
 
 public readonly record struct CancelOrderCommand(Guid OrderId) : ICommand<Result>;
 
-public sealed class CancelOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+public sealed class CancelOrderCommandHandler(IApplicationDbContext dbContext, ICurrentUserService currentUserService)
     : ICommandHandler<CancelOrderCommand, Result>
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-
-    private readonly ICurrentUserService _currentUserService =
-        currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
-
     public async ValueTask<Result> Handle(CancelOrderCommand command, CancellationToken cancellationToken)
     {
-        var order = await _unitOfWork.OrderRepository.GetByIdAsync(OrderId.From(command.OrderId));
+        var orderId = OrderId.From(command.OrderId);
+        var order = await dbContext.Orders.FirstOrDefaultAsync(o => o.Id == orderId, cancellationToken);
         if (order is null)
         {
             return ErrorFactory.NotFound($"Order with ID {command.OrderId} not found.");
         }
 
-        if (order.UserId != _currentUserService.GetUserId())
+        if (order.UserId != currentUserService.GetUserId())
         {
             return ErrorFactory.Unauthorized("You cannot cancel an order that does not belong to you.");
         }
 
         order.Cancel();
 
-        _unitOfWork.OrderRepository.Delete(order);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        dbContext.Orders.Remove(order);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

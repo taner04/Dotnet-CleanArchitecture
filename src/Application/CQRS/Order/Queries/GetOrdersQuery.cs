@@ -1,23 +1,25 @@
+using Application.Abstraction;
 using Application.Dtos.Order;
 using Application.Mapper;
+using Ardalis.Specification.EntityFrameworkCore;
+using Domain.Entities.Orders;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.Order.Queries;
 
 public readonly record struct GetOrdersQuery : IQuery<ResultT<List<OrderDto>>>;
 
-public sealed class GetOrdersQueryHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+public sealed class GetOrdersQueryHandler(IApplicationDbContext dbContext, ICurrentUserService currentUserService)
     : IQueryHandler<GetOrdersQuery, ResultT<List<OrderDto>>>
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-
-    private readonly ICurrentUserService _currentUserService =
-        currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
-
     public async ValueTask<ResultT<List<OrderDto>>> Handle(GetOrdersQuery command, CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.GetUserId();
+        var userId = currentUserService.GetUserId();
 
-        var orders = await _unitOfWork.OrderRepository.OrdersByUserAsync(userId);
+        var orders = await dbContext.Orders
+            .WithSpecification(new OrdersByUserSpecification(userId))
+            .ToListAsync(cancellationToken);
+        
         return orders.Select(o => o.ToOrderDto()).ToList();
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SharedKernel.Extensions;
 using System.Reflection;
+using Application.Abstraction;
 using Persistence.Data;
 using Persistence.Interceptor;
 
@@ -17,7 +18,7 @@ public static class DependencyInjection
         services.AddSingleton<ISaveChangesInterceptor, AuditableInterceptor>();
         services.AddSingleton<ISaveChangesInterceptor, SoftDeletableInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, AggregateRootInterceptor>();
-
+        
         services.AddDbContext<ApplicationDbContext>((sp, opt) =>
         {
             var interceptors = sp.GetServices<ISaveChangesInterceptor>().ToList();

@@ -1,43 +1,45 @@
+using Application.Abstraction;
+using Ardalis.Specification.EntityFrameworkCore;
+using Domain.Entities.Users;
+using Microsoft.EntityFrameworkCore;
 using SharedKernel.Enums;
 
 namespace Application.CQRS.User.Commands;
 
 public readonly record struct DeleteUserCommand : ICommand<Result>;
 
-public sealed class DeleteUserCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+public sealed class DeleteUserCommandHandler(IApplicationDbContext dbContext, ICurrentUserService currentUserService)
     : ICommandHandler<DeleteUserCommand, Result>
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-
-    private readonly ICurrentUserService _currentUserService =
-        currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
-
     public async ValueTask<Result> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.GetUserId();
-        var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+        var userId = currentUserService.GetUserId();
+        
+        var user = await dbContext.Users
+            .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+        
         if (user is null)
         {
             return ErrorFactory.NotFound($"User with ID {userId.Value} not found.");
         }
 
-        var orders = await _unitOfWork.OrderRepository.OrdersByUserAsync(userId);
+        var orders = await dbContext.Orders.Where(o => o.UserId == userId).ToListAsync(cancellationToken);
         if (orders.Any(o => o.Status == OrderStatus.Pending))
         {
             return ErrorFactory.Conflict("User cannot be deleted while having pending orders.");
         }
 
-        _unitOfWork.OrderRepository.DeleteRange(orders);
+        dbContext.Orders.RemoveRange(orders);
 
-        var cart = await _unitOfWork.CartRepository.GetCartByUserId(userId);
+        var cart = await dbContext.Carts.FirstOrDefaultAsync(c => c.UserId == userId, cancellationToken);
         if (cart != null)
         {
-            _unitOfWork.CartRepository.Delete(cart);
+            dbContext.Carts.Remove(cart);
         }
 
-        _unitOfWork.UserRepository.Delete(user);
+        dbContext.Users.Remove(user);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

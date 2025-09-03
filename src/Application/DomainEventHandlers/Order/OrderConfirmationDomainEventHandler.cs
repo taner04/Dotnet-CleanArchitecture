@@ -1,24 +1,22 @@
-﻿using Application.Abstraction.Utils;
+﻿using Application.Abstraction;
+using Application.Abstraction.Utils;
+using Ardalis.Specification.EntityFrameworkCore;
 using Domain.Abstraction.DomainEvent;
 using Domain.Entities.Orders.DomainEvents;
+using Domain.Entities.Users;
+using Microsoft.EntityFrameworkCore;
 using MimeKit;
 
 namespace Application.DomainEventHandlers.Order;
 
-public sealed class OrderConfirmationDomainEventHandler : IDomainEventHandler<OrderConfirmationDomainEvent>
+public sealed class OrderConfirmationDomainEventHandler(IEmailSender emailSender, IApplicationDbContext dbContext)
+    : IDomainEventHandler<OrderConfirmationDomainEvent>
 {
-    private readonly IEmailSender _emailSender;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public OrderConfirmationDomainEventHandler(IEmailSender emailSender, IUnitOfWork unitOfWork)
-    {
-        _emailSender = emailSender ?? throw new ArgumentNullException(nameof(emailSender));
-        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-    }
-
     public async ValueTask Handle(OrderConfirmationDomainEvent notification, CancellationToken cancellationToken)
     {
-        var user = await _unitOfWork.UserRepository.GetByIdAsync(notification.UserId);
+        var user = await dbContext.Users
+            .FirstOrDefaultAsync(u => u.Id == notification.UserId,cancellationToken);
+        
         if (user is null)
         {
             return;
@@ -36,6 +34,6 @@ public sealed class OrderConfirmationDomainEventHandler : IDomainEventHandler<Or
                 $"Hello {user!.FirstName},\n\nYour order with ID {notification.Order.Id} has been successfully placed.\n\nThank you for shopping with us!\n\nBest regards,\neShop Team"
         };
 
-        await _emailSender.SendAsync(mimeMessage, cancellationToken);
+        await emailSender.SendAsync(mimeMessage, cancellationToken);
     }
 }

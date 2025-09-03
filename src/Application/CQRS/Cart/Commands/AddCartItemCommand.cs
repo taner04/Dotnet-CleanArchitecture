@@ -1,35 +1,32 @@
+using Application.Abstraction;
 using Application.Validator;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.Cart.Commands;
 
 public readonly record struct AddCartItemCommand(Guid ProductId, int Quantity) : ICommand<Result>;
 
-public sealed class AddCartItemCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+public sealed class AddCartItemCommandHandler(IApplicationDbContext dbContext, ICurrentUserService currentUserService)
     : ICommandHandler<AddCartItemCommand, Result>
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-
-    private readonly ICurrentUserService _currentUserService =
-        currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
-
     public async ValueTask<Result> Handle(AddCartItemCommand command, CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.GetUserId();
-        var cart = await _unitOfWork.CartRepository.GetCartByUserId(userId);
+        var userId = currentUserService.GetUserId();
+        var cart = await dbContext.Carts.FirstOrDefaultAsync(c => c.UserId == userId, cancellationToken);
         if (cart == null)
         {
             cart = Domain.Entities.Carts.Cart.TryCreate(userId);
-            _unitOfWork.CartRepository.Add(cart);
+            dbContext.Carts.Add(cart);
         }
 
         var productId = ProductId.From(command.ProductId);
-        if (await _unitOfWork.ProductRepository.GetByIdAsync(productId) == null)
+        if (await dbContext.Products.FindAsync(productId, cancellationToken) == null)
         {
             return ErrorFactory.NotFound("Product not found.");
         }
 
         cart.AddCartItem(productId, command.Quantity);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

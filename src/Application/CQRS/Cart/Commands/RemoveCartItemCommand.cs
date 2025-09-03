@@ -1,22 +1,19 @@
+using Application.Abstraction;
 using Application.Validator;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.Cart.Commands;
 
 public readonly record struct RemoveCartItemCommand(Guid CartItemId) : ICommand<Result>;
 
-public sealed class RemoveCartItemCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+public sealed class RemoveCartItemCommandHandler(IApplicationDbContext dbContext, ICurrentUserService currentUserService)
     : ICommandHandler<RemoveCartItemCommand, Result>
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-
-    private readonly ICurrentUserService _currentUserService =
-        currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
-
     public async ValueTask<Result> Handle(RemoveCartItemCommand command, CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.GetUserId();
+        var userId = currentUserService.GetUserId();
 
-        var cart = await _unitOfWork.CartRepository.GetCartByUserId(userId);
+        var cart = await dbContext.Carts.FirstOrDefaultAsync(c => c.UserId == userId, cancellationToken);
         if (cart == null)
         {
             return ErrorFactory.NotFound("Cart not found for the specified user.");
@@ -24,7 +21,7 @@ public sealed class RemoveCartItemCommandHandler(IUnitOfWork unitOfWork, ICurren
 
         cart.RemoveCartItem(CartItemId.From(command.CartItemId));
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

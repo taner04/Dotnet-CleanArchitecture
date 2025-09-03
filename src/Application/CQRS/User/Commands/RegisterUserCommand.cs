@@ -1,6 +1,10 @@
+using Application.Abstraction;
 using Application.Mapper;
+using Ardalis.Specification.EntityFrameworkCore;
+using Domain.Entities.Users;
 using Domain.Entities.Users.DomainEvents;
 using Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.User.Commands;
 
@@ -9,23 +13,25 @@ public readonly record struct RegisterUserCommand(string FirstName, string LastN
 
 public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, Result>
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IApplicationDbContext _dbContext;
     private readonly ITokenService _tokenService;
     private readonly IPasswordHasher _passwordHasher;
 
     public RegisterUserCommandHandler(
-        IUnitOfWork unitOfWork,
+        IApplicationDbContext dbContext,
         ITokenService tokenService,
         IPasswordHasher passwordHasher)
     {
-        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
         _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
     }
 
     public async ValueTask<Result> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
     {
-        var existingUser = await _unitOfWork.UserRepository.GetByEmailAsync(Email.From(command.Email));
+        var email = Email.From(command.Email);
+        var existingUser = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+        
         if (existingUser is not null)
         {
             return ErrorFactory.Conflict("The email is already registered");
@@ -38,8 +44,8 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
 
         newUser.AddDomainEvent(new UserRegisteredDomainEvent(newUser.FirstName, newUser.LastName, newUser.Email.Value));
 
-        _unitOfWork.UserRepository.Add(newUser);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        _dbContext.Users.Add(newUser);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

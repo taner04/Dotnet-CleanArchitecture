@@ -1,21 +1,18 @@
+using Application.Abstraction;
 using Application.Dtos.Product;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.Order.Commands;
 
 public readonly record struct CreateOrderCommand(List<ProductOrderCreateDto> Products) : ICommand<Result>;
 
-public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+public sealed class CreateOrderCommandHandler(IApplicationDbContext dbContext, ICurrentUserService currentUserService)
     : ICommandHandler<CreateOrderCommand, Result>
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-
-    private readonly ICurrentUserService _currentUserService =
-        currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
-
     public async ValueTask<Result> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.GetUserId();
-        var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+        var userId = currentUserService.GetUserId();
+        var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
         if (user is null)
         {
             return ErrorFactory.NotFound($"User with ID {userId.Value} not found.");
@@ -25,7 +22,7 @@ public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUs
         foreach (var product in command.Products)
         {
             var productId = ProductId.From(product.ProductId);
-            var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
+            var productEntity = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == productId, cancellationToken);
 
             if (productEntity is null)
             {
@@ -33,13 +30,13 @@ public sealed class CreateOrderCommandHandler(IUnitOfWork unitOfWork, ICurrentUs
             }
 
             productEntity.ReduceStock(product.Quantity);
-            _unitOfWork.ProductRepository.Update(productEntity);
+            dbContext.Products.Update(productEntity);
 
             order.AddOrderItem(productId, product.Quantity, productEntity.Price);
         }
 
-        _unitOfWork.OrderRepository.Add(order);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        dbContext.Orders.Add(order);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

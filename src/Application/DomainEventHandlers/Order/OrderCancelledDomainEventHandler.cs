@@ -1,32 +1,30 @@
-﻿using Application.Abstraction.Utils;
+﻿using Application.Abstraction;
+using Application.Abstraction.Utils;
+using Ardalis.Specification.EntityFrameworkCore;
 using Domain.Abstraction.DomainEvent;
 using Domain.Entities.Orders.DomainEvents;
+using Domain.Entities.Products;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.DomainEventHandlers.Order;
 
-public sealed class OrderCancelledDomainEventHandler : IDomainEventHandler<OrderCancelledDomainEvent>
+public sealed class OrderCancelledDomainEventHandler(IApplicationDbContext dbContext)
+    : IDomainEventHandler<OrderCancelledDomainEvent>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public OrderCancelledDomainEventHandler(IUnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-    }
-
     public async ValueTask Handle(OrderCancelledDomainEvent notification, CancellationToken cancellationToken)
     {
         foreach (var (productId, quantity) in notification.Products)
         {
-            var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
+            var product = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == productId, cancellationToken);
             if (product is null)
             {
                 continue;
             }
 
             product.IncreaseStock(quantity);
-            _unitOfWork.ProductRepository.Update(product);
+            dbContext.Products.Update(product);
         }
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

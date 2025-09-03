@@ -1,20 +1,28 @@
+using Application.Abstraction;
 using Application.Dtos.Product;
 using Application.Mapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.Product.Queries;
 
-public readonly record struct GetProductByNameQuery(string Name) : IQuery<ResultT<List<ProductDto>>>;
+public readonly record struct GetProductByNameQuery(string Name) : IQuery<ResultT<ProductDto>>;
 
-public sealed class GetProductByNameQueryHandler(IUnitOfWork unitOfWork)
-    : IQueryHandler<GetProductByNameQuery, ResultT<List<ProductDto>>>
+public sealed class GetProductByNameQueryHandler(IApplicationDbContext dbContext)
+    : IQueryHandler<GetProductByNameQuery, ResultT<ProductDto>>
 {
-    private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-
-    public async ValueTask<ResultT<List<ProductDto>>> Handle(GetProductByNameQuery query,
+    public async ValueTask<ResultT<ProductDto>> Handle(GetProductByNameQuery query,
         CancellationToken cancellationToken)
     {
-        var products = await _unitOfWork.ProductRepository.GetByNameAsync(query.Name);
-        return products.Select(p => p.ToProductDto()).ToList();
+        var products = await dbContext.Products
+            .Where(p => EF.Functions.Like(p.Name.ToLower(), $"%{query.Name.ToLower()}%"))
+            .FirstOrDefaultAsync(cancellationToken);
+        
+        if (products is null)
+        {
+            return ErrorFactory.NotFound($"No products found with name containing '{query.Name}'.");
+        }
+
+        return products.ToProductDto();
     }
 }
 
