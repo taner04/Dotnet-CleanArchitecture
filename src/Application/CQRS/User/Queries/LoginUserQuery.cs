@@ -24,7 +24,7 @@ public class LoginUserQueryHandler : IQueryHandler<LoginUserQuery, ResultT<AuthR
         var existingUser = await _unitOfWork.UserRepository.GetByEmailAsync(Email.From(query.Email));
         if (existingUser is null)
         {
-            ErrorFactory.NotFound("User not found");
+            return ErrorFactory.NotFound("User not found");
         }
 
         if (!_passwordHasher.VerifyPassword(query.Password, existingUser.Password.Value))

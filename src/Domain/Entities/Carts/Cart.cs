@@ -59,7 +59,7 @@ public sealed class Cart : AggregateRoot<CartId>
         _cartItems.Remove(cartItem);
     }
 
-    public UserId UserId { get; set; }
+    public UserId UserId { get; private set; }
     public IReadOnlyCollection<CartItem> CartItems => _cartItems.AsReadOnly();
 
     public User User { get; set; } = null!; // Navigation property

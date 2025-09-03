@@ -24,19 +24,4 @@ public sealed class CurrentUserService(IHttpContextAccessor httpContextAccessor)
 
         return UserId.From(userIdGuid);
     }
-
-    public string GetAccessToken()
-    {
-        var authorizationHeader = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].FirstOrDefault();
-        if (authorizationHeader == null || !authorizationHeader.Contains("Bearer"))
-        {
-            throw new UnauthorizedAccessException("Authorization header is missing or invalid.");
-        }
-
-        var token = authorizationHeader.Split(" ").Last();
-        var handler = new JsonWebTokenHandler();
-        var jwtToken = handler.ReadJsonWebToken(token);
-
-        return jwtToken == null ? throw new UnauthorizedAccessException("Invalid JWT token.") : token;
-    }
 }
