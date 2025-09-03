@@ -36,7 +36,8 @@ public sealed class CancelOrderValidator : AbstractValidator<CancelOrderCommand>
 {
     public CancelOrderValidator()
     {
-        RuleFor(x => x.OrderId).IsId()
+        RuleFor(x => x.OrderId)
+            .IsId()
             .WithMessage("ID needs to be a valid Guid");
     }
 }
