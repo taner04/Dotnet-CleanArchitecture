@@ -17,7 +17,7 @@ It is also intended to serve as inspiration for others looking to adopt Clean Ar
 - **Infrastructure** – Handles external integrations and technical concerns (e.g., email, logging, authentication) that are not directly related to data persistence.
 - **Api** – Exposes HTTP endpoints for clients and maps requests to Application services.
 - **SharedKernel** – Common abstractions and utilities shared across multiple projects.
-- **eShop.AppHost / eShop.ServiceDefaults** – Hosting and default configuration for running the application.
+- **AppHost / ServiceDefaults** – Hosting and default configuration for running the application.
 
 ---
 
