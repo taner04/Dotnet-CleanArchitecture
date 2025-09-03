@@ -1,4 +1,4 @@
-@baseUrl = https://localhost:7255
+@baseUrl = https://localhost:5229
 
 ### Register 
 POST {{baseUrl}}/api/authentication/register

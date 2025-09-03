@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
@@ -7,18 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Exceptions\NewFolder\**"/>
-        <EmbeddedResource Remove="Exceptions\NewFolder\**"/>
-        <None Remove="Exceptions\NewFolder\**"/>
+        <Compile Remove="Exceptions\NewFolder\**" />
+        <EmbeddedResource Remove="Exceptions\NewFolder\**" />
+        <None Remove="Exceptions\NewFolder\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Mediator.Abstractions" Version="3.0.1"/>
-        <PackageReference Include="Vogen" Version="8.0.1"/>
+        <PackageReference Include="Mediator.Abstractions" />
+        <PackageReference Include="Vogen" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\SharedKernel\SharedKernel.csproj"/>
+        <ProjectReference Include="..\..\src\SharedKernel\SharedKernel.csproj" />
     </ItemGroup>
 
 </Project>
