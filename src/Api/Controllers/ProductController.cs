@@ -6,33 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers;
 
 [Route("api/products")]
-public class ProductController : ControllerBase
+public class ProductController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public ProductController(IMediator mediator)
-    {
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-    }
-
     [HttpGet]
-    public async Task<IActionResult> GetProductsAsync()
+    public async Task<IActionResult> GetProductsAsync(CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetAllProductsQuery());
+        var result = await mediator.Send(new GetAllProductsQuery(), cancellationToken);
         return MapResponse(result);
     }
 
     [HttpPost("name")]
-    public async Task<IActionResult> GetProductByName([FromBody] GetProductByNameQuery query)
+    public async Task<IActionResult> GetProductByName([FromBody] GetProductByNameQuery query, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(query);
+        var result = await mediator.Send(query, cancellationToken);
         return MapResponse(result);
     }
 
     [HttpPost("details")]
-    public async Task<IActionResult> GetProductDetailsAsync([FromBody] GetProductDetailsQuery query)
+    public async Task<IActionResult> GetProductDetailsAsync([FromBody] GetProductDetailsQuery query, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(query);
+        var result = await mediator.Send(query, cancellationToken);
         return MapResponse(result);
     }
 }

@@ -9,33 +9,26 @@ namespace Api.Controllers;
 
 [Authorize]
 [Route("api/orders")]
-public class OrderController : ControllerBase
+public class OrderController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public OrderController(IMediator mediator)
-    {
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-    }
-
     [HttpGet("user")]
-    public async Task<IActionResult> GetOrdersByUserAsync()
+    public async Task<IActionResult> GetOrdersByUserAsync(CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetOrdersQuery());
+        var result = await mediator.Send(new GetOrdersQuery(), cancellationToken);
         return MapResponse(result);
     }
 
     [HttpPost("user/new-order")]
-    public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderCommand command)
+    public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderCommand command, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(command);
+        var result = await mediator.Send(command, cancellationToken);
         return MapResponse(result);
     }
 
     [HttpDelete("user/cancel")]
-    public async Task<IActionResult> CancelOrderAsync([FromBody] CancelOrderCommand command)
+    public async Task<IActionResult> CancelOrderAsync([FromBody] CancelOrderCommand command, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(command);
+        var result = await mediator.Send(command, cancellationToken);
         return MapResponse(result);
     }
 }

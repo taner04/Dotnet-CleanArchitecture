@@ -1,4 +1,5 @@
 using Application.CQRS.User.Commands;
+using Application.CQRS.User.Queries;
 using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,19 +8,19 @@ namespace Api.Controllers;
 
 [Authorize]
 [Route("api/user")]
-public sealed class UserController : ControllerBase
+public sealed class UserController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public UserController(IMediator mediator)
+    [HttpDelete("delete-account")]
+    public async Task<IActionResult> DeleteUserAccountAsync(CancellationToken cancellationToken)
     {
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        var result = await mediator.Send(new DeleteUserCommand(), cancellationToken);
+        return MapResponse(result);
     }
 
-    [HttpDelete("delete-account")]
-    public async Task<IActionResult> DeleteUserAccountAsync()
+    [HttpGet("get-info")]
+    public async Task<IActionResult> GetUserInfoAsync(CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new DeleteUserCommand());
+        var result = await mediator.Send(new GetUserInfoQuery(), cancellationToken);
         return MapResponse(result);
     }
 }

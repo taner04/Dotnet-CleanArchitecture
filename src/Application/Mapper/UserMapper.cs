@@ -6,14 +6,12 @@ namespace Application.Mapper;
 
 public static class UserMapper
 {
-    public static AuthResponse ToAuthResponse(this User user, string accessToken)
+    public static UserInfoResponse ToUserInfoResponse(this User user)
     {
-        return new AuthResponse(
+        return new UserInfoResponse(
             user.FirstName,
             user.LastName,
-            user.Email.Value,
-            accessToken,
-            user.RefreshToken.Value
+            user.Email.Value
         );
     }
 

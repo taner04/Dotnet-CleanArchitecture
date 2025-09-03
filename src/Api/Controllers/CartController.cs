@@ -10,33 +10,26 @@ namespace Api.Controllers;
 
 [Authorize]
 [Route("api/cart")]
-public sealed class CartController : ControllerBase
+public sealed class CartController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public CartController(IMediator mediator)
-    {
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-    }
-
     [HttpGet("user")]
-    public async Task<IActionResult> GetCartByUserAsync()
+    public async Task<IActionResult> GetCartByUserAsync(CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetCartByUserQuery());
+        var result = await mediator.Send(new GetCartByUserQuery(), cancellationToken);
         return MapResponse(result);
     }
 
     [HttpPost("item/add")]
-    public async Task<IActionResult> AddItemToCartAsync([FromBody] AddCartItemCommand command)
+    public async Task<IActionResult> AddItemToCartAsync([FromBody] AddCartItemCommand command, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(command);
+        var result = await mediator.Send(command, cancellationToken);
         return MapResponse(result);
     }
 
     [HttpDelete("item/remove")]
-    public async Task<IActionResult> RemoveItemFromCartAsync([FromBody] RemoveCartItemCommand command)
+    public async Task<IActionResult> RemoveItemFromCartAsync([FromBody] RemoveCartItemCommand command, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(command);
+        var result = await mediator.Send(command, cancellationToken);
         return MapResponse(result);
     }
 }

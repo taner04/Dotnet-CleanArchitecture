@@ -1,22 +1,18 @@
 using Application.Abstraction;
-using Application.Dtos.User;
-using Application.Mapper;
-using Ardalis.Specification.EntityFrameworkCore;
-using Domain.Entities.Users;
 using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.User.Queries;
 
-public readonly record struct LoginUserQuery(string Email, string Password) : IQuery<ResultT<AuthResponse>>;
+public readonly record struct LoginUserQuery(string Email, string Password) : IQuery<ResultT<string>>;
 
 public class LoginUserQueryHandler(
     IApplicationDbContext dbContext,
     IPasswordHasher passwordHasher,
     ITokenService tokenService)
-    : IQueryHandler<LoginUserQuery, ResultT<AuthResponse>>
+    : IQueryHandler<LoginUserQuery, ResultT<string>>
 {
-    public async ValueTask<ResultT<AuthResponse>> Handle(LoginUserQuery query, CancellationToken cancellationToken)
+    public async ValueTask<ResultT<string>> Handle(LoginUserQuery query, CancellationToken cancellationToken)
     {
         var email = Email.From(query.Email);
         var existingUser = await dbContext.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
@@ -31,17 +27,18 @@ public class LoginUserQueryHandler(
             return ErrorFactory.Unauthorized("Invalid password");
         }
 
-        if (!existingUser.HasValidRefreshToken)
+        if (existingUser.HasValidRefreshToken)
         {
-            var refreshToken = tokenService.GenerateRefreshToken(existingUser);
-            existingUser.SetRefreshToken(refreshToken);
-
-            dbContext.Users.Update(existingUser);
-            await dbContext.SaveChangesAsync(cancellationToken);
+            return tokenService.GenerateAccessToken(existingUser);
         }
 
-        var accessToken = tokenService.GenerateAccessToken(existingUser);
-        return existingUser.ToAuthResponse(accessToken);
+        var refreshToken = tokenService.GenerateRefreshToken(existingUser);
+        existingUser.SetRefreshToken(refreshToken);
+
+        dbContext.Users.Update(existingUser);
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        return tokenService.GenerateAccessToken(existingUser);
     }
 }
 
