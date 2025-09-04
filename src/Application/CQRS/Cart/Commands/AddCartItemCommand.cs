@@ -19,6 +19,7 @@ public sealed class AddCartItemCommandHandler(IApplicationDbContext dbContext, I
             dbContext.Carts.Add(cart);
         }
 
+        
         var productId = ProductId.From(command.ProductId);
         if (await dbContext.Products.FirstOrDefaultAsync(p => p.Id == productId, cancellationToken) == null)
         {
