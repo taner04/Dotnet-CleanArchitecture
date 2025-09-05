@@ -7,7 +7,7 @@ namespace SharedKernel.Response.Results;
 /// Inherits from <see cref="Result"/>.
 /// </summary>
 /// <typeparam name="TValue">The type of the value returned by the operation.</typeparam>
-public sealed class ResultT<TValue> : Result
+public sealed class ResultT<TValue> : Result, IFailureCreatable<ResultT<TValue>>
 {
     private readonly TValue? _value;
 
@@ -69,7 +69,7 @@ public sealed class ResultT<TValue> : Result
     /// </summary>
     /// <param name="error">The error describing the failure.</param>
     /// <returns>A failed <see cref="ResultT{TValue}"/>.</returns>
-    public new static ResultT<TValue> Failure(Error error)
+    public new static ResultT<TValue> Failure(Error error) 
     {
         return new ResultT<TValue>(error);
     }

@@ -5,7 +5,7 @@ namespace SharedKernel.Response.Results;
 /// <summary>
 /// Represents the result of an operation, indicating success or failure.
 /// </summary>
-public class Result
+public class Result : IFailureCreatable<Result>
 {
     /// <summary>
     /// Initializes a successful result.

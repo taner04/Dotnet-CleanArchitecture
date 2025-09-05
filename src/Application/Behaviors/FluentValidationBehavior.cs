@@ -1,11 +1,11 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using SharedKernel.Response;
 
 namespace Application.Behaviors;
 
 public sealed class FluentValidationBehavior<TMessage, TResponse>(IServiceProvider serviceProvider)
     : IPipelineBehavior<TMessage, TResponse>
     where TMessage : IMessage
+    where TResponse : IFailureCreatable<TResponse>
 {
     private readonly IServiceProvider _serviceProvider =
         serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
@@ -30,29 +30,6 @@ public sealed class FluentValidationBehavior<TMessage, TResponse>(IServiceProvid
         }
 
 
-        return CreateFailureResponse(
-            ErrorFactory.ValidationError(validationResult.ToDictionary())
-        );
-    }
-
-    private static TResponse CreateFailureResponse(Error error)
-    {
-        if (typeof(TResponse) == typeof(Result))
-        {
-            return (TResponse)(object)Result.Failure(error);
-        }
-
-        if (typeof(TResponse).IsGenericType && typeof(TResponse).GetGenericTypeDefinition() == typeof(ResultT<>))
-        {
-            var failure = typeof(ResultT<>)
-                .MakeGenericType(typeof(TResponse).GetGenericArguments()[0])
-                .GetMethod("Failure")!
-                .Invoke(null, [error]);
-
-            return (TResponse)failure!;
-        }
-
-        throw new InvalidOperationException(
-            $"TResponse must be Result or ResultT<T>, but was {typeof(TResponse).Name}");
+        return TResponse.Failure(ErrorFactory.ValidationError(validationResult.ToDictionary()));
     }
 }
