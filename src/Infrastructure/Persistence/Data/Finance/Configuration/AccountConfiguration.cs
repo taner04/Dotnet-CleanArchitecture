@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Data.Configuration;
+namespace Infrastructure.Persistence.Data.Finance.Configuration;
 
 public sealed class AccountConfiguration : EntityConfiguration<Account, AccountId>
 {

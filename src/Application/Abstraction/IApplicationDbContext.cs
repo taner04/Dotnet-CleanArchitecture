@@ -1,12 +1,9 @@
-﻿using System.Transactions;
-using Domain.Entities.Users;
+using Domain.Entities.ApplicationUsers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Abstraction;
 
-public interface IApplicationDbContext : IDisposable
+public interface IApplicationDbContext : IDbContext
 {
-    DbSet<User> Users { get; }
-    
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    DbSet<ApplicationUser> ApplicationUsers { get; }
 }

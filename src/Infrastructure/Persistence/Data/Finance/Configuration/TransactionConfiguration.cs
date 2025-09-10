@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Data.Configuration.Converter;
+namespace Infrastructure.Persistence.Data.Finance.Configuration;
 
 public sealed class TransactionConfiguration : EntityConfiguration<Transaction, TransactionId>
 {

@@ -1,8 +1,7 @@
 ﻿using Domain.Entities.Users;
-using Domain.Entities.Users.ValueObjects;
 using Vogen;
 
-namespace Infrastructure.Persistence.Data.Configuration.Converter;
+namespace Infrastructure.Persistence.Data.Converter;
 
 [EfCoreConverter<UserId>]
 [EfCoreConverter<AccountId>]

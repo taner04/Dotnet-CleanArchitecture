@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Data.Configuration;
+namespace Infrastructure.Persistence.Data.Finance.Configuration;
 
 public abstract class EntityConfiguration<TEntity, TId> : IEntityTypeConfiguration<TEntity> 
     where TEntity : class, IEntity<TId>
