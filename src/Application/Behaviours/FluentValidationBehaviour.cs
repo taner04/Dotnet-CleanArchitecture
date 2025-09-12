@@ -1,27 +1,33 @@
+using ErrorOr;
 using FluentValidation;
-using FluentValidation.Results;
 using Mediator;
 
 namespace Application.Behaviours;
 
-public class FluentValidationBehaviour<TMessage, TResponse>(IValidator<TResponse>? validator) : IPipelineBehavior<TMessage, TResponse>
+public class FluentValidationBehaviour<TMessage, TResponse>(IServiceProvider serviceProvider) : IPipelineBehavior<TMessage, TResponse>
     where TMessage : IMessage
+    where TResponse : IErrorOr
 {
     public async ValueTask<TResponse> Handle(TMessage message, MessageHandlerDelegate<TMessage, TResponse> next, CancellationToken cancellationToken)
     {
-        if(validator is null)
+        if (serviceProvider.GetService(typeof(IValidator<TMessage>)) is not IValidator<TMessage> validator)
         {
             return await next(message, cancellationToken);
         }
 
         var context = new ValidationContext<TMessage>(message);
-        var result = await validator.ValidateAsync(context, cancellationToken);
+        var validationResult = await validator.ValidateAsync(context, cancellationToken);
 
-        if (result.IsValid)
+        if (validationResult.IsValid)
         {
             return await next(message, cancellationToken);
         }
 
-        throw new Exception();
+        var errors = validationResult.Errors
+            .ConvertAll(error => Error.Validation(
+                code: error.PropertyName,
+                description: error.ErrorMessage));
+
+        return (dynamic)errors;
     }
 }

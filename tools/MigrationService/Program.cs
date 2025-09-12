@@ -1,23 +1,20 @@
-using Application.Abstraction;
-using Infrastructure.Persistence.Data.Application;
-using Infrastructure.Persistence.Data.Finance;
+using Application.Abstraction.Persistence;
+using Infrastructure.Persistence.Data;
 using MigrationService;
+using ServiceDefaults;
 using SharedKernel;
 
 var builder = Host.CreateApplicationBuilder(args);
 
 builder.AddServiceDefaults();
 
-builder.Services.AddHostedService<MigrationService<ApplicationDbContext>>();
-builder.Services.AddHostedService<MigrationService<BudgetDbContext>>();
+builder.Services.AddHostedService<MigrationService.MigrationService>();
 
 builder.Services.AddOpenTelemetry().WithTracing(t =>
 {
-    t.AddSource(MigrationService<ApplicationDbContext>.ActivitySourceName);
-    t.AddSource(MigrationService<BudgetDbContext>.ActivitySourceName);
+    t.AddSource(MigrationService.MigrationService.ActivitySourceName);
 });
 
-builder.AddNpgsqlDbContext<ApplicationDbContext>(Constants.ApplicationDb);
 builder.AddNpgsqlDbContext<BudgetDbContext>(Constants.BudgetDb);
 
 var host = builder.Build();

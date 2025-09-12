@@ -4,7 +4,7 @@ using Domain.Abstraction.Entity;
 
 namespace Domain.Common;
 
-public abstract class AggregateRoot<TId> : Entity<TId>, IAggregateRoot<TId>
+public abstract class AggregateRoot<TId> : Entity<TId>, IAggregateRoot
     where TId : struct
 {
     private readonly List<IDomainEvent> _domainEvents = [];

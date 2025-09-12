@@ -16,7 +16,7 @@ public class Account : Entity<AccountId>
     
     private Account() { } // For EF Core
     
-    private Account(UserId userId)
+    public Account(UserId userId)
     {
         Id = AccountId.New();
         UserId = userId;

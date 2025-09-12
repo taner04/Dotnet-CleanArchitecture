@@ -1,0 +1,47 @@
+using Application.Abstraction.Persistence;
+using Domain.Entities.Users.ValueObjects;
+using ErrorOr;
+using FluentValidation;
+using Mediator;
+using Microsoft.EntityFrameworkCore;
+
+namespace Application.CQRS.Users;
+
+public static class RegisterUser
+{
+    public record Command(string FirstName, string LastName, string Email, string Password, bool WantsEmailNotification) : ICommand<ErrorOr<Success>>;
+    
+    internal class CommandHandler(IBudgetDbContext budgetDbContext, IPasswordService passwordService) : ICommandHandler<Command, ErrorOr<Success>>
+    {
+        public async ValueTask<ErrorOr<Success>> Handle(Command command, CancellationToken cancellationToken)
+        {
+            var email = Email.From(command.Email);
+            if (await budgetDbContext.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken) != null)
+            {
+                Error.Conflict(description: "User with this email already exists");
+            }
+        
+            var newUser = Domain.Entities.Users.User.Create(command.FirstName, command.LastName, email, command.WantsEmailNotification);
+        
+            var hashedPassword = passwordService.HashPassword(command.Password);
+            newUser.SetPassword(Password.From(hashedPassword));
+        
+            await budgetDbContext.Users.AddAsync(newUser, cancellationToken);
+            await budgetDbContext.SaveChangesAsync(cancellationToken);
+        
+            return Result.Success;
+        }
+    }
+    
+    internal sealed class Validator : AbstractValidator<Command>
+    {
+        public Validator()
+        {
+            RuleFor(u => u.Email).NotEmpty();
+            RuleFor(u => u.Password).NotEmpty().MinimumLength(8);
+            RuleFor(u => u.FirstName).NotEmpty().MaximumLength(50);
+            RuleFor(u => u.LastName).NotEmpty().MaximumLength(50);
+            RuleFor(u => u.WantsEmailNotification).NotNull();
+        }
+    }
+}

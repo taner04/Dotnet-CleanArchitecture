@@ -2,8 +2,7 @@
 
 namespace Domain.Abstraction.Entity;
 
-public interface IAggregateRoot<TId> : IEntity<TId>
-    where TId : struct
+public interface IAggregateRoot 
 {
     void AddDomainEvent(IDomainEvent domainEvent);
     List<IDomainEvent> PopDomainEvents();
