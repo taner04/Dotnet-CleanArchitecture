@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Common.Exceptions;
 using Vogen;
 using Money = Domain.Entities.Users.ValueObjects.Money;
 
@@ -33,10 +34,10 @@ public class Transaction : Entity<TransactionId>
     {
         if (string.IsNullOrWhiteSpace(description))
         {
-            throw new ArgumentException("Description cannot be null or whitespace.", nameof(description));
+            throw new DomainException("Description cannot be null or whitespace.");
         }
         
-        var money = Money.From(amount); // Validate money
+        var money = Money.From(amount); 
         
         return new Transaction(money, type, description);
     }

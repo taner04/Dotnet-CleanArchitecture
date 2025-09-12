@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers;
 
 [Route("api/auth")]
-public class ApplicationController(IMediator mediator) : ControllerBase
+public class AuthenticationController(IMediator mediator) : ControllerBase
 {
     [HttpPost("register")]
     public async ValueTask<IActionResult> Register([FromBody] RegisterUser.Command command, CancellationToken cancellationToken) 

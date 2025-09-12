@@ -9,6 +9,7 @@ public static class ScalarExtension
         app.MapScalarApiReference(opt =>
         {
             opt.Title = "Budget API";
+            opt.Layout = ScalarLayout.Classic;
         });
         
         return app;

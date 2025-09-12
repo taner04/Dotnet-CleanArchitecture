@@ -1,3 +1,4 @@
+using Domain.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,15 +8,36 @@ public class GlobalExceptionHandler(IProblemDetailsService problemDetailsService
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
+        var type = exception.GetType().Name;
+        var instance = $"{httpContext.Request.Method} {httpContext.Request.Path}";
+        
+        var statusCode = exception switch
+        {
+            DomainException => StatusCodes.Status400BadRequest,
+            _ => StatusCodes.Status500InternalServerError
+        };
+        
+        var title = statusCode switch
+        {
+            StatusCodes.Status400BadRequest => "Domain error",
+            _ => "Unexpected error"
+        };
+        
+        var detail = exception switch
+        {
+            DomainException domainException => domainException.Message,
+            _ => "An unexpected error occurred. Please try again later."
+        };
+        
         return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext
         {
             ProblemDetails = new ProblemDetails
             {
-                Type = exception.GetType().Name,
-                Title = "Unexpected error",
-                Detail = "An unexpected error occurred while processing your request.",
-                Status = StatusCodes.Status500InternalServerError,
-                Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}"
+                Type = type,
+                Title = title,
+                Detail = detail,
+                Status = statusCode,
+                Instance = instance
             },
             HttpContext = httpContext,
             Exception = exception

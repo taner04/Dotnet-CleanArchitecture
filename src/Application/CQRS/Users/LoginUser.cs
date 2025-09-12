@@ -12,14 +12,20 @@ public static class LoginUser
 {
     public record Query(string Email, string Password) : IQuery<ErrorOr<string>>;
     
-    internal class QueryHandler(
+    internal class Handler(
         IBudgetDbContext budgetDbContext, 
         IPasswordService passwordService,
         ITokenService<Domain.Entities.Users.User> tokenService) : IQueryHandler<Query, ErrorOr<string>>
     {
         public async ValueTask<ErrorOr<string>> Handle(Query query, CancellationToken cancellationToken)
         {
-            var email = Email.From(query.Email);
+            var emailResult = Email.TryFrom(query.Email);
+            if (!emailResult.IsSuccess)
+            {
+                return Error.Validation(description: "Invalid email format");
+            }
+            
+            var email = emailResult.ValueObject;
             var user = await budgetDbContext.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
             
             if (user is null || !passwordService.VerifyPassword(user, query.Password))

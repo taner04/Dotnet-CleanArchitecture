@@ -11,7 +11,7 @@ public static class RefreshToken
 {
     public record Command : ICommand<ErrorOr<string>>;
     
-    internal class QueryHandler(
+    internal class Handler(
         IBudgetDbContext dbContext,
         ICurrentUserService currentUserService,
         ITokenService<Domain.Entities.Users.User> tokenService) : ICommandHandler<Command, ErrorOr<string>>

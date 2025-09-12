@@ -11,17 +11,23 @@ public static class RegisterUser
 {
     public record Command(string FirstName, string LastName, string Email, string Password, bool WantsEmailNotification) : ICommand<ErrorOr<Success>>;
     
-    internal class CommandHandler(IBudgetDbContext budgetDbContext, IPasswordService passwordService) : ICommandHandler<Command, ErrorOr<Success>>
+    internal class Handler(IBudgetDbContext budgetDbContext, IPasswordService passwordService) : ICommandHandler<Command, ErrorOr<Success>>
     {
         public async ValueTask<ErrorOr<Success>> Handle(Command command, CancellationToken cancellationToken)
         {
-            var email = Email.From(command.Email);
-            if (await budgetDbContext.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken) != null)
+            var emailResult = Email.TryFrom(command.Email);
+            if (!emailResult.IsSuccess)
+            {
+                return Error.Validation(description: "Invalid email format");
+            }
+            
+            var mail = emailResult.ValueObject;
+            if (await budgetDbContext.Users.FirstOrDefaultAsync(u => u.Email == mail, cancellationToken) != null)
             {
                 Error.Conflict(description: "User with this email already exists");
             }
         
-            var newUser = Domain.Entities.Users.User.Create(command.FirstName, command.LastName, email, command.WantsEmailNotification);
+            var newUser = Domain.Entities.Users.User.Create(command.FirstName, command.LastName, mail, command.WantsEmailNotification);
         
             var hashedPassword = passwordService.HashPassword(command.Password);
             newUser.SetPassword(Password.From(hashedPassword));

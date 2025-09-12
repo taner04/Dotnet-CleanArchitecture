@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Domain.Common;
+using Domain.Common.Exceptions;
 using Domain.Entities.Users.DomainEvent;
 using Domain.Entities.Users.ValueObjects;
 using Vogen;
@@ -33,8 +34,11 @@ public class User : AggregateRoot<UserId>
         AddDomainEvent(new UserRegisteredDomainEvent(this));
     }
 
-    public static User Create(string firstName, string lastName, Email email, bool wantsEmailNotifications) 
-        => new(firstName, lastName,email, wantsEmailNotifications);
+    public static User Create(string firstName, string lastName, Email email, bool wantsEmailNotifications)
+    {
+        
+        return new(firstName, lastName,email, wantsEmailNotifications);
+    }
 
     [MaxLength(50)] public string FirstName { get; private set; }
     [MaxLength(50)] public string LastName { get; private set; }
@@ -55,10 +59,28 @@ public class User : AggregateRoot<UserId>
     }
     
     public void SetPassword(Password newPassword) => PasswordHash = newPassword;
-    public void ChangeEmail(Email newEmail) => Email = newEmail;
+
+    public void ChangeEmail(string newMail)
+    {
+        var emailResult = Email.TryFrom(newMail);
+        if (!emailResult.IsSuccess)
+        {
+            throw new DomainException(emailResult.Error.ErrorMessage);
+        }
+        
+        Email = emailResult.ValueObject;
+    }
     public void ChangeEmailNotificationPreference(bool wantsEmailNotifications) => WantsEmailNotifications = wantsEmailNotifications;
+
+    public void AddTransaction(Transaction transaction)
+    {
+        Account.AddTransaction(transaction);
+        
+        AddDomainEvent(new UserTransactionDomainEvent(transaction));
+    }
     
-    public void MakeTransaction(Transaction transaction) => Account.AddTransaction(transaction);
+    public IReadOnlyCollection<Transaction> GetTransactions() => Account.Transactions;
+    public decimal GetBalance() => Account.Balance.Value;
 
     public Account Account { get; private set; } // Navigation property
 }

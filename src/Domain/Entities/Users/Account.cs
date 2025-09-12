@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Common.Exceptions;
 using Domain.Entities.Users.ValueObjects;
 using Vogen;
 
@@ -22,12 +23,33 @@ public class Account : Entity<AccountId>
         UserId = userId;
         Balance = Money.From(0); // Initial balance is zero
     }
-    
-    public void AddTransaction(Transaction transaction) => _transactions.Add(transaction);
 
     public UserId UserId { get; private set; }
-    public Money Balance { get; private set; } 
+    public Money Balance { get; private set; }
+
+    public void AddTransaction(Transaction transaction)
+    {
+        _transactions.Add(transaction);
+        UpdateBalance(transaction.Amount.Value, transaction.Type);
+    }
     
+    private void UpdateBalance(decimal amount, TransactionType type)
+    {
+        var newBalanceResult = type switch
+        {
+            TransactionType.Income => Money.TryFrom(Balance.Value + amount),
+            TransactionType.Expense => Money.TryFrom(Balance.Value - amount),
+            _ => throw new DomainException("Invalid transaction type.")
+        };
+
+        if (!newBalanceResult.IsSuccess)
+        {
+            throw new DomainException(newBalanceResult.Error.ErrorMessage);
+        }
+        
+        Balance = newBalanceResult.ValueObject;
+    }
+
     public User User { get; private set; } = null!; // Navigation property
-    public IReadOnlyList<Transaction> Transactions => _transactions.AsReadOnly(); // Navigation property
+    public IReadOnlyList<Transaction> Transactions => _transactions.ToList(); // Navigation property
 }
