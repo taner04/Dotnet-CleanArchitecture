@@ -15,9 +15,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\tools\AppHost\AppHost.csproj" />
-      <ProjectReference Include="..\..\tools\ServiceDefaults\ServiceDefaults.csproj" />
       <ProjectReference Include="..\..\src\Application\Application.csproj" />
+      <ProjectReference Include="..\..\tools\ServiceDefaults\ServiceDefaults.csproj" />
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
 

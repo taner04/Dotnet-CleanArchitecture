@@ -34,10 +34,19 @@ public class User : AggregateRoot<UserId>
         AddDomainEvent(new UserRegisteredDomainEvent(this));
     }
 
-    public static User Create(string firstName, string lastName, Email email, bool wantsEmailNotifications)
+    public static User TryCreate(string firstName, string lastName, Email email, bool wantsEmailNotifications)
     {
+        if (string.IsNullOrEmpty(firstName))
+        {
+            throw new DomainException("First name cannot be null or empty.");
+        }
         
-        return new(firstName, lastName,email, wantsEmailNotifications);
+        if (string.IsNullOrEmpty(lastName))
+        {
+            throw new DomainException("Last name cannot be null or empty.");
+        }
+        
+        return new User(firstName, lastName,email, wantsEmailNotifications);
     }
 
     [MaxLength(50)] public string FirstName { get; private set; }

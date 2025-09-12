@@ -37,9 +37,13 @@ public class Transaction : Entity<TransactionId>
             throw new DomainException("Description cannot be null or whitespace.");
         }
         
-        var money = Money.From(amount); 
+        var money = Money.TryFrom(amount); 
+        if (!money.IsSuccess)
+        {
+            throw new DomainException(money.Error.ErrorMessage);
+        }
         
-        return new Transaction(money, type, description);
+        return new Transaction(money.ValueObject, type, description);
     }
     
     public AccountId AccountId { get; private set; }

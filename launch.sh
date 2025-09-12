@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-PORT=17266
+PORT=17259
 URL="https://localhost:${PORT}"
 
 SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"

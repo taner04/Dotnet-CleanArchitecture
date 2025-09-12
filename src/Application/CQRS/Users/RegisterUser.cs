@@ -1,4 +1,5 @@
 using Application.Abstraction.Persistence;
+using Domain.Entities.Users;
 using Domain.Entities.Users.ValueObjects;
 using ErrorOr;
 using FluentValidation;
@@ -27,7 +28,7 @@ public static class RegisterUser
                 Error.Conflict(description: "User with this email already exists");
             }
         
-            var newUser = Domain.Entities.Users.User.Create(command.FirstName, command.LastName, mail, command.WantsEmailNotification);
+            var newUser = User.TryCreate(command.FirstName, command.LastName, mail, command.WantsEmailNotification);
         
             var hashedPassword = passwordService.HashPassword(command.Password);
             newUser.SetPassword(Password.From(hashedPassword));
