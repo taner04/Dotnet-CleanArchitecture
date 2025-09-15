@@ -3,6 +3,7 @@ using Api.Extensions;
 using Application;
 using DotNetEnv;
 using Infrastructure;
+using JetBrains.Annotations;
 using ServiceDefaults;
 using SharedKernel;
 
@@ -42,3 +43,6 @@ app.UseExceptionHandler();
 app.UseAuthorization();
 
 app.Run();
+
+[UsedImplicitly]
+public partial class Program { } // For integration tests
