@@ -1,6 +1,5 @@
-using Domain.Common.Exceptions;
+using Domain.Common;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Api.ExceptionHandler;
 

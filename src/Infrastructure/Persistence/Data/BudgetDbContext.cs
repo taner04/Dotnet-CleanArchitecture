@@ -1,10 +1,8 @@
 ﻿using System.Reflection;
 using Application.Abstraction;
 using Application.Abstraction.Persistence;
-using Domain.Entities.Users;
 using Infrastructure.Persistence.Data.Configuration;
 using Infrastructure.Persistence.Data.Converter;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Data;
 

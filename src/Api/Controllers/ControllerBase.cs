@@ -1,7 +1,5 @@
 using Api.Extensions;
 using ErrorOr;
-using Mediator;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 

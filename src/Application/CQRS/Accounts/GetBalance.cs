@@ -1,8 +1,4 @@
 using Application.Abstraction.Infrastructure;
-using Application.Abstraction.Persistence;
-using ErrorOr;
-using Mediator;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.Accounts;
 

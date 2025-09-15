@@ -1,8 +1,6 @@
 using Api.Extensions;
 using Application.CQRS.Users;
-using Mediator;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 

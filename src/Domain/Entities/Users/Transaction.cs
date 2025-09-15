@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using Domain.Common.Exceptions;
 using Vogen;
 using Money = Domain.Entities.Users.ValueObjects.Money;
 

@@ -1,9 +1,8 @@
 using System.Security.Claims;
 using Application.Abstraction.Infrastructure;
-using Domain.Entities.Users;
 using Microsoft.AspNetCore.Http;
 
-namespace Infrastructure;
+namespace Infrastructure.Utils;
 
 public sealed class CurrentUserService(IHttpContextAccessor contextAccessor) : ICurrentUserService
 {

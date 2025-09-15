@@ -1,6 +1,4 @@
-﻿using Domain.Entities.Users;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Application.Abstraction.Persistence;
 

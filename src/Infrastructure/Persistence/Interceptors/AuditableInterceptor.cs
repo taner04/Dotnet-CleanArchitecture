@@ -1,7 +1,6 @@
 using Application.Abstraction;
 using Application.Abstraction.Infrastructure;
 using Domain.Abstraction.Entity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Infrastructure.Persistence.Interceptors;

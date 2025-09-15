@@ -1,7 +1,6 @@
 using ErrorOr;
     using Microsoft.AspNetCore.Http.Features;
-    using Microsoft.AspNetCore.Mvc;
-    
+
     namespace Api.Models;
     
     public class CustomError

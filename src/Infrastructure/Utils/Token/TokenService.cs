@@ -2,11 +2,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Application.Abstraction.Infrastructure;
-using Domain.Entities.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure.Token;
+namespace Infrastructure.Utils.Token;
 
 public sealed class TokenService : ITokenService<User>
 {

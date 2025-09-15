@@ -1,5 +1,4 @@
-﻿using Domain.Entities.Users;
-using Vogen;
+﻿using Vogen;
 
 namespace Infrastructure.Persistence.Data.Converter;
 

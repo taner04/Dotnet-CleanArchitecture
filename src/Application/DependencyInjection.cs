@@ -1,7 +1,6 @@
 using System.Reflection;
 using Application.Behaviours;
 using Application.CQRS.Users;
-using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;

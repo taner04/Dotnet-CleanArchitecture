@@ -1,4 +1,3 @@
-using Domain.Entities.Users;
 using Domain.Entities.Users.ValueObjects;
 
 namespace Application.Abstraction.Persistence;

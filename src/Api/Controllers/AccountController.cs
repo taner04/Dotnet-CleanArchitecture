@@ -1,7 +1,5 @@
 using Application.CQRS.Accounts;
-using Mediator;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 

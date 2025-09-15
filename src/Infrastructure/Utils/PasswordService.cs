@@ -1,7 +1,6 @@
 using Application.Abstraction.Persistence;
-using Domain.Entities.Users;
 
-namespace Infrastructure;
+namespace Infrastructure.Utils;
 
 public class PasswordService : IPasswordService
 {

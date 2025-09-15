@@ -1,11 +1,10 @@
 using Application.Abstraction;
 using Application.Abstraction.Infrastructure;
 using Application.Abstraction.Persistence;
-using Domain.Entities.Users;
 using Infrastructure.Persistence.Data;
 using Infrastructure.Persistence.Interceptors;
-using Infrastructure.Token;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.Utils;
+using Infrastructure.Utils.Token;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,7 +1,3 @@
-using ErrorOr;
-using FluentValidation;
-using Mediator;
-
 namespace Application.Behaviours;
 
 public class FluentValidationBehaviour<TMessage, TResponse>(IServiceProvider serviceProvider) : IPipelineBehavior<TMessage, TResponse>

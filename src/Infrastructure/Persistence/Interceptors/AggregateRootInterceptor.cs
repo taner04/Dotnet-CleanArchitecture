@@ -1,6 +1,5 @@
 using Domain.Abstraction.Entity;
 using Mediator;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Infrastructure.Persistence.Interceptors;

@@ -1,10 +1,4 @@
 using Application.Abstraction.Infrastructure;
-using Application.Abstraction.Persistence;
-using Domain.Entities.Users;
-using ErrorOr;
-using FluentValidation;
-using Mediator;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.Transactions;
 

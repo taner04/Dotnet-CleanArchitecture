@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Domain.Common;
-using Domain.Common.Exceptions;
 using Domain.Entities.Users.DomainEvent;
 using Domain.Entities.Users.ValueObjects;
 using Vogen;

@@ -1,4 +1,4 @@
-namespace Infrastructure.Token;
+namespace Infrastructure.Utils.Token;
 
 public class JwtSettings(string secretKey, string issuer, string audience)
 {
