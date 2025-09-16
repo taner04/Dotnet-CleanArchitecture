@@ -15,7 +15,7 @@ builder.Services.AddOpenTelemetry().WithTracing(t =>
     t.AddSource(MigrationService.MigrationService.ActivitySourceName);
 });
 
-builder.AddNpgsqlDbContext<BudgetDbContext>(Constants.BudgetDb);
+builder.AddNpgsqlDbContext<BudgetDbContext>(AspireConstants.BudgetDb);
 
 var host = builder.Build();
 

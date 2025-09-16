@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Api.Controllers;
 
 [Authorize]
-[Route("api/accounts")]
+[Route("accounts")]
 public class AccountController(IMediator mediator) : ControllerBase
 {
     [HttpGet("get-balance")] 

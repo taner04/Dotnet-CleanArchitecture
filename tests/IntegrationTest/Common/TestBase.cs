@@ -1,6 +1,5 @@
-﻿namespace IntegrationTest.Common;
+namespace IntegrationTest.Common;
 
-public abstract class TestBase
-{
-  
-}
+
+[Collection("ApiCollection")]
+public abstract class TestBase;

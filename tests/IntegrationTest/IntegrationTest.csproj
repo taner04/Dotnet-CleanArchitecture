@@ -1,35 +1,24 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.Testing" />
-    <PackageReference Include="coverlet.collector">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Aspire.Hosting.Testing" />
+        <PackageReference Include="coverlet.collector" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="xunit" />
+        <PackageReference Include="xunit.runner.visualstudio" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\tools\AppHost\AppHost.csproj" />
-  </ItemGroup>
-
-	<ItemGroup>
-		<Using Include="System.Net" />
-		<Using Include="Microsoft.Extensions.DependencyInjection" />
-		<Using Include="Aspire.Hosting.ApplicationModel" />
-		<Using Include="Aspire.Hosting.Testing" />
-		<Using Include="Xunit" />
-	</ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Application\Application.csproj" />
+      <ProjectReference Include="..\..\tools\AppHost\AppHost.csproj" />
+    </ItemGroup>
 
 </Project>

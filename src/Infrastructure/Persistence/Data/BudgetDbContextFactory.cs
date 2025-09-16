@@ -11,7 +11,7 @@ public class BudgetDbContextFactory : IDesignTimeDbContextFactory<BudgetDbContex
         
         optionsBuilder.EnableDetailedErrors();
         optionsBuilder.EnableSensitiveDataLogging();
-        optionsBuilder.UseNpgsql($"Host=localhost;Database={Constants.BudgetDb};Username=postgres;");
+        optionsBuilder.UseNpgsql($"Host=localhost;Database={AspireConstants.BudgetDb};Username=postgres;");
 
         return new BudgetDbContext(optionsBuilder.Options);
     }

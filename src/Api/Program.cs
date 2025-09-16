@@ -24,7 +24,7 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
-builder.Services.AddPersistence(builder.Configuration.GetConnectionString(Constants.BudgetDb)!);
+builder.Services.AddPersistence(builder.Configuration.GetConnectionString(AspireConstants.BudgetDb)!);
 builder.Services.AddBearerScheme(builder.Configuration);
 
 var app = builder.Build();

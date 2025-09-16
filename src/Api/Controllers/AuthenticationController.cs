@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers;
 
-[Route("api/auth")]
+[Route("auth")]
 public class AuthenticationController(IMediator mediator) : ControllerBase
 {
     [HttpPost("register")]

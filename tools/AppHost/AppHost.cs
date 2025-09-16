@@ -1,16 +1,17 @@
 using Projects;
+using SharedKernel;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
 var db = builder.AddPostgres("database").WithPgAdmin();
 
-var budgetDb = db.AddDatabase("BudgetDb");
+var budgetDb = db.AddDatabase(AspireConstants.BudgetDb);
 
-var migration = builder.AddProject<MigrationService>("migration-service")
+var migration = builder.AddProject<MigrationService>(AspireConstants.MigrationService)
     .WithReference(budgetDb)
     .WaitFor(budgetDb);
 
-builder.AddProject<Api>("api")
+builder.AddProject<Api>(AspireConstants.BudgetApi)
     .WithReference(budgetDb)
     .WaitFor(budgetDb)
     .WaitForCompletion(migration);
