@@ -1,14 +1,15 @@
-using System.Net;
+using Application.Abstraction.Persistence;
 using Aspire.Hosting;
 using Aspire.Hosting.Testing;
+using Infrastructure.Persistence.Data;
 
-namespace IntegrationTest.Common;
+namespace Api.IntegrationTests.Common;
 
 [CollectionDefinition("ApiCollection")]
-public class ApiCollection : ICollectionFixture<ApiFixture>;
+public class ApiFixtureCollection : ICollectionFixture<ApiFixture>;
 
 // ReSharper disable once ClassNeverInstantiated.Global
-public class ApiFixture : IAsyncLifetime
+public class ApiFixture(TestDatabase testDatabase) : IAsyncLifetime
 {
     private static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(120);
     private DistributedApplication _app = null!;
@@ -32,16 +33,18 @@ public class ApiFixture : IAsyncLifetime
         {
             clientBuilder.AddStandardResilienceHandler();
         });
-    
+
+        appHost.Services.AddDbContext<IBudgetDbContext, BudgetDbContext>();
+        
         _app = await appHost.BuildAsync(cancellationToken).WaitAsync(DefaultTimeout, cancellationToken);
         await _app.StartAsync(cancellationToken).WaitAsync(DefaultTimeout, cancellationToken);
     }
 
     public async Task DisposeAsync()
     {
-        await _app.StopAsync();
         await _app.DisposeAsync();
     }
+    
     
     private HttpClient CreateClient(string resourceName)
         => _app.CreateHttpClient(resourceName);
