@@ -6,7 +6,7 @@ public static class RefreshToken
 {
     public record Command : ICommand<ErrorOr<string>>;
     
-    internal class Handler(
+    internal sealed class Handler(
         IBudgetDbContext dbContext,
         ICurrentUserService currentUserService,
         ITokenService<User> tokenService) : ICommandHandler<Command, ErrorOr<string>>

@@ -8,7 +8,7 @@ public static class LoginUser
 {
     public record Query(string Email, string Password) : IQuery<ErrorOr<string>>;
     
-    internal class Handler(
+    internal sealed class Handler(
         IBudgetDbContext budgetDbContext, 
         IPasswordService passwordService,
         ITokenService<Domain.Entities.Users.User> tokenService) : IQueryHandler<Query, ErrorOr<string>>

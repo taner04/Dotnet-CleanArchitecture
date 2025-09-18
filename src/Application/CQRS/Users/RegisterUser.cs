@@ -7,7 +7,9 @@ public static class RegisterUser
 {
     public record Command(string FirstName, string LastName, string Email, string Password, bool WantsEmailNotification) : ICommand<ErrorOr<Success>>;
     
-    internal class Handler(IBudgetDbContext budgetDbContext, IPasswordService passwordService) : ICommandHandler<Command, ErrorOr<Success>>
+    internal sealed class Handler(
+        IBudgetDbContext budgetDbContext, 
+        IPasswordService passwordService) : ICommandHandler<Command, ErrorOr<Success>>
     {
         public async ValueTask<ErrorOr<Success>> Handle(Command command, CancellationToken cancellationToken)
         {

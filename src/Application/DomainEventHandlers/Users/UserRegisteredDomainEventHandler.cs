@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Domain.Abstraction.DomainEvent;
 using Domain.Entities.Users.DomainEvents;
 
-namespace Application.DomainEventHandlers;
+namespace Application.DomainEventHandlers.Users;
 
 public class UserRegisteredDomainEventHandler : IDomainEventHandler<UserRegisteredDomainEvent>
 {
