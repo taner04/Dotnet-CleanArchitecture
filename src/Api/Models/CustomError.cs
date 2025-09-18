@@ -114,7 +114,7 @@ public class CustomError
     {
         var customError = new CustomError(domainException.Error, httpContext);
 
-        httpContext.Response.StatusCode = customError.ProblemDetails.Status ?? 500;
+        httpContext.Response.StatusCode = GetStatusCode(domainException.Error.Type);
         httpContext.Response.ContentType = "application/json";
 
         try
