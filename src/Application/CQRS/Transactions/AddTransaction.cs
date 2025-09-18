@@ -20,7 +20,7 @@ public static class AddTransaction
 
             if (user is null)
             {
-                return Error.NotFound(description: "User not found.");
+                return UserErrors.Unauthorized;
             }
             
             var newTransaction = Transaction.TryCreate(command.Amount, command.Type, command.Description);

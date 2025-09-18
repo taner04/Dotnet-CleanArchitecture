@@ -15,9 +15,10 @@ public static class RefreshToken
         {
             var userId = currentUserService.GetUserId();
             var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+            
             if (user is null || !tokenService.IsRefreshTokenValid(user.RefreshToken))
             {
-                return Error.Unauthorized(description: "Invalid refresh token, please login again");
+                return UserErrors.Unauthorized;
             }
             
             var newRefreshToken = tokenService.GenerateRefreshToken(user);

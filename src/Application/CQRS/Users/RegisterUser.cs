@@ -16,13 +16,13 @@ public static class RegisterUser
             var emailResult = Email.TryFrom(command.Email);
             if (!emailResult.IsSuccess)
             {
-                return Error.Validation(description: "Invalid email format");
+                return UserErrors.InvalidEmail;
             }
             
             var mail = emailResult.ValueObject;
             if (await budgetDbContext.Users.FirstOrDefaultAsync(u => u.Email == mail, cancellationToken) != null)
             {
-                Error.Conflict(description: "User with this email already exists");
+                return UserErrors.AlreadyExists;
             }
         
             var newUser = User.TryCreate(command.FirstName, command.LastName, mail, command.WantsEmailNotification);

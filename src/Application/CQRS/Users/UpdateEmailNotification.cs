@@ -17,7 +17,7 @@ public static class UpdateEmailNotification
 
             if (user is null)
             {
-                return Error.NotFound("User not found");
+                return UserErrors.Unauthorized;
             }
             
             user.ChangeEmailNotificationPreference(command.EnableEmailNotifications);

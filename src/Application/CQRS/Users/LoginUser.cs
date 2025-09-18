@@ -11,14 +11,14 @@ public static class LoginUser
     internal sealed class Handler(
         IBudgetDbContext budgetDbContext, 
         IPasswordService passwordService,
-        ITokenService<Domain.Entities.Users.User> tokenService) : IQueryHandler<Query, ErrorOr<string>>
+        ITokenService<User> tokenService) : IQueryHandler<Query, ErrorOr<string>>
     {
         public async ValueTask<ErrorOr<string>> Handle(Query query, CancellationToken cancellationToken)
         {
             var emailResult = Email.TryFrom(query.Email);
             if (!emailResult.IsSuccess)
             {
-                return Error.Validation(description: "Invalid email format");
+                return UserErrors.InvalidEmail;
             }
             
             var email = emailResult.ValueObject;
@@ -26,7 +26,7 @@ public static class LoginUser
             
             if (user is null || !passwordService.VerifyPassword(user, query.Password))
             {
-                return Error.Unauthorized(description: "Invalid credentials");
+                return UserErrors.InvalidCredentials;
             }
 
             if (!user.IsRefreshTokenValid)

@@ -1,5 +1,4 @@
 using Application.Abstraction.Infrastructure;
-using Domain.Entities.Users.ValueObjects;
 
 namespace Application.CQRS.Users;
 
@@ -18,7 +17,7 @@ public static class ChangeEmail
             
             if (user is null)
             {
-                return Error.NotFound("User not found");
+                return UserErrors.Unauthorized;
             }
             
             user.ChangeEmail(command.NewEmail);

@@ -20,7 +20,7 @@ public static class GetTransactions
                                             .FirstOrDefaultAsync(cancellationToken);
             if (user == null)
             {
-                return Error.NotFound(description: "User not found");
+                return UserErrors.Unauthorized;
             }
 
             return user.GetTransactions().Select(TransactionDto.From).ToList();

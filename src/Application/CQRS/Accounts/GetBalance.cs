@@ -20,7 +20,7 @@ public static class GetBalance
 
             if (user is null)
             {
-                return Error.NotFound( description: "User not found");
+                return UserErrors.Unauthorized;
             }
             
             return user.GetBalance();
