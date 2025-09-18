@@ -1,5 +1,6 @@
 ﻿using Domain.Common;
 using Domain.Entities.Users.ValueObjects;
+using SharedKernel.Errors;
 using Vogen;
 
 namespace Domain.Entities.Users;
@@ -38,13 +39,8 @@ public class Account : Entity<AccountId>
         {
             TransactionType.Income => Money.TryFrom(Balance.Value + amount),
             TransactionType.Expense => Money.TryFrom(Balance.Value - amount),
-            _ => throw new DomainException("Invalid transaction type.")
+            _ => throw new DomainException(TransactionErrors.InvalidTransactionType)
         };
-
-        if (!newBalanceResult.IsSuccess)
-        {
-            throw new DomainException(newBalanceResult.Error.ErrorMessage);
-        }
         
         Balance = newBalanceResult.ValueObject;
     }

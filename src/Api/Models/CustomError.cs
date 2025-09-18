@@ -1,3 +1,4 @@
+using Domain.Common;
 using ErrorOr;
 using Microsoft.AspNetCore.Http.Features;
 
@@ -98,4 +99,22 @@ public class CustomError
     /// <returns>The trace identifier string.</returns>
     private static string GetTraceId(HttpContext httpContext) =>
         httpContext.Features.Get<IHttpActivityFeature>()?.Activity.Id!;
+
+    public static async ValueTask<bool> TryWriteAsync(HttpContext httpContext, DomainException domainException, CancellationToken cancellationToken = default)
+    {
+        var customError = new CustomError(domainException.Error, httpContext);
+
+        httpContext.Response.StatusCode = customError.ProblemDetails.Status ?? 500;
+        httpContext.Response.ContentType = "application/json";
+
+        try
+        {
+            await httpContext.Response.WriteAsJsonAsync(customError, cancellationToken);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

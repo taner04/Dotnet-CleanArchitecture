@@ -2,6 +2,8 @@
 using Domain.Common;
 using Domain.Entities.Users.DomainEvents;
 using Domain.Entities.Users.ValueObjects;
+using SharedKernel;
+using SharedKernel.Errors;
 using Vogen;
 
 namespace Domain.Entities.Users;
@@ -35,14 +37,9 @@ public class User : AggregateRoot<UserId>
 
     public static User TryCreate(string firstName, string lastName, Email email, bool wantsEmailNotifications)
     {
-        if (string.IsNullOrEmpty(firstName))
+        if (string.IsNullOrEmpty(firstName) || firstName.Length > 50 || string.IsNullOrEmpty(lastName) ||  lastName.Length > 50 )
         {
-            throw new DomainException("First name cannot be null or empty.");
-        }
-        
-        if (string.IsNullOrEmpty(lastName))
-        {
-            throw new DomainException("Last name cannot be null or empty.");
+            throw new DomainException(UserErrors.InvalidName);
         }
         
         return new User(firstName, lastName,email, wantsEmailNotifications);
@@ -73,7 +70,7 @@ public class User : AggregateRoot<UserId>
         var emailResult = Email.TryFrom(newMail);
         if (!emailResult.IsSuccess)
         {
-            throw new DomainException(emailResult.Error.ErrorMessage);
+            throw new DomainException(UserErrors.InvalidEmail);
         }
         
         Email = emailResult.ValueObject;

@@ -1,4 +1,5 @@
 using Application.Abstraction.Infrastructure;
+using SharedKernel.Errors;
 
 namespace Application.CQRS.Transactions;
 

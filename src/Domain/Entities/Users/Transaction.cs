@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using SharedKernel.Errors;
 using Vogen;
 using Money = Domain.Entities.Users.ValueObjects.Money;
 
@@ -33,16 +34,13 @@ public class Transaction : Entity<TransactionId>
     {
         if (string.IsNullOrWhiteSpace(description))
         {
-            throw new DomainException("Description cannot be null or whitespace.");
+            throw new DomainException(TransactionErrors.InvalidDescription);
         }
         
         var money = Money.TryFrom(amount); 
-        if (!money.IsSuccess)
-        {
-            throw new DomainException(money.Error.ErrorMessage);
-        }
         
-        return new Transaction(money.ValueObject, type, description);
+        return !money.IsSuccess ? throw new DomainException(TransactionErrors.InvalidMoney) : 
+            new Transaction(money.ValueObject, type, description);
     }
     
     public AccountId AccountId { get; private set; }

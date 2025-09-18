@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace SharedKernel;
+namespace SharedKernel.Errors;
 
 public static class UserErrors
 {
@@ -19,4 +19,8 @@ public static class UserErrors
     public static Error AlreadyExists => Error.Conflict(
         code: "User.AlreadyExists",
         description: "A user with the given details already exists.");
+    
+    public static Error InvalidName => Error.Validation(
+        code: "User.InvalidName",
+        description: "The provided name is invalid.");
 }
