@@ -9,7 +9,7 @@ public static class RefreshToken
     internal class Handler(
         IBudgetDbContext dbContext,
         ICurrentUserService currentUserService,
-        ITokenService<Domain.Entities.Users.User> tokenService) : ICommandHandler<Command, ErrorOr<string>>
+        ITokenService<User> tokenService) : ICommandHandler<Command, ErrorOr<string>>
     {
         public async ValueTask<ErrorOr<string>> Handle(Command request, CancellationToken cancellationToken)
         {

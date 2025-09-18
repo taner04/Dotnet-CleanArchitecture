@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Domain.Common;
-using Domain.Entities.Users.DomainEvent;
+using Domain.Entities.Users.DomainEvents;
 using Domain.Entities.Users.ValueObjects;
 using Vogen;
 
@@ -80,13 +80,8 @@ public class User : AggregateRoot<UserId>
     }
     public void ChangeEmailNotificationPreference(bool wantsEmailNotifications) => WantsEmailNotifications = wantsEmailNotifications;
 
-    public void AddTransaction(Transaction transaction)
-    {
-        Account.AddTransaction(transaction);
-        
-        AddDomainEvent(new UserTransactionDomainEvent(transaction));
-    }
-    
+    public void AddTransaction(Transaction transaction) => Account.AddTransaction(transaction);
+
     public IReadOnlyCollection<Transaction> GetTransactions() => Account.Transactions;
     public decimal GetBalance() => Account.Balance.Value;
 

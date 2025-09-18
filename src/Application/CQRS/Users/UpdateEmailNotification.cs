@@ -1,0 +1,38 @@
+using Application.Abstraction.Infrastructure;
+
+namespace Application.CQRS.Users;
+
+public static class UpdateEmailNotification
+{
+    public record Command(bool EnableEmailNotifications) : ICommand<ErrorOr<Success>>;
+    
+    internal sealed class Handler(
+        IBudgetDbContext dbContext, 
+        ICurrentUserService currentUserService) : ICommandHandler<Command, ErrorOr<Success>>
+    {
+        public async ValueTask<ErrorOr<Success>> Handle(Command command, CancellationToken cancellationToken)
+        {
+            var userId = currentUserService.GetUserId();
+            var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+
+            if (user is null)
+            {
+                return Error.NotFound("User not found");
+            }
+            
+            user.ChangeEmailNotificationPreference(command.EnableEmailNotifications);
+            
+            await dbContext.SaveChangesAsync(cancellationToken);
+            
+            return Result.Success;
+        }
+    }
+    
+    internal sealed class Validator : AbstractValidator<Command>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.EnableEmailNotifications).NotEmpty().NotNull();
+        }
+    }
+}

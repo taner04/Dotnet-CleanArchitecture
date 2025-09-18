@@ -44,5 +44,8 @@ app.UseAuthorization();
 
 app.Run();
 
-[UsedImplicitly]
-public partial class Program { } // For integration tests
+namespace Api
+{
+    [UsedImplicitly]
+    public partial class Program { }
+} // For integration tests

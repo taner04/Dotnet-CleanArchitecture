@@ -1,4 +1,5 @@
 using Application.Abstraction.Infrastructure;
+using Domain.Entities.Users.DomainEvents;
 using Domain.Entities.Users.ValueObjects;
 
 namespace Application.CQRS.Users;
@@ -28,15 +29,13 @@ public static class LoginUser
                 return Error.Unauthorized(description: "Invalid credentials");
             }
 
-            if (user.IsRefreshTokenValid)
+            if (!user.IsRefreshTokenValid)
             {
-                return tokenService.GenerateAccessToken(user);
+                user.SetRefreshToken(tokenService.GenerateRefreshToken(user));
+                await budgetDbContext.SaveChangesAsync(cancellationToken);
             }
-
-            var refreshToken = tokenService.GenerateRefreshToken(user);
-            user.SetRefreshToken(refreshToken);
             
-            await budgetDbContext.SaveChangesAsync(cancellationToken);
+            user.AddDomainEvent(new UserLoggedInDomainEvent(user));
 
             return tokenService.GenerateAccessToken(user);
         }

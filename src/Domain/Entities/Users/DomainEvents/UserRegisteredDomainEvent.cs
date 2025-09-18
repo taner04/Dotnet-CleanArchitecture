@@ -1,6 +1,5 @@
 using Domain.Abstraction.DomainEvent;
-using Domain.Entities.Users.ValueObjects;
 
-namespace Domain.Entities.Users.DomainEvent;
+namespace Domain.Entities.Users.DomainEvents;
 
 public record UserRegisteredDomainEvent(User User) : IDomainEvent;
