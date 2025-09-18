@@ -1,3 +1,4 @@
+using Application.Abstraction.Infrastructure;
 using Domain.Entities.Users.ValueObjects;
 
 namespace Application.CQRS.Users;

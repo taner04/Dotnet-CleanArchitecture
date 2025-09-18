@@ -36,15 +36,6 @@ public sealed class TokenService : ITokenService<User>
         return _tokenHandler.WriteToken(jwt);
     }
 
-    public Claim GetClaim(string token, string claimType)
-    {
-        var jwtSecurityToken =
-            _tokenHandler.ReadJwtToken(token) ?? throw new ArgumentException("Invalid token format.");
-        var claim = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type.Equals(claimType));
-
-        return claim ?? throw new ArgumentException($"Claim '{claimType}' not found in the token.");
-    }
-
     public bool IsRefreshTokenValid(string token)
     {
         var validationParameters = GetValidationParameters();
