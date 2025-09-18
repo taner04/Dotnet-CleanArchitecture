@@ -9,18 +9,6 @@ It is also intended to serve as inspiration for others looking to adopt Clean Ar
 
 ---
 
-## 🏛 Architecture Overview
-
-- **Domain** – Contains the core business model and rules (Entities, Value Objects, Domain Events, Domain Interfaces).
-- **Application** – Coordinates business processes, orchestrates domain logic, and handles cross-cutting concerns.
-- **Persistence** – Responsible for data persistence and access. Implements interfaces from the Domain and Application layers.
-- **Infrastructure** – Handles external integrations and technical concerns (e.g., email, logging, authentication) that are not directly related to data persistence.
-- **Api** – Exposes HTTP endpoints for clients and maps requests to Application services.
-- **SharedKernel** – Common abstractions and utilities shared across multiple projects.
-- **AppHost / ServiceDefaults** – Hosting and default configuration for running the application.
-
----
-
 ## 🚀 Getting Started
 
 To get started, ensure you have the following prerequisites installed:
@@ -48,13 +36,6 @@ Alternatively, run the provided script from the root directory:
   ./launch.sh
   ```
   This will start the application and all supporting services defined in the Aspire project.
-
----
-
-## 📚 References
-
-- Robert C. Martin: [_Clean Architecture_](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
-- Jimmy Bogard: [_Domain Driven Design_](https://www.jimmybogard.com/tag/domain-driven-design/)
 
 ---
 
