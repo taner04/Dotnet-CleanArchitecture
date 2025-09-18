@@ -100,6 +100,16 @@ public class CustomError
     private static string GetTraceId(HttpContext httpContext) =>
         httpContext.Features.Get<IHttpActivityFeature>()?.Activity.Id!;
 
+    /// <summary>
+    /// Attempts to write a <see cref="CustomError"/> response to the HTTP context for a given <see cref="DomainException"/>.
+    /// </summary>
+    /// <param name="httpContext">The current HTTP context.</param>
+    /// <param name="domainException">The domain exception to serialize.</param>
+    /// <param name="cancellationToken">A cancellation token for the async operation.</param>
+    /// <returns>
+    /// A <see cref="ValueTask{Boolean}"/> indicating whether the response was successfully written.
+    /// Returns <c>true</c> if the response was written; otherwise, <c>false</c>.
+    /// </returns>
     public static async ValueTask<bool> TryWriteAsync(HttpContext httpContext, DomainException domainException, CancellationToken cancellationToken = default)
     {
         var customError = new CustomError(domainException.Error, httpContext);
