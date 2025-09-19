@@ -28,8 +28,7 @@ public class CustomError
             httpContext,
             new Dictionary<string, object>
             {
-                ["errors"] = validationErrors,
-                ["traceId"] = GetTraceId(httpContext)
+                ["errors"] = validationErrors
             }
         );
     }
@@ -46,10 +45,7 @@ public class CustomError
             error.Code,
             GetStatusCode(error.Type),
             httpContext,
-            new Dictionary<string, object>
-            {
-                ["traceId"] = GetTraceId(httpContext)
-            }
+            new Dictionary<string, object>()
         );
     }
 
@@ -69,13 +65,15 @@ public class CustomError
         HttpContext httpContext,
         Dictionary<string, object> extensions)
     {
+        extensions.Add("traceId", GetTraceId(httpContext));
+        
         return new ProblemDetails
         {
             Title = title,
             Type = type,
             Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}",
             Status = status,
-            Extensions = extensions!
+            Extensions = extensions
         };
     }
 
