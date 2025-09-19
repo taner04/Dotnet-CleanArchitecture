@@ -1,4 +1,4 @@
-﻿using Domain.Abstraction.Entity;
+﻿using Domain.Common.Abstraction.Entity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Data.Configuration;

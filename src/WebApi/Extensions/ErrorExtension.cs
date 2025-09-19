@@ -1,8 +1,8 @@
-using Api.Models;
 using ErrorOr;
 using Microsoft.AspNetCore.Http.HttpResults;
+using WebApi.Models;
 
-namespace Api.Extensions;
+namespace WebApi.Extensions;
 
 public static class ErrorExtension
 {

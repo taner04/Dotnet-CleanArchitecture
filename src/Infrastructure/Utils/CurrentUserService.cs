@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using Application.Abstraction.Infrastructure;
+using Application.Common.Abstraction.Infrastructure;
 using Microsoft.AspNetCore.Http;
 
 namespace Infrastructure.Utils;

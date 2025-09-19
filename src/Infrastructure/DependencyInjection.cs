@@ -1,6 +1,5 @@
-using Application.Abstraction;
-using Application.Abstraction.Infrastructure;
-using Application.Abstraction.Persistence;
+using Application.Common.Abstraction.Infrastructure;
+using Application.Common.Abstraction.Persistence;
 using Infrastructure.Persistence.Data;
 using Infrastructure.Persistence.Interceptors;
 using Infrastructure.Utils;

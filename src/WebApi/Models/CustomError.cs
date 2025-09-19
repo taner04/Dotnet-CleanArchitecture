@@ -2,7 +2,7 @@ using Domain.Common;
 using ErrorOr;
 using Microsoft.AspNetCore.Http.Features;
 
-namespace Api.Models;
+namespace WebApi.Models;
 
 /// <summary>
 /// Represents a custom error response with problem details for API error handling.

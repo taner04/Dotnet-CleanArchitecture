@@ -1,4 +1,5 @@
-using Application.Abstraction.Infrastructure;
+using Application.Common.Abstraction.Infrastructure;
+using Application.Common.Abstraction.Persistence;
 using SharedKernel.Errors;
 
 namespace Application.CQRS.Transactions;

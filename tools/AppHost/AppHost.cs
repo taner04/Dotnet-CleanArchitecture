@@ -11,7 +11,7 @@ var migration = builder.AddProject<MigrationService>(AspireConstants.MigrationSe
     .WithReference(budgetDb)
     .WaitFor(budgetDb);
 
-builder.AddProject<Api>(AspireConstants.BudgetApi)
+builder.AddProject<WebApi>(AspireConstants.BudgetApi)
     .WithReference(budgetDb)
     .WaitFor(budgetDb)
     .WaitForCompletion(migration);

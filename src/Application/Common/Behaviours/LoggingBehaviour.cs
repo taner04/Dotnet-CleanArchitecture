@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace Application.Behaviours;
+namespace Application.Common.Behaviours;
 
 public sealed class LoggingBehaviour<TMessage, TResponse>(
     ILogger<IPipelineBehavior<TMessage, TResponse>> logger) : IPipelineBehavior<TMessage, TResponse>

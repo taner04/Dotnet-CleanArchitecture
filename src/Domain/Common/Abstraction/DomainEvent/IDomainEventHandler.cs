@@ -1,6 +1,6 @@
 ﻿using Mediator;
 
-namespace Domain.Abstraction.DomainEvent;
+namespace Domain.Common.Abstraction.DomainEvent;
 
 /// <summary>
 /// Defines a handler for domain events of type <typeparamref name="TEvent"/>.

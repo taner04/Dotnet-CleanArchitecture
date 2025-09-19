@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using Domain.Abstraction.DomainEvent;
+using Domain.Common.Abstraction.DomainEvent;
 using Domain.Entities.Users.DomainEvents;
 
 namespace Application.DomainEventHandlers.Users;

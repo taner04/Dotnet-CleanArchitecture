@@ -1,9 +1,10 @@
+using Api.IntegrationTests.Common;
 using Microsoft.Extensions.Logging;
 using SharedKernel;
 
-namespace Api.IntegrationTests.Tests;
+namespace Api.IntegrationTests;
 
-public class IntegrationTest1
+public class IntegrationTest1 : TestBase
 {
     private static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(30);
 
@@ -21,7 +22,7 @@ public class IntegrationTest1
     {
         // Arrange
         var cancellationToken = new CancellationTokenSource(DefaultTimeout).Token;
-        var appHost = await DistributedApplicationTestingBuilder.CreateAsync<Projects.Api>(cancellationToken);
+        var appHost = await DistributedApplicationTestingBuilder.CreateAsync<Projects.WebApi>(cancellationToken);
         appHost.Services.AddLogging(logging =>
         {
             logging.SetMinimumLevel(LogLevel.Debug);

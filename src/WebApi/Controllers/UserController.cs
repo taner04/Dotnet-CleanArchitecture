@@ -1,7 +1,7 @@
 using Application.CQRS.Users;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Api.Controllers;
+namespace WebApi.Controllers;
 
 [Authorize]
 [Route("users")]

@@ -1,4 +1,4 @@
-namespace Application.Behaviours;
+namespace Application.Common.Behaviours;
 
 public class FluentValidationBehaviour<TMessage, TResponse>(IServiceProvider serviceProvider) : IPipelineBehavior<TMessage, TResponse>
     where TMessage : IMessage

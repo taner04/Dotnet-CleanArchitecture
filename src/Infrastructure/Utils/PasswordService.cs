@@ -1,5 +1,4 @@
-using Application.Abstraction.Infrastructure;
-using Application.Abstraction.Persistence;
+using Application.Common.Abstraction.Infrastructure;
 
 namespace Infrastructure.Utils;
 

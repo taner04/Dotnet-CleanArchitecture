@@ -1,8 +1,8 @@
-using Api.Extensions;
+using WebApi.Extensions;
 using Application.CQRS.Users;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Api.Controllers;
+namespace WebApi.Controllers;
 
 [Route("auth")]
 public class AuthenticationController(IMediator mediator) : ControllerBase

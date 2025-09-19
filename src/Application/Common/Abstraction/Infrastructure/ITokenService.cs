@@ -1,4 +1,4 @@
-namespace Application.Abstraction.Infrastructure;
+namespace Application.Common.Abstraction.Infrastructure;
 
 /// <summary>
 /// Defines methods for generating and validating access and refresh tokens for a user.

@@ -1,8 +1,8 @@
 using System.Text;
-using Api.Bearer;
 using Microsoft.IdentityModel.Tokens;
+using WebApi.Bearer;
 
-namespace Api.Extensions;
+namespace WebApi.Extensions;
 
 public static class BearerExtensions
 {

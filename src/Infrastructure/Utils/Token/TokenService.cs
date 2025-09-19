@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Application.Abstraction.Infrastructure;
+using Application.Common.Abstraction.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 

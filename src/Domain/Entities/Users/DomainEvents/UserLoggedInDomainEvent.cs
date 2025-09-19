@@ -1,4 +1,4 @@
-using Domain.Abstraction.DomainEvent;
+using Domain.Common.Abstraction.DomainEvent;
 
 namespace Domain.Entities.Users.DomainEvents;
 

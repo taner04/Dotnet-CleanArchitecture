@@ -1,8 +1,8 @@
-using Api.Models;
 using Domain.Common;
 using Microsoft.AspNetCore.Diagnostics;
+using WebApi.Models;
 
-namespace Api.ExceptionHandler;
+namespace WebApi.ExceptionHandler;
 
 public class GlobalExceptionHandler(IProblemDetailsService problemDetailsService) : IExceptionHandler
 {

@@ -1,7 +1,7 @@
-using Api.Extensions;
+using WebApi.Extensions;
 using ErrorOr;
 
-namespace Api.Controllers;
+namespace WebApi.Controllers;
 
 [ApiController]
 public abstract class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase

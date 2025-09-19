@@ -1,4 +1,4 @@
-﻿using Domain.Abstraction.Entity;
+﻿using Domain.Common.Abstraction.Entity;
 
 namespace Domain.Common;
 

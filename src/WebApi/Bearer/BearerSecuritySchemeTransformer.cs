@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi.Models;
 
-namespace Api.Bearer;
+namespace WebApi.Bearer;
 
 public sealed class BearerSecuritySchemeTransformer(IAuthenticationSchemeProvider authenticationSchemeProvider) : IOpenApiDocumentTransformer
 {

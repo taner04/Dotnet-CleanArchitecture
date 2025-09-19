@@ -1,6 +1,4 @@
 using System.Diagnostics;
-using Application.Abstraction;
-using Application.Abstraction.Persistence;
 using Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 

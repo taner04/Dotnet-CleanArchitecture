@@ -1,7 +1,4 @@
-﻿using System.Reflection;
-using Application.Abstraction;
-using Application.Abstraction.Persistence;
-using Infrastructure.Persistence.Data.Configuration;
+﻿using Application.Common.Abstraction.Persistence;
 using Infrastructure.Persistence.Data.Converter;
 
 namespace Infrastructure.Persistence.Data;

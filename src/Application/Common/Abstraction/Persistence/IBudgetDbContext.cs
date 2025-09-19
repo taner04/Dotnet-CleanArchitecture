@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Application.Abstraction.Persistence;
+namespace Application.Common.Abstraction.Persistence;
 
 /// <summary>
 /// Represents the abstraction for the Budget database context.

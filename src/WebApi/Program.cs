@@ -1,5 +1,5 @@
-using Api.ExceptionHandler;
-using Api.Extensions;
+using WebApi.ExceptionHandler;
+using WebApi.Extensions;
 using Application;
 using DotNetEnv;
 using Infrastructure;
@@ -44,7 +44,7 @@ app.UseAuthorization();
 
 app.Run();
 
-namespace Api
+namespace WebApi
 {
     [UsedImplicitly]
     public partial class Program { }

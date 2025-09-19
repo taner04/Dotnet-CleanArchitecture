@@ -1,4 +1,4 @@
-namespace Application.Abstraction.Infrastructure;
+namespace Application.Common.Abstraction.Infrastructure;
 
 /// <summary>
 /// Provides access to the current user's information.

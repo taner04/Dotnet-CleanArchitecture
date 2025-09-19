@@ -1,6 +1,6 @@
-﻿using Domain.Abstraction.DomainEvent;
+﻿using Domain.Common.Abstraction.DomainEvent;
 
-namespace Domain.Abstraction.Entity;
+namespace Domain.Common.Abstraction.Entity;
 
 /// <summary>
 /// Represents an aggregate root in the domain model.

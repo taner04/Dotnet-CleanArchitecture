@@ -1,6 +1,6 @@
 ﻿using Mediator;
 
-namespace Domain.Abstraction.DomainEvent;
+namespace Domain.Common.Abstraction.DomainEvent;
 
 /// <summary>
 /// Represents a domain event in the system.

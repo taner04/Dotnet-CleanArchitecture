@@ -1,4 +1,5 @@
-using Application.Abstraction.Infrastructure;
+using Application.Common.Abstraction.Infrastructure;
+using Application.Common.Abstraction.Persistence;
 using Domain.Entities.Users.DomainEvents;
 using Domain.Entities.Users.ValueObjects;
 using SharedKernel.Errors;

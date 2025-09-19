@@ -1,7 +1,7 @@
 using Application.CQRS.Transactions;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Api.Controllers;
+namespace WebApi.Controllers;
 
 [Authorize]
 [Microsoft.AspNetCore.Components.Route("transactions")]

@@ -1,4 +1,4 @@
-﻿namespace Domain.Abstraction.Entity;
+﻿namespace Domain.Common.Abstraction.Entity;
 
 /// <summary>
 /// Represents an entity with a strongly-typed identifier.
