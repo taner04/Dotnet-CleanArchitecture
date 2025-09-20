@@ -1,16 +1,21 @@
 using WebApi.ExceptionHandler;
 using WebApi.Extensions;
 using Application;
-using DotNetEnv;
 using Infrastructure;
 using JetBrains.Annotations;
 using ServiceDefaults;
 using SharedKernel;
 
-if (File.Exists(".env.dev"))
-{
-    Env.Load(".env.dev");
-}
+IConfigurationRoot configurationRoot;
+#if DEBUG
+configurationRoot = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.Development.json")
+    .Build();
+#else
+configurationRoot = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .Build();
+#endif
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,8 +49,5 @@ app.UseAuthorization();
 
 app.Run();
 
-namespace WebApi
-{
-    [UsedImplicitly]
-    public partial class Program { }
-} // For integration tests
+[UsedImplicitly]
+public partial class Program; // For integration tests
