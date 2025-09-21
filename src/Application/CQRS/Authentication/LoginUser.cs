@@ -4,7 +4,7 @@ using Domain.Entities.Users.DomainEvents;
 using Domain.Entities.Users.ValueObjects;
 using SharedKernel.Errors;
 
-namespace Application.CQRS.Users;
+namespace Application.CQRS.Authentication;
 
 public static class LoginUser
 {

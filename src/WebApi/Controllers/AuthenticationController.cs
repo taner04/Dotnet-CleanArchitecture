@@ -1,3 +1,4 @@
+using Application.CQRS.Authentication;
 using WebApi.Extensions;
 using Application.CQRS.Users;
 using Microsoft.AspNetCore.Authorization;

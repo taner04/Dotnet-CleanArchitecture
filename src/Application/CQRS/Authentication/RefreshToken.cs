@@ -2,7 +2,7 @@ using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
 using SharedKernel.Errors;
 
-namespace Application.CQRS.Users;
+namespace Application.CQRS.Authentication;
 
 public static class RefreshToken
 {

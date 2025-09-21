@@ -1,4 +1,5 @@
 using Application.Common.Behaviours;
+using Application.CQRS.Authentication;
 using Application.CQRS.Users;
 using Microsoft.Extensions.DependencyInjection;
 

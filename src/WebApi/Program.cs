@@ -1,10 +1,10 @@
-using WebApi.ExceptionHandler;
-using WebApi.Extensions;
 using Application;
 using Infrastructure;
 using JetBrains.Annotations;
 using ServiceDefaults;
 using SharedKernel;
+using WebApi.ExceptionHandler;
+using WebApi.Extensions;
 
 IConfigurationRoot configurationRoot;
 #if DEBUG
@@ -49,5 +49,8 @@ app.UseAuthorization();
 
 app.Run();
 
-[UsedImplicitly]
-public partial class Program; // For integration tests
+namespace WebApi
+{
+    [UsedImplicitly]
+    public partial class Program; // For integration tests
+}

@@ -1,3 +1,5 @@
+using Api.IntegrationTests.Common.Database;
+
 namespace Api.IntegrationTests.Common;
 
 [CollectionDefinition("TestingFixtureCollection")]

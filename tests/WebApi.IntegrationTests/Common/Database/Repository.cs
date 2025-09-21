@@ -1,7 +1,6 @@
-using Application.Common.Abstraction.Persistence;
 using Infrastructure.Persistence.Data;
 
-namespace Api.IntegrationTests.Common;
+namespace Api.IntegrationTests.Common.Database;
 
 public class Repository(BudgetDbContext budgetDbContext)
 {

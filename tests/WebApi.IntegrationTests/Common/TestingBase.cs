@@ -1,3 +1,4 @@
+using Api.IntegrationTests.Common.Database;
 using Domain.Entities.Users;
 using Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;

@@ -2,7 +2,8 @@ using System.Data.Common;
 using Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-namespace Api.IntegrationTests.Common;
+
+namespace Api.IntegrationTests.Common.Database;
 
 public class PostgresTestDatabase : IAsyncDisposable
 {

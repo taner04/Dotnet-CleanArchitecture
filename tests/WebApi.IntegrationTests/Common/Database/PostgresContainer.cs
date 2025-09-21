@@ -1,7 +1,6 @@
-using SharedKernel;
 using Testcontainers.PostgreSql;
 
-namespace Api.IntegrationTests.Common;
+namespace Api.IntegrationTests.Common.Database;
 
 public class PostgresContainer : IAsyncDisposable
 {
