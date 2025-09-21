@@ -13,7 +13,7 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
 
         var registerCommand = new RegisterUser.Command("John", "Doe", "doe@mail.com", "John123!", true);
         
-        var result = await client.PatchAsJsonAsync("auth/register", registerCommand);
+        var result = await client.PostAsJsonAsync(Routes.Auth.Register, registerCommand);
         
         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
     }
