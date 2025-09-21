@@ -11,6 +11,7 @@ public abstract class TestingBase : IAsyncLifetime
     private readonly IServiceScope _scope;
     private readonly TestingFixture _fixture;
     private readonly BudgetDbContext _dbContext;
+    protected Repository Repository;
     
     protected TestingBase(TestingFixture fixture)
     {
@@ -22,6 +23,8 @@ public abstract class TestingBase : IAsyncLifetime
         {
             throw new NpgsqlException("Cannot connect to the database");
         }
+        
+        Repository = new Repository(_dbContext);
     }
     
     public async Task InitializeAsync() => await _fixture.SetUpAsync();
