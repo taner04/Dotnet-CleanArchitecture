@@ -5,14 +5,32 @@ namespace Api.IntegrationTests.Common;
 
 public class PostgresContainer : IAsyncDisposable
 {
-    private readonly PostgreSqlContainer _postgresSqlContainer = new PostgreSqlBuilder()
-        .WithName($"Dotnet-CleanArchitecture-IntegrationTests-{Guid.NewGuid()}")
-        .WithAutoRemove(true)
-        .Build();
+    private readonly PostgreSqlContainer _postgresSqlContainer = new PostgreSqlBuilder().Build();
 
-    public async Task InitializeAsync()
+    public async Task InitializeAsync() => await StartWithRetry();
+
+    private const int MaxRetries = 5;
+    private async Task StartWithRetry()
     {
-        await _postgresSqlContainer.StartAsync();
+        var attempt = 0;
+        while (attempt < MaxRetries)
+        {
+            try
+            {
+                await _postgresSqlContainer.StartAsync();
+                return; 
+            }
+            catch (Exception ex)
+            {
+                attempt++;
+                if (attempt >= MaxRetries)
+                {
+                    throw new Exception($"Failed to start PostgresSQL container after {MaxRetries} attempts.", ex);
+                }
+                
+                await Task.Delay(2000); 
+            }
+        }
     }
 
     public async ValueTask DisposeAsync()

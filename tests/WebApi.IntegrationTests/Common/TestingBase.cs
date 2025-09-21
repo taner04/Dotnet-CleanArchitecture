@@ -1,6 +1,7 @@
 using Domain.Entities.Users;
 using Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Api.IntegrationTests.Common;
 
@@ -10,8 +11,6 @@ public abstract class TestingBase : IAsyncLifetime
     private readonly IServiceScope _scope;
     private readonly TestingFixture _fixture;
     private readonly BudgetDbContext _dbContext;
-
-    protected Repository<User> UserRepository;
     
     protected TestingBase(TestingFixture fixture)
     {
@@ -19,20 +18,19 @@ public abstract class TestingBase : IAsyncLifetime
         _scope = _fixture.CreateScope();
         _dbContext = _scope.ServiceProvider.GetRequiredService<BudgetDbContext>();
 
-        UserRepository = new Repository<User>(_dbContext);
+        if (!_dbContext.Database.CanConnect())
+        {
+            throw new NpgsqlException("Cannot connect to the database");
+        }
     }
     
-    public async Task InitializeAsync()
-    {
-        await _fixture.SetUpAsync();
-    }
+    public async Task InitializeAsync() => await _fixture.SetUpAsync();
 
     public Task DisposeAsync()
     {
         _scope.Dispose();
-        
         return Task.CompletedTask;   
     }
 
-    protected bool CanConnect => _dbContext.Database.CanConnect();
+    protected HttpClient GetApiClient() => _fixture.ApiClient.Value;
 }

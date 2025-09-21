@@ -14,17 +14,6 @@ namespace Api.IntegrationTests.Common;
 [UsedImplicitly]
 public class WebApiFactory(DbConnection dbConnection) : WebApplicationFactory<Program>
 {
-    protected override IHostBuilder CreateHostBuilder()
-    {
-        var webApiPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "src", "WebApi"));
-        return Host.CreateDefaultBuilder()
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseContentRoot(webApiPath);
-                webBuilder.UseStartup<Program>();
-            });
-    }
-    
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureLogging(opt =>

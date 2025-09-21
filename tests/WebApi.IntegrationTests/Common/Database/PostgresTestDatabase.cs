@@ -2,15 +2,14 @@ using System.Data.Common;
 using Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using Respawn;
-
 namespace Api.IntegrationTests.Common;
 
 public class PostgresTestDatabase : IAsyncDisposable
 {
+    private readonly List<string> _tableNames = ["Transactions", "Accounts", "Users"];
     private readonly PostgresContainer _postgresContainer = new();
-    private Respawner _respawner;
     private string _connectionString;
+    private DbContextOptions<BudgetDbContext> _dbContextOptions;
     
     public async Task InitializeAsync()
     {
@@ -20,19 +19,22 @@ public class PostgresTestDatabase : IAsyncDisposable
         
         _connectionString = builder.ConnectionString;
 
-        var budgetDbContextOptions = new DbContextOptionsBuilder<BudgetDbContext>()
+        _dbContextOptions = new DbContextOptionsBuilder<BudgetDbContext>()
             .UseNpgsql(_connectionString)
             .Options;
         
-        await using var context = new BudgetDbContext(budgetDbContextOptions);
+        await using var context = new BudgetDbContext(_dbContextOptions);
         await context.Database.MigrateAsync();
-        
-
     }
     
     public async Task ResetDatabaseAsync()
     {
-        await _respawner.ResetAsync(_connectionString);
+        await using var context = new BudgetDbContext(_dbContextOptions);
+        
+        foreach (var tableName in _tableNames)
+        {
+            await context.Database.ExecuteSqlRawAsync($"Delete from \"{tableName}\"");
+        }
     }
     
     public async ValueTask DisposeAsync()

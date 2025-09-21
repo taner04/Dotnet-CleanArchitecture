@@ -22,10 +22,9 @@ public class TestingFixture : IAsyncLifetime
         await _webApiFactory.DisposeAsync();
     }
     
-    public async Task SetUpAsync()
-    {
-        await _postgresTestDatabase.ResetDatabaseAsync();
-    }
-    
+    public async Task SetUpAsync() => await _postgresTestDatabase.ResetDatabaseAsync();
+
     public IServiceScope CreateScope() => _serviceScopeFactory.CreateScope();
+    
+    public Lazy<HttpClient> ApiClient => new(_webApiFactory.CreateClient());
 }
