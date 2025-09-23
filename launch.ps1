@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Launches the eShop.AppHost project with required environment checks and opens the application in the browser.
+    Launches the AppHost project with required environment checks and opens the application in the browser.
 #>
 
 $ErrorActionPreference = 'Stop'
