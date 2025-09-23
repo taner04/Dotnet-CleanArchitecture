@@ -8,8 +8,8 @@ public class TestingFixtureCollection : ICollectionFixture<TestingFixture>;
 public class TestingFixture : IAsyncLifetime
 {
     private readonly PostgresTestDatabase _postgresTestDatabase = new();
-    private IServiceScopeFactory _serviceScopeFactory;
-    private WebApiFactory _webApiFactory;
+    private IServiceScopeFactory _serviceScopeFactory = null!;
+    private WebApiFactory _webApiFactory = null!;
 
     public async ValueTask InitializeAsync()
     {

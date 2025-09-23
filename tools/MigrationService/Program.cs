@@ -1,4 +1,4 @@
-using Infrastructure.Persistence.Data;
+using Persistence.Data;
 using ServiceDefaults;
 using SharedKernel;
 

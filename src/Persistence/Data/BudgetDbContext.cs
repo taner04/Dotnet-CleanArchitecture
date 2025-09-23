@@ -1,7 +1,9 @@
 ﻿using Application.Common.Abstraction.Persistence;
-using Infrastructure.Persistence.Data.Converter;
+using Domain.Entities.Users;
+using Microsoft.EntityFrameworkCore;
+using Persistence.Data.Converter;
 
-namespace Infrastructure.Persistence.Data;
+namespace Persistence.Data;
 
 public sealed class BudgetDbContext(DbContextOptions<BudgetDbContext> options)
     : DbContext(options), IBudgetDbContext

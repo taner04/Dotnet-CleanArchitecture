@@ -1,6 +1,6 @@
 using Application.CQRS.Authentication;
 
-namespace Api.IntegrationTests.Tests.Users;
+namespace Api.IntegrationTests.Tests.AuthenticationController;
 
 public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
 {
@@ -47,6 +47,6 @@ public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        Assert.False(string.IsNullOrWhiteSpace(await response.Content.ReadAsStringAsync()));
+        Assert.False(string.IsNullOrWhiteSpace(await response.Content.ReadAsStringAsync(CurrentCancellationToken)));
     }
 }

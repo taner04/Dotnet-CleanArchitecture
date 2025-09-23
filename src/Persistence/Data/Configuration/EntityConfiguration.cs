@@ -1,7 +1,8 @@
 ﻿using Domain.Common.Abstraction.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Data.Configuration;
+namespace Persistence.Data.Configuration;
 
 public abstract class EntityConfiguration<TEntity, TId> : IEntityTypeConfiguration<TEntity>
     where TEntity : class, IEntity<TId>, IAuditable

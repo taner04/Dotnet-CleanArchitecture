@@ -1,9 +1,9 @@
 using System.Net.Http.Headers;
 using Api.IntegrationTests.Common.Database;
 using Application.CQRS.Authentication;
-using Infrastructure.Persistence.Data;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using Persistence.Data;
 
 namespace Api.IntegrationTests.Common;
 

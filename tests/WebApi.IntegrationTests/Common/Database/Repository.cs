@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
-using Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Data;
 
 namespace Api.IntegrationTests.Common.Database;
 

@@ -19,7 +19,7 @@ public class GetBalanceTests(TestingFixture fixture) : TestingBase(fixture)
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        var content = await response.Content.ReadAsStringAsync();
+        var content = await response.Content.ReadAsStringAsync(CurrentCancellationToken);
         Assert.False(string.IsNullOrWhiteSpace(content));
         Assert.Equal(0, int.Parse(content));
     }

@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Users.ValueObjects;
 using Vogen;
 
-namespace Infrastructure.Persistence.Data.Converter;
+namespace Persistence.Data.Converter;
 
 [EfCoreConverter<Money>]
 [EfCoreConverter<Email>]

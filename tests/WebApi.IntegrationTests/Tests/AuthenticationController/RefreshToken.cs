@@ -1,4 +1,4 @@
-namespace Api.IntegrationTests.Tests.Users;
+namespace Api.IntegrationTests.Tests.AuthenticationController;
 
 public class RefreshToken(TestingFixture fixture) : TestingBase(fixture)
 {
@@ -10,7 +10,7 @@ public class RefreshToken(TestingFixture fixture) : TestingBase(fixture)
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        Assert.False(string.IsNullOrWhiteSpace(await response.Content.ReadAsStringAsync()));
+        Assert.False(string.IsNullOrWhiteSpace(await response.Content.ReadAsStringAsync(CurrentCancellationToken)));
     }
 
     [Fact]

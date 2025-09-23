@@ -3,7 +3,7 @@ using Domain.Entities.Users;
 using Domain.Entities.Users.ValueObjects;
 using Infrastructure.Utils;
 
-namespace Api.IntegrationTests.Tests.Users;
+namespace Api.IntegrationTests.Tests.AuthenticationController;
 
 public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
 {

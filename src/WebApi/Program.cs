@@ -1,21 +1,10 @@
 using Application;
 using Infrastructure;
 using JetBrains.Annotations;
+using Persistence;
 using ServiceDefaults;
-using SharedKernel;
 using WebApi.ExceptionHandler;
 using WebApi.Extensions;
-
-IConfigurationRoot configurationRoot;
-#if DEBUG
-configurationRoot = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.Development.json")
-    .Build();
-#else
-configurationRoot = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.json")
-    .Build();
-#endif
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +18,7 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
-builder.Services.AddPersistence(builder.Configuration.GetConnectionString(AspireConstants.BudgetDb)!);
+builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddBearerScheme(builder.Configuration);
 
 var app = builder.Build();

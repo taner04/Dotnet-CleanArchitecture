@@ -1,8 +1,9 @@
 using Domain.Common.Abstraction.Entity;
 using Mediator;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace Infrastructure.Persistence.Interceptors;
+namespace Persistence.Interceptors;
 
 public sealed class AggregateRootInterceptor(IMediator mediator) : SaveChangesInterceptor
 {

@@ -1,8 +1,9 @@
 using Application.Common.Abstraction.Infrastructure;
 using Domain.Common.Abstraction.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace Infrastructure.Persistence.Interceptors;
+namespace Persistence.Interceptors;
 
 public class AuditableInterceptor(ICurrentUserService currentUserService) : SaveChangesInterceptor
 {

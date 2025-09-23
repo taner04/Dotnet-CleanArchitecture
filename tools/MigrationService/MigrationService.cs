@@ -1,6 +1,6 @@
 using System.Diagnostics;
-using Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Data;
 
 namespace MigrationService;
 
