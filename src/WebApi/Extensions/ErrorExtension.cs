@@ -1,5 +1,4 @@
 using ErrorOr;
-using Microsoft.AspNetCore.Http.HttpResults;
 using WebApi.Models;
 
 namespace WebApi.Extensions;
@@ -8,10 +7,11 @@ public static class ErrorExtension
 {
     public static BadRequestObjectResult ToActionResult(this List<Error> errors, HttpContext httpContext)
     {
-        return errors.All(e => e.Type == ErrorType.Validation) ? 
-            ValidationError(errors, httpContext) : new BadRequestObjectResult(errors[0]);
+        return errors.All(e => e.Type == ErrorType.Validation)
+            ? ValidationError(errors, httpContext)
+            : new BadRequestObjectResult(errors[0]);
     }
-    
+
     private static BadRequestObjectResult ValidationError(List<Error> errors, HttpContext httpContext)
     {
         var validationErrors = new Dictionary<string, List<string>>();
@@ -28,7 +28,7 @@ public static class ErrorExtension
                 validationErrors[error.Code] = [error.Description];
             }
         }
-        
+
         return new BadRequestObjectResult(new CustomError(validationErrors, httpContext));
     }
 }

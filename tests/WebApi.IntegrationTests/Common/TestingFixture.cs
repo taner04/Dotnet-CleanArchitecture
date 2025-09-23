@@ -8,9 +8,9 @@ public class TestingFixtureCollection : ICollectionFixture<TestingFixture>;
 public class TestingFixture : IAsyncLifetime
 {
     private readonly PostgresTestDatabase _postgresTestDatabase = new();
-    private WebApiFactory _webApiFactory;
     private IServiceScopeFactory _serviceScopeFactory;
-    
+    private WebApiFactory _webApiFactory;
+
     public async ValueTask InitializeAsync()
     {
         await _postgresTestDatabase.InitializeAsync();
@@ -23,10 +23,19 @@ public class TestingFixture : IAsyncLifetime
         await _postgresTestDatabase.DisposeAsync();
         await _webApiFactory.DisposeAsync();
     }
-    
-    public async Task SetUpAsync() => await _postgresTestDatabase.ResetDatabaseAsync();
 
-    public IServiceScope CreateScope() => _serviceScopeFactory.CreateScope();
-    
-    public HttpClient CreateClient() => _webApiFactory.CreateClient();
+    public async Task SetUpAsync()
+    {
+        await _postgresTestDatabase.ResetDatabaseAsync();
+    }
+
+    public IServiceScope CreateScope()
+    {
+        return _serviceScopeFactory.CreateScope();
+    }
+
+    public HttpClient CreateClient()
+    {
+        return _webApiFactory.CreateClient();
+    }
 }

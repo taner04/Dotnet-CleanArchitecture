@@ -11,7 +11,7 @@ public static class ScalarExtension
             opt.Title = "Budget API";
             opt.Layout = ScalarLayout.Classic;
         });
-        
+
         return app;
     }
 }

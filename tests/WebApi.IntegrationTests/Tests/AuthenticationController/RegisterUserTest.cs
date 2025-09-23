@@ -23,7 +23,7 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
         var user = await Repository.SearchByAsync<User>(
             u => u.Email == Email.From(command.Email),
             CurrentCancellationToken);
-        
+
         Assert.NotNull(user);
         Assert.Equal(Email.From(command.Email), user.Email);
         Assert.Equal(command.FirstName, user.FirstName);
@@ -36,10 +36,10 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
     public async Task RegisterUser_WithInvalidEmail_ReturnsBadRequest()
     {
         var client = CreateClient();
-        
+
         var command = new RegisterUser.Command("John", "Doe", "doemail.com", "John123!", true);
         var result = await client.PostAsJsonAsync(Routes.Auth.Register, command, CurrentCancellationToken);
-        
+
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
     }
 
@@ -47,10 +47,10 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
     public async Task RegisterUser_WithWeakPassword_ReturnsBadRequest()
     {
         var client = CreateClient();
-        
+
         var command = new RegisterUser.Command("John", "Doe", "doe@mail.com", "John", true);
         var result = await client.PostAsJsonAsync(Routes.Auth.Register, command, CurrentCancellationToken);
-        
+
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
     }
 
@@ -59,10 +59,10 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
     {
         await Repository.AddAsync(UserFactory.User(), CurrentCancellationToken);
         var client = CreateClient();
-        
+
         var command = new RegisterUser.Command("John", "Doe", "doe@mail.com", "John123!", true);
         var result = await client.PostAsJsonAsync(Routes.Auth.Register, command, CurrentCancellationToken);
-        
+
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
     }
 }

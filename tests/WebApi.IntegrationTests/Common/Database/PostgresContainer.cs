@@ -4,11 +4,23 @@ namespace Api.IntegrationTests.Common.Database;
 
 public class PostgresContainer : IAsyncDisposable
 {
+    private const int MaxRetries = 5;
     private readonly PostgreSqlContainer _postgresSqlContainer = new PostgreSqlBuilder().Build();
 
-    public async Task InitializeAsync() => await StartWithRetry();
+    public string ConnectionString => _postgresSqlContainer.GetConnectionString();
 
-    private const int MaxRetries = 5;
+    public async ValueTask DisposeAsync()
+    {
+        await _postgresSqlContainer.StopAsync();
+        await _postgresSqlContainer.DisposeAsync();
+        GC.SuppressFinalize(this);
+    }
+
+    public async Task InitializeAsync()
+    {
+        await StartWithRetry();
+    }
+
     private async Task StartWithRetry()
     {
         var attempt = 0;
@@ -17,7 +29,7 @@ public class PostgresContainer : IAsyncDisposable
             try
             {
                 await _postgresSqlContainer.StartAsync();
-                return; 
+                return;
             }
             catch (Exception ex)
             {
@@ -26,18 +38,9 @@ public class PostgresContainer : IAsyncDisposable
                 {
                     throw new Exception($"Failed to start PostgresSQL container after {MaxRetries} attempts.", ex);
                 }
-                
-                await Task.Delay(2000); 
+
+                await Task.Delay(2000);
             }
         }
     }
-
-    public async ValueTask DisposeAsync()
-    {
-        await _postgresSqlContainer.StopAsync();
-        await _postgresSqlContainer.DisposeAsync();
-        GC.SuppressFinalize(this);
-    }
-    
-    public string ConnectionString => _postgresSqlContainer.GetConnectionString();
 }

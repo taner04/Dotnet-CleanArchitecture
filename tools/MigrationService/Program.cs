@@ -1,5 +1,4 @@
 using Infrastructure.Persistence.Data;
-using MigrationService;
 using ServiceDefaults;
 using SharedKernel;
 

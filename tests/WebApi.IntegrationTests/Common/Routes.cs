@@ -8,7 +8,7 @@ public static class Routes
         public const string Login = "auth/login";
         public const string RefreshToken = "auth/refresh-token";
     }
-    
+
     public static class Account
     {
         public const string GetBalance = "accounts/get-balance";

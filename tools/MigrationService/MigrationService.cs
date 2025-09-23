@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MigrationService;
 
-public class MigrationService(IServiceProvider serviceProvider, IHostApplicationLifetime applicationLifetime) : BackgroundService
+public class MigrationService(IServiceProvider serviceProvider, IHostApplicationLifetime applicationLifetime)
+    : BackgroundService
 {
     public const string ActivitySourceName = "Migrations";
     private readonly ActivitySource _sActivitySource = new(ActivitySourceName);

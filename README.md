@@ -1,9 +1,11 @@
 # Dotnet Clean Architecture
 
-> **Note:** This is my first project implementing Clean Architecture in .NET. Feedback and suggestions are very welcome—feel free to open an issue or start a discussion!
+> **Note:** This is my first project implementing Clean Architecture in .NET. Feedback and suggestions are very
+> welcome—feel free to open an issue or start a discussion!
 
 This repository is a reference implementation of **Clean Architecture** principles in a .NET solution.  
-It demonstrates how to structure a modern, maintainable, and testable application by separating concerns into clearly defined layers.
+It demonstrates how to structure a modern, maintainable, and testable application by separating concerns into clearly
+defined layers.
 
 It is also intended to serve as inspiration for others looking to adopt Clean Architecture in their own .NET projects.
 

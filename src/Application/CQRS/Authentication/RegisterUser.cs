@@ -7,10 +7,11 @@ namespace Application.CQRS.Authentication;
 
 public static class RegisterUser
 {
-    public record Command(string FirstName, string LastName, string Email, string Password, bool WantsEmailNotification) : ICommand<ErrorOr<Success>>;
-    
+    public record Command(string FirstName, string LastName, string Email, string Password, bool WantsEmailNotification)
+        : ICommand<ErrorOr<Success>>;
+
     internal sealed class Handler(
-        IBudgetDbContext budgetDbContext, 
+        IBudgetDbContext budgetDbContext,
         IPasswordService passwordService) : ICommandHandler<Command, ErrorOr<Success>>
     {
         public async ValueTask<ErrorOr<Success>> Handle(Command command, CancellationToken cancellationToken)
@@ -20,25 +21,25 @@ public static class RegisterUser
             {
                 return UserErrors.InvalidEmail;
             }
-            
+
             var mail = emailResult.ValueObject;
             if (await budgetDbContext.Users.FirstOrDefaultAsync(u => u.Email == mail, cancellationToken) != null)
             {
                 return UserErrors.AlreadyExists;
             }
-        
+
             var newUser = User.TryCreate(command.FirstName, command.LastName, mail, command.WantsEmailNotification);
-        
+
             var hashedPassword = passwordService.HashPassword(command.Password);
             newUser.SetPassword(Password.From(hashedPassword));
-        
+
             await budgetDbContext.Users.AddAsync(newUser, cancellationToken);
             await budgetDbContext.SaveChangesAsync(cancellationToken);
-        
+
             return Result.Success;
         }
     }
-    
+
     internal sealed class Validator : AbstractValidator<Command>
     {
         public Validator()

@@ -5,9 +5,9 @@ namespace Infrastructure.Persistence.Data;
 
 public sealed class BudgetDbContext(DbContextOptions<BudgetDbContext> options)
     : DbContext(options), IBudgetDbContext
-{    
+{
     public DbSet<User> Users => Set<User>();
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -17,7 +17,7 @@ public sealed class BudgetDbContext(DbContextOptions<BudgetDbContext> options)
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         base.ConfigureConventions(configurationBuilder);
-        
+
         configurationBuilder.RegisterAllInIdConverter();
         configurationBuilder.RegisterAllInValueObjectConverter();
     }

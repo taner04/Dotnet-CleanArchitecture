@@ -3,7 +3,7 @@ using Vogen;
 namespace Domain.Entities.Users.ValueObjects;
 
 [ValueObject<string>]
-public readonly partial struct  Password
+public readonly partial struct Password
 {
     public static Validation Validate(string value)
     {

@@ -7,9 +7,9 @@ namespace Application.CQRS.Users;
 public static class UpdateEmailNotification
 {
     public record Command(bool WantsEmailNotifications) : ICommand<ErrorOr<Success>>;
-    
+
     internal sealed class Handler(
-        IBudgetDbContext dbContext, 
+        IBudgetDbContext dbContext,
         ICurrentUserService currentUserService) : ICommandHandler<Command, ErrorOr<Success>>
     {
         public async ValueTask<ErrorOr<Success>> Handle(Command command, CancellationToken cancellationToken)
@@ -21,14 +21,14 @@ public static class UpdateEmailNotification
             {
                 return UserErrors.Unauthorized;
             }
-            
+
             user.ChangeEmailNotificationPreference(command.WantsEmailNotifications);
             await dbContext.SaveChangesAsync(cancellationToken);
-            
+
             return Result.Success;
         }
     }
-    
+
     internal sealed class Validator : AbstractValidator<Command>
     {
         public Validator()

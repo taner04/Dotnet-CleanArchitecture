@@ -21,9 +21,9 @@ public class GetUserDataTests(TestingFixture fixture) : TestingBase(fixture)
     {
         var client = await CreateAuthenticatedClientAsync();
         var response = await client.GetAsync(Routes.User.GetUserData, CurrentCancellationToken);
-        
+
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        
+
         var userDto = await response.Content.ReadFromJsonAsync<GetUserData.UserDataDto>();
         Assert.NotNull(userDto);
         Assert.Equal(UserFactory.Email, userDto.Email);

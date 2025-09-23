@@ -7,8 +7,11 @@ public abstract class AggregateRoot<TId> : Entity<TId>, IAggregateRoot
     where TId : struct
 {
     private readonly List<IDomainEvent> _domainEvents = [];
-    
-    public void AddDomainEvent(IDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
+
+    public void AddDomainEvent(IDomainEvent domainEvent)
+    {
+        _domainEvents.Add(domainEvent);
+    }
 
     public List<IDomainEvent> PopDomainEvents()
     {

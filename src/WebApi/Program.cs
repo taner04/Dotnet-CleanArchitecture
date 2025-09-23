@@ -52,5 +52,5 @@ app.Run();
 namespace WebApi
 {
     [UsedImplicitly]
-    public partial class Program; // For integration tests
+    public class Program; // For integration tests
 }

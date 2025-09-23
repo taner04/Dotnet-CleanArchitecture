@@ -1,5 +1,5 @@
-using WebApi.Extensions;
 using ErrorOr;
+using WebApi.Extensions;
 
 namespace WebApi.Controllers;
 
@@ -12,7 +12,7 @@ public abstract class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
         {
             return result.Errors.ToActionResult(HttpContext);
         }
-        
+
         return Ok(result.Value);
     }
 }

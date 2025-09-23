@@ -7,11 +7,15 @@ namespace WebApi.Controllers;
 [Route("transactions")]
 public class TransactionController(IMediator mediator) : ControllerBase
 {
-   [HttpGet("get-all")] 
-   public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
-       => MapResult(await mediator.Send(new GetTransactions.Query(), cancellationToken));
-   
-   [HttpPost("add")]
-   public async Task<IActionResult> Add([FromBody] AddTransaction.Command command, CancellationToken cancellationToken)
-       => MapResult(await mediator.Send(command, cancellationToken));
+    [HttpGet("get-all")]
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    {
+        return MapResult(await mediator.Send(new GetTransactions.Query(), cancellationToken));
+    }
+
+    [HttpPost("add")]
+    public async Task<IActionResult> Add([FromBody] AddTransaction.Command command, CancellationToken cancellationToken)
+    {
+        return MapResult(await mediator.Send(command, cancellationToken));
+    }
 }

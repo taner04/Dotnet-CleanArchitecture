@@ -1,6 +1,5 @@
 using Application.Common.Behaviours;
 using Application.CQRS.Authentication;
-using Application.CQRS.Users;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
@@ -11,7 +10,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IValidator<RegisterUser.Command>, RegisterUser.Validator>();
         services.AddScoped<IValidator<LoginUser.Query>, LoginUser.Validator>();
-        
+
         services.AddMediator(options =>
             {
                 options.ServiceLifetime = ServiceLifetime.Scoped;
@@ -22,7 +21,7 @@ public static class DependencyInjection
                 ];
             }
         );
-        
+
         return services;
     }
 }

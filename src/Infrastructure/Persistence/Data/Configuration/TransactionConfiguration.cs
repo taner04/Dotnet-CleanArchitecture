@@ -5,6 +5,7 @@ namespace Infrastructure.Persistence.Data.Configuration;
 public sealed class TransactionConfiguration : EntityConfiguration<Transaction, TransactionId>
 {
     protected override string TableName => "Transactions";
+
     protected override void PostConfigure(EntityTypeBuilder<Transaction> builder)
     {
         builder.Property(t => t.AccountId)

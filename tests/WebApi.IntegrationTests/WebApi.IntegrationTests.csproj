@@ -10,16 +10,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Aspire.Hosting.Testing" />
-        <PackageReference Include="coverlet.collector" />
-        <PackageReference Include="JetBrains.Annotations" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" />
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
-        <PackageReference Include="Respawn" />
-        <PackageReference Include="Testcontainers.PostgreSql" />
-        <PackageReference Include="xunit.runner.visualstudio" />
-        <PackageReference Include="xunit.v3" />
+        <PackageReference Include="Aspire.Hosting.Testing"/>
+        <PackageReference Include="coverlet.collector"/>
+        <PackageReference Include="JetBrains.Annotations"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
+        <PackageReference Include="Respawn"/>
+        <PackageReference Include="Testcontainers.PostgreSql"/>
+        <PackageReference Include="xunit.runner.visualstudio"/>
+        <PackageReference Include="xunit.v3"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -31,9 +31,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Infrastructure\Infrastructure.csproj" />
-      <ProjectReference Include="..\..\src\WebApi\WebApi.csproj" />
-      <ProjectReference Include="..\..\tools\AppHost\AppHost.csproj" IsAspireProjectResource="false"/>
+        <ProjectReference Include="..\..\src\Infrastructure\Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\src\WebApi\WebApi.csproj"/>
+        <ProjectReference Include="..\..\tools\AppHost\AppHost.csproj" IsAspireProjectResource="false"/>
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,4 @@
-using System.Net.Http.Json;
 using Api.IntegrationTests.Common;
-using Api.IntegrationTests.Factories;
 
 namespace Api.IntegrationTests.Tests.Users;
 
@@ -11,16 +9,16 @@ public class RefreshToken(TestingFixture fixture) : TestingBase(fixture)
     {
         var client = await CreateAuthenticatedClientAsync();
         var response = await client.GetAsync(Routes.Auth.RefreshToken, CurrentCancellationToken);
-        
+
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        
-        Assert.False(string.IsNullOrWhiteSpace( await response.Content.ReadAsStringAsync()));
+
+        Assert.False(string.IsNullOrWhiteSpace(await response.Content.ReadAsStringAsync()));
     }
-    
+
     [Fact]
     public async Task RefreshToken_WithInvalidRefreshToken_ReturnsBadRequest()
     {
-        var client = CreateClient(); 
+        var client = CreateClient();
         var response = await client.GetAsync(Routes.Auth.RefreshToken, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);

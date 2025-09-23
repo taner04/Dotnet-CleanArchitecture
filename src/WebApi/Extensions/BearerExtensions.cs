@@ -17,19 +17,19 @@ public static class BearerExtensions
         {
             throw new Exception("JWT secret key is missing");
         }
-        
+
         var issuer = configuration["JwtSettings:Issuer"];
         if (string.IsNullOrEmpty(issuer))
         {
             throw new Exception("JWT issuer is missing");
         }
-        
+
         var audience = configuration["JwtSettings:Audience"];
         if (string.IsNullOrEmpty(audience))
         {
             throw new Exception("JWT audience is missing");
         }
-        
+
         services.AddAuthentication("Bearer")
             .AddJwtBearer("Bearer", options =>
             {

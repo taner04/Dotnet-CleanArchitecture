@@ -8,7 +8,8 @@ public sealed class CurrentUserService(IHttpContextAccessor contextAccessor) : I
 {
     public UserId? GetUserId()
     {
-        var userIdString = contextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        var userIdString = contextAccessor.HttpContext?.User.Claims
+            .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
         if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userIdGuid))
         {

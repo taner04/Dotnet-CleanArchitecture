@@ -8,7 +8,7 @@ public class BudgetDbContextFactory : IDesignTimeDbContextFactory<BudgetDbContex
     public BudgetDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<BudgetDbContext>();
-        
+
         optionsBuilder.EnableDetailedErrors();
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.UseNpgsql($"Host=localhost;Database={AspireConstants.BudgetDb};Username=postgres;");

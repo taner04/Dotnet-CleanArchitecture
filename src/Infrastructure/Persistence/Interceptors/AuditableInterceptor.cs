@@ -26,7 +26,7 @@ public class AuditableInterceptor(ICurrentUserService currentUserService) : Save
             .Where(e => e.Entity is IAuditable);
 
         var userId = currentUserService.GetUserId()?.Value.ToString();
-        
+
         foreach (var entry in auditableEntities)
         {
             if (entry.Entity is IAuditable auditable)

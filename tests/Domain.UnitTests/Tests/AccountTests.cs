@@ -1,5 +1,4 @@
 using Domain.Entities.Users;
-using Domain.Entities.Users.ValueObjects;
 
 namespace Domain.UnitTests.Tests;
 

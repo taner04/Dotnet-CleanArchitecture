@@ -11,8 +11,9 @@ public class Repository(BudgetDbContext budgetDbContext)
         budgetDbContext.Set<T>().Add(entity);
         await budgetDbContext.SaveChangesAsync(cancellationToken);
     }
-    
-    public async Task<T?> SearchByAsync<T>(Expression<Func<T, bool>> expression, CancellationToken cancellationToken) where T : class
+
+    public async Task<T?> SearchByAsync<T>(Expression<Func<T, bool>> expression, CancellationToken cancellationToken)
+        where T : class
     {
         return await budgetDbContext.Set<T>().Where(expression).FirstOrDefaultAsync(cancellationToken);
     }

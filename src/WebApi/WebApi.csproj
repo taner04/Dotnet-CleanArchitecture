@@ -7,19 +7,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DotNetEnv" />
-        <PackageReference Include="ErrorOr" />
-        <PackageReference Include="JetBrains.Annotations" />
-        <PackageReference Include="Mediator.Abstractions" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-        <PackageReference Include="Scalar.AspNetCore" />
+        <PackageReference Include="DotNetEnv"/>
+        <PackageReference Include="ErrorOr"/>
+        <PackageReference Include="JetBrains.Annotations"/>
+        <PackageReference Include="Mediator.Abstractions"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+        <PackageReference Include="Scalar.AspNetCore"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Application\Application.csproj" />
-      <ProjectReference Include="..\..\tools\ServiceDefaults\ServiceDefaults.csproj" />
-      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+        <ProjectReference Include="..\..\src\Application\Application.csproj"/>
+        <ProjectReference Include="..\..\tools\ServiceDefaults\ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

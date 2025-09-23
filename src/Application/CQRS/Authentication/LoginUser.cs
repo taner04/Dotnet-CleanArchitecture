@@ -9,9 +9,9 @@ namespace Application.CQRS.Authentication;
 public static class LoginUser
 {
     public record Query(string Email, string Password) : IQuery<ErrorOr<string>>;
-    
+
     internal sealed class Handler(
-        IBudgetDbContext budgetDbContext, 
+        IBudgetDbContext budgetDbContext,
         IPasswordService passwordService,
         ITokenService<User> tokenService) : IQueryHandler<Query, ErrorOr<string>>
     {
@@ -22,10 +22,10 @@ public static class LoginUser
             {
                 return UserErrors.InvalidEmail;
             }
-            
+
             var email = emailResult.ValueObject;
             var user = await budgetDbContext.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
-            
+
             if (user is null || !passwordService.VerifyPassword(user, query.Password))
             {
                 return UserErrors.InvalidCredentials;
@@ -36,13 +36,13 @@ public static class LoginUser
                 user.SetRefreshToken(tokenService.GenerateRefreshToken(user));
                 await budgetDbContext.SaveChangesAsync(cancellationToken);
             }
-            
+
             user.AddDomainEvent(new UserLoggedInDomainEvent(user));
 
             return tokenService.GenerateAccessToken(user);
         }
     }
-    
+
     internal sealed class Validator : AbstractValidator<Query>
     {
         public Validator()
