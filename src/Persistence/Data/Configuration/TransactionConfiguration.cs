@@ -1,8 +1,4 @@
-﻿using Domain.Entities.Users;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Persistence.Data.Configuration;
+﻿namespace Persistence.Data.Configuration;
 
 public sealed class TransactionConfiguration : EntityConfiguration<Transaction, TransactionId>
 {

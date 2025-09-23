@@ -1,6 +1,4 @@
 ﻿using Domain.Common.Abstraction.Entity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Data.Configuration;
 

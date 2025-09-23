@@ -1,6 +1,4 @@
 ﻿using Application.Common.Abstraction.Persistence;
-using Domain.Entities.Users;
-using Microsoft.EntityFrameworkCore;
 using Persistence.Data.Converter;
 
 namespace Persistence.Data;
