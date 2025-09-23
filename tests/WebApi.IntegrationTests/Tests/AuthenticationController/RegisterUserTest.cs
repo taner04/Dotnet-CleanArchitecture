@@ -1,7 +1,4 @@
-﻿using System.Net.Http.Json;
-using Api.IntegrationTests.Common;
-using Api.IntegrationTests.Factories;
-using Application.CQRS.Authentication;
+﻿using Application.CQRS.Authentication;
 using Domain.Entities.Users;
 using Domain.Entities.Users.ValueObjects;
 using Infrastructure.Utils;

@@ -1,6 +1,3 @@
-using System.Net.Http.Json;
-using Api.IntegrationTests.Common;
-using Api.IntegrationTests.Factories;
 using Application.CQRS.Users;
 
 namespace Api.IntegrationTests.Tests.UserController;

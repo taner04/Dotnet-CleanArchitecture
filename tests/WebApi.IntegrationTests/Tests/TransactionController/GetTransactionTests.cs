@@ -1,5 +1,3 @@
-using System.Net.Http.Json;
-using Api.IntegrationTests.Common;
 using Application.CQRS.Transactions;
 
 namespace Api.IntegrationTests.Tests.TransactionController;

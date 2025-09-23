@@ -1,5 +1,3 @@
-using System.Net.Http.Json;
-using Api.IntegrationTests.Common;
 using Application.CQRS.Users;
 using Domain.Entities.Users;
 using Domain.Entities.Users.ValueObjects;

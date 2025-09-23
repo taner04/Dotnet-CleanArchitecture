@@ -1,5 +1,3 @@
-using Api.IntegrationTests.Common;
-
 namespace Api.IntegrationTests.Tests.AccountController;
 
 public class GetBalanceTests(TestingFixture fixture) : TestingBase(fixture)

@@ -1,5 +1,3 @@
-using Api.IntegrationTests.Common;
-
 namespace Api.IntegrationTests.Tests.Users;
 
 public class RefreshToken(TestingFixture fixture) : TestingBase(fixture)

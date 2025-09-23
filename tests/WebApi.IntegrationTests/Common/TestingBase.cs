@@ -1,7 +1,5 @@
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using Api.IntegrationTests.Common.Database;
-using Api.IntegrationTests.Factories;
 using Application.CQRS.Authentication;
 using Infrastructure.Persistence.Data;
 using Microsoft.Extensions.Configuration;

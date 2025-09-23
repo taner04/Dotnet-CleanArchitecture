@@ -1,5 +1,3 @@
-using Domain.Entities.Users;
-
 namespace Domain.UnitTests.Tests;
 
 public class AccountTests
