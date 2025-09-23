@@ -46,19 +46,22 @@ public abstract class TestingBase : IAsyncLifetime
 
     protected HttpClient CreateClient() => _fixture.CreateClient();
     
-    protected async Task<HttpClient> CreateAuthenticatedClientAsync(string email, string password)
+    protected async Task<HttpClient> CreateAuthenticatedClientAsync()
     {
         var client = _fixture.CreateClient();
 
+        var registerCommand = new RegisterUser.Command("John", "Doe", UserFactory.Email, UserFactory.Pwd, true);
+        await client.PostAsJsonAsync(Routes.Auth.Register, registerCommand, CurrentCancellationToken);
+        
         var loginResponse = await client.PostAsJsonAsync(
             Routes.Auth.Login, 
-            new LoginUser.Query(email, password));
+            new LoginUser.Query(UserFactory.Email, UserFactory.Pwd));
 
         var token = await loginResponse.Content.ReadAsStringAsync();
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
         return client;
     }
-    
+
     protected static CancellationToken CurrentCancellationToken => TestContext.Current.CancellationToken;
 }

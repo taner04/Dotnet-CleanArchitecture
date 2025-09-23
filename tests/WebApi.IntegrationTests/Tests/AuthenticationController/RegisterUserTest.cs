@@ -20,9 +20,11 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
 
         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
 
-        var user = await Repository.SearchByAsync<User>(u => u.Email == Email.From(command.Email), CurrentCancellationToken);
+        var user = await Repository.SearchByAsync<User>(
+            u => u.Email == Email.From(command.Email),
+            CurrentCancellationToken);
+        
         Assert.NotNull(user);
-
         Assert.Equal(Email.From(command.Email), user.Email);
         Assert.Equal(command.FirstName, user.FirstName);
         Assert.Equal(command.LastName, user.LastName);

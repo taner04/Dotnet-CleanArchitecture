@@ -9,9 +9,7 @@ public class RefreshToken(TestingFixture fixture) : TestingBase(fixture)
     [Fact]
     public async Task RefreshToken_WithValidRefreshToken_ReturnsNewAccessToken()
     {
-        await Repository.AddAsync(UserFactory.User(), CurrentCancellationToken);
-        
-        var client = await CreateAuthenticatedClientAsync(UserFactory.Email, UserFactory.Pwd);
+        var client = await CreateAuthenticatedClientAsync();
         var response = await client.GetAsync(Routes.Auth.RefreshToken, CurrentCancellationToken);
         
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);

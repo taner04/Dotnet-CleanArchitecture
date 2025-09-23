@@ -6,7 +6,7 @@ namespace Application.CQRS.Users;
 
 public static class UpdateEmailNotification
 {
-    public record Command(bool EnableEmailNotifications) : ICommand<ErrorOr<Success>>;
+    public record Command(bool WantsEmailNotifications) : ICommand<ErrorOr<Success>>;
     
     internal sealed class Handler(
         IBudgetDbContext dbContext, 
@@ -22,8 +22,7 @@ public static class UpdateEmailNotification
                 return UserErrors.Unauthorized;
             }
             
-            user.ChangeEmailNotificationPreference(command.EnableEmailNotifications);
-            
+            user.ChangeEmailNotificationPreference(command.WantsEmailNotifications);
             await dbContext.SaveChangesAsync(cancellationToken);
             
             return Result.Success;
@@ -34,7 +33,7 @@ public static class UpdateEmailNotification
     {
         public Validator()
         {
-            RuleFor(x => x.EnableEmailNotifications).NotEmpty().NotNull();
+            RuleFor(x => x.WantsEmailNotifications).NotEmpty().NotNull();
         }
     }
 }
