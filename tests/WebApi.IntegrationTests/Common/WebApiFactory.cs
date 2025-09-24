@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using SharedKernel;
+using SharedKernel.Aspire;
 using WebApi;
 
 namespace Api.IntegrationTests.Common;

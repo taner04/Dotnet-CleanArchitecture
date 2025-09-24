@@ -1,4 +1,4 @@
-﻿namespace SharedKernel;
+﻿namespace SharedKernel.Aspire;
 
 public static class AspireConstants
 {

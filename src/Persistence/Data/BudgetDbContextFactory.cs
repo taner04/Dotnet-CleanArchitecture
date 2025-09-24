@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Design;
 using SharedKernel;
+using SharedKernel.Aspire;
 
 namespace Persistence.Data;
 

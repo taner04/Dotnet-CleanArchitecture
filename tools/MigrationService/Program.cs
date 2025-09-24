@@ -1,6 +1,6 @@
 using Persistence.Data;
-using ServiceDefaults;
 using SharedKernel;
+using SharedKernel.Aspire;
 
 var builder = Host.CreateApplicationBuilder(args);
 

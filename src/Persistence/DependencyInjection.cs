@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Persistence.Data;
 using Persistence.Interceptors;
 using SharedKernel;
+using SharedKernel.Aspire;
 
 namespace Persistence;
 

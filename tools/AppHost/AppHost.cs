@@ -1,5 +1,6 @@
 using Projects;
 using SharedKernel;
+using SharedKernel.Aspire;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
