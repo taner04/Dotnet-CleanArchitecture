@@ -1,27 +1,28 @@
 using Application.CQRS.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Shared.WebApi;
 
 namespace WebApi.Controllers;
 
-[Route("auth")]
 public class AuthenticationController(IMediator mediator) : ControllerBase
 {
-    [HttpPost("register")]
-    public async ValueTask<IActionResult> Register([FromBody] RegisterUser.Command command,
+    [HttpPost(Routes.Authentication.Register)]
+    public async ValueTask<IActionResult> RegisterAsync([FromBody] RegisterUser.Command command,
         CancellationToken cancellationToken)
     {
         return MapResult(await mediator.Send(command, cancellationToken));
     }
 
-    [HttpPost("login")]
-    public async ValueTask<IActionResult> Login([FromBody] LoginUser.Query query, CancellationToken cancellationToken)
+    [HttpPost(Routes.Authentication.Login)]
+    public async ValueTask<IActionResult> LoginAsync([FromBody] LoginUser.Query query,
+        CancellationToken cancellationToken)
     {
         return MapResult(await mediator.Send(query, cancellationToken));
     }
 
     [Authorize]
-    [HttpGet("refresh-token")]
-    public async ValueTask<IActionResult> RefreshToken(CancellationToken cancellationToken)
+    [HttpGet(Routes.Authentication.RefreshToken)]
+    public async ValueTask<IActionResult> RefreshTokenAsync(CancellationToken cancellationToken)
     {
         return MapResult(await mediator.Send(new RefreshToken.Command(), cancellationToken));
     }

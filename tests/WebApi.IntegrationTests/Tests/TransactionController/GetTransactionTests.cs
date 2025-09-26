@@ -1,6 +1,8 @@
 using Application.CQRS.Transactions;
+using Shared.WebApi;
+using WebApi.IntegrationTests.Common;
 
-namespace Api.IntegrationTests.Tests.TransactionController;
+namespace WebApi.IntegrationTests.Tests.TransactionController;
 
 public class GetTransactionTests(TestingFixture fixture) : TestingBase(fixture)
 {
@@ -23,6 +25,7 @@ public class GetTransactionTests(TestingFixture fixture) : TestingBase(fixture)
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
+        
         var transactions = await response.Content.ReadFromJsonAsync<List<GetTransactions.TransactionDto>>(CurrentCancellationToken);
         Assert.NotNull(transactions);
         Assert.Empty(transactions);

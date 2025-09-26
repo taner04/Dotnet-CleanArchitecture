@@ -1,8 +1,10 @@
 using Application.CQRS.Users;
 using Domain.Entities.Users;
 using Domain.Entities.Users.ValueObjects;
+using Shared.WebApi;
+using WebApi.IntegrationTests.Common;
 
-namespace Api.IntegrationTests.Tests.UserController;
+namespace WebApi.IntegrationTests.Tests.UserController;
 
 public class ChangeEmailTests(TestingFixture fixture) : TestingBase(fixture)
 {

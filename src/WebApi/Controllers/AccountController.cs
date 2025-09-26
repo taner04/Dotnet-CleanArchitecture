@@ -1,14 +1,14 @@
 using Application.CQRS.Accounts;
 using Microsoft.AspNetCore.Authorization;
+using Shared.WebApi;
 
 namespace WebApi.Controllers;
 
 [Authorize]
-[Route("accounts")]
 public class AccountController(IMediator mediator) : ControllerBase
 {
-    [HttpGet("get-balance")]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    [HttpGet(Routes.Account.GetBalance)]
+    public async Task<IActionResult> GetBalanceAsync(CancellationToken cancellationToken)
     {
         return MapResult(await mediator.Send(new GetBalance.Query(), cancellationToken));
     }

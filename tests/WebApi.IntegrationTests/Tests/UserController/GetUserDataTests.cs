@@ -1,6 +1,9 @@
 using Application.CQRS.Users;
+using Shared.WebApi;
+using WebApi.IntegrationTests.Common;
+using WebApi.IntegrationTests.Factories;
 
-namespace Api.IntegrationTests.Tests.UserController;
+namespace WebApi.IntegrationTests.Tests.UserController;
 
 public class GetUserDataTests(TestingFixture fixture) : TestingBase(fixture)
 {

@@ -1,20 +1,21 @@
 using Application.CQRS.Transactions;
 using Microsoft.AspNetCore.Authorization;
+using Shared.WebApi;
 
 namespace WebApi.Controllers;
 
 [Authorize]
-[Route("transactions")]
 public class TransactionController(IMediator mediator) : ControllerBase
 {
-    [HttpGet("get-all")]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    [HttpGet(Routes.Transaction.GetAll)]
+    public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
         return MapResult(await mediator.Send(new GetTransactions.Query(), cancellationToken));
     }
 
-    [HttpPost("add")]
-    public async Task<IActionResult> Add([FromBody] AddTransaction.Command command, CancellationToken cancellationToken)
+    [HttpPost(Routes.Transaction.Add)]
+    public async Task<IActionResult> AddAsync([FromBody] AddTransaction.Command command,
+        CancellationToken cancellationToken)
     {
         return MapResult(await mediator.Send(command, cancellationToken));
     }

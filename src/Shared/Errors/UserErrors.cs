@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace SharedKernel.Errors;
+namespace Shared.Errors;
 
 public static class UserErrors
 {

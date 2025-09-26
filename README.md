@@ -1,9 +1,11 @@
 # Dotnet Clean Architecture
 
-> **Note:** This is my first project implementing Clean Architecture in .NET. Feedback and suggestions are very welcome—feel free to open an issue or start a discussion!
+> **Note:** This is my first project implementing Clean Architecture in .NET. Feedback and suggestions are very
+> welcome—feel free to open an issue or start a discussion!
 
 This repository is a reference implementation of **Clean Architecture** principles in a .NET solution.  
-It demonstrates how to structure a modern, maintainable, and testable application by separating concerns into clearly defined layers.
+It demonstrates how to structure a modern, maintainable, and testable application by separating concerns into clearly
+defined layers.
 
 It is also intended to serve as inspiration for others looking to adopt Clean Architecture in their own .NET projects.
 
@@ -42,6 +44,7 @@ Alternatively, run the provided script from the root directory:
 ## 📁 Project Structure
 
 A quick overview of the main folders and projects:
+
 ```
 tools/
   AppHost                  # Orchestrates service startup
@@ -64,20 +67,23 @@ tests/
 
 ## ✨ Features
 
-- **Clean Architecture**: Strict separation of domain, application, infrastructure, and presentation layers for maintainability and testability.
+- **Clean Architecture**: Strict separation of domain, application, infrastructure, and presentation layers for
+  maintainability and testability.
 - **Aspire Integration**: Modern service orchestration using .NET Aspire, including service discovery and resilience.
 - **OpenAPI (Scalar)**: Automatic API documentation and testing available in development mode.
 - **JWT Authentication**: Secure authentication via bearer tokens and configurable JWT settings.
 - **Global Error Handling**: Unified error handling for the API using custom error responses and problem details.
 - **Integration Tests**: Comprehensive integration tests with test database and WebApiFactory.
 - **Migration Services**: Automated database migrations on startup to ensure the database schema is up-to-date.
-- **CQRS Pattern & Mediator Behaviors**: Implements Command Query Responsibility Segregation using Mediator, with pipeline behaviors for logging, validation, and performance monitoring.
+- **CQRS Pattern & Mediator Behaviors**: Implements Command Query Responsibility Segregation using Mediator, with
+  pipeline behaviors for logging, validation, and performance monitoring.
 
 ---
 
 ## 📦 Used Dependencies
 
 ### 🔧 Aspire & Hosting
+
 - [Aspire.Hosting.AppHost](https://www.nuget.org/packages/Aspire.Hosting.AppHost)
 - [Aspire.Hosting.PostgreSQL](https://www.nuget.org/packages/Aspire.Hosting.PostgreSQL)
 - [Aspire.Hosting.Testing](https://www.nuget.org/packages/Aspire.Hosting.Testing)
@@ -85,6 +91,7 @@ tests/
 - [Microsoft.Extensions.ServiceDiscovery](https://www.nuget.org/packages/Microsoft.Extensions.ServiceDiscovery)
 
 ### 🗄️ Database & ORM
+
 - [Microsoft.EntityFrameworkCore](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore)
 - [Microsoft.EntityFrameworkCore.Design](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design)
 - [Microsoft.EntityFrameworkCore.Relational](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Relational)
@@ -92,21 +99,25 @@ tests/
 - [Testcontainers.PostgreSql](https://www.nuget.org/packages/Testcontainers.PostgreSql)
 
 ### 🔐 Authentication & Security
+
 - [Microsoft.AspNetCore.Authentication.JwtBearer](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer)
 - [System.IdentityModel.Tokens.Jwt](https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt)
 - [BCrypt.Net-Next](https://www.nuget.org/packages/BCrypt.Net-Next)
 
 ### ✅ Validation & Mapping
+
 - [FluentValidation](https://www.nuget.org/packages/FluentValidation)
 - [FluentValidation.DependencyInjectionExtensions](https://www.nuget.org/packages/FluentValidation.DependencyInjectionExtensions)
 - [Vogen](https://www.nuget.org/packages/Vogen)
 - [Mapster](https://www.nuget.org/packages/Mapster)
 
 ### ⚙️ Mediator & CQRS
+
 - [Mediator.Abstractions](https://www.nuget.org/packages/Mediator.Abstractions)
 - [Mediator.SourceGenerator](https://www.nuget.org/packages/Mediator.SourceGenerator)
 
 ### 📊 OpenTelemetry & Observability
+
 - [OpenTelemetry.Exporter.OpenTelemetryProtocol](https://www.nuget.org/packages/OpenTelemetry.Exporter.OpenTelemetryProtocol)
 - [OpenTelemetry.Extensions.Hosting](https://www.nuget.org/packages/OpenTelemetry.Extensions.Hosting)
 - [OpenTelemetry.Instrumentation.AspNetCore](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore)
@@ -114,11 +125,13 @@ tests/
 - [OpenTelemetry.Instrumentation.Runtime](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Runtime)
 
 ### 🌐 ASP.NET & Web
+
 - [Microsoft.AspNetCore.Mvc.Testing](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Testing)
 - [Microsoft.AspNetCore.OpenApi](https://www.nuget.org/packages/Microsoft.AspNetCore.OpenApi)
 - [Scalar.AspNetCore](https://www.nuget.org/packages/Scalar.AspNetCore)
 
 ### 🧪 Testing
+
 - [Microsoft.NET.Test.Sdk](https://www.nuget.org/packages/Microsoft.NET.Test.Sdk)
 - [coverlet.collector](https://www.nuget.org/packages/coverlet.collector)
 - [xunit.runner.visualstudio](https://www.nuget.org/packages/xunit.runner.visualstudio)
@@ -127,6 +140,7 @@ tests/
 - [Respawn](https://www.nuget.org/packages/Respawn)
 
 ### 🛠️ Utilities
+
 - [ErrorOr](https://www.nuget.org/packages/ErrorOr)
 - [Microsoft.Extensions.Http.Resilience](https://www.nuget.org/packages/Microsoft.Extensions.Http.Resilience)
 - [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting)

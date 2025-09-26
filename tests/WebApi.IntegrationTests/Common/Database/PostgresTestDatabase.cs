@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using Persistence.Data;
 
-namespace Api.IntegrationTests.Common.Database;
+namespace WebApi.IntegrationTests.Common.Database;
 
 public class PostgresTestDatabase : IAsyncDisposable
 {
     private readonly PostgresContainer _postgresContainer = new();
     private readonly List<string> _tableNames = ["Transactions", "Accounts", "Users"];
     private string _connectionString = null!;
-    private DbContextOptions<BudgetDbContext> _dbContextOptions = null!;
+    private DbContextOptions<ApplicationDbContext> _dbContextOptions = null!;
 
     public DbConnection DbConnection => new NpgsqlConnection(_postgresContainer.ConnectionString);
 
@@ -28,17 +28,17 @@ public class PostgresTestDatabase : IAsyncDisposable
 
         _connectionString = builder.ConnectionString;
 
-        _dbContextOptions = new DbContextOptionsBuilder<BudgetDbContext>()
+        _dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseNpgsql(_connectionString)
             .Options;
 
-        await using var context = new BudgetDbContext(_dbContextOptions);
+        await using var context = new ApplicationDbContext(_dbContextOptions);
         await context.Database.MigrateAsync();
     }
 
     public async Task ResetDatabaseAsync()
     {
-        await using var context = new BudgetDbContext(_dbContextOptions);
+        await using var context = new ApplicationDbContext(_dbContextOptions);
 
         foreach (var sql in _tableNames.Select(tableName => $"Delete from \"{tableName}\""))
         {

@@ -2,8 +2,11 @@
 using Domain.Entities.Users;
 using Domain.Entities.Users.ValueObjects;
 using Infrastructure.Utils;
+using Shared.WebApi;
+using WebApi.IntegrationTests.Common;
+using WebApi.IntegrationTests.Factories;
 
-namespace Api.IntegrationTests.Tests.AuthenticationController;
+namespace WebApi.IntegrationTests.Tests.AuthenticationController;
 
 public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
 {
@@ -13,7 +16,7 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
         var client = CreateClient();
 
         var command = new RegisterUser.Command("John", "Doe", "doe@mail.com", "John123!", true);
-        var result = await client.PostAsJsonAsync(Routes.Auth.Register, command, CurrentCancellationToken);
+        var result = await client.PostAsJsonAsync(Routes.Authentication.Register, command, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
 
@@ -35,7 +38,7 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
         var client = CreateClient();
 
         var command = new RegisterUser.Command("John", "Doe", "doemail.com", "John123!", true);
-        var result = await client.PostAsJsonAsync(Routes.Auth.Register, command, CurrentCancellationToken);
+        var result = await client.PostAsJsonAsync(Routes.Authentication.Register, command, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
     }
@@ -46,7 +49,7 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
         var client = CreateClient();
 
         var command = new RegisterUser.Command("John", "Doe", "doe@mail.com", "John", true);
-        var result = await client.PostAsJsonAsync(Routes.Auth.Register, command, CurrentCancellationToken);
+        var result = await client.PostAsJsonAsync(Routes.Authentication.Register, command, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
     }
@@ -58,7 +61,7 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
         var client = CreateClient();
 
         var command = new RegisterUser.Command("John", "Doe", "doe@mail.com", "John123!", true);
-        var result = await client.PostAsJsonAsync(Routes.Auth.Register, command, CurrentCancellationToken);
+        var result = await client.PostAsJsonAsync(Routes.Authentication.Register, command, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
     }

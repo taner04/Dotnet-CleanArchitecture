@@ -1,6 +1,5 @@
 using Persistence.Data;
-using SharedKernel;
-using SharedKernel.Aspire;
+using Shared.Aspire;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -13,7 +12,7 @@ builder.Services.AddOpenTelemetry().WithTracing(t =>
     t.AddSource(MigrationService.MigrationService.ActivitySourceName);
 });
 
-builder.AddNpgsqlDbContext<BudgetDbContext>(AspireConstants.BudgetDb);
+builder.AddNpgsqlDbContext<ApplicationDbContext>(AspireConstants.ApplicationDb);
 
 var host = builder.Build();
 

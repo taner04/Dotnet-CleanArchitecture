@@ -11,7 +11,7 @@ public class GlobalExceptionHandler(IProblemDetailsService problemDetailsService
     {
         if (exception is DomainException domainException)
         {
-            var result = await CustomError.TryWriteAsync(httpContext, domainException, cancellationToken);
+            var result = await WebApiError.TryWriteAsync(httpContext, domainException, cancellationToken);
             if (result)
             {
                 return true;

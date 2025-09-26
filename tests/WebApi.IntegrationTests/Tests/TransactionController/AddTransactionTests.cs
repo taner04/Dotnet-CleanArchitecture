@@ -1,7 +1,9 @@
 using Application.CQRS.Transactions;
 using Domain.Entities.Users;
+using Shared.WebApi;
+using WebApi.IntegrationTests.Common;
 
-namespace Api.IntegrationTests.Tests.TransactionController;
+namespace WebApi.IntegrationTests.Tests.TransactionController;
 
 public class AddTransactionTests(TestingFixture fixture) : TestingBase(fixture)
 {

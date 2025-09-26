@@ -1,6 +1,9 @@
 using Application.CQRS.Authentication;
+using Shared.WebApi;
+using WebApi.IntegrationTests.Common;
+using WebApi.IntegrationTests.Factories;
 
-namespace Api.IntegrationTests.Tests.AuthenticationController;
+namespace WebApi.IntegrationTests.Tests.AuthenticationController;
 
 public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
 {
@@ -10,7 +13,7 @@ public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
         var query = new LoginUser.Query("doemail.com", "Test123!");
         var client = CreateClient();
 
-        var response = await client.PostAsJsonAsync(Routes.Auth.Login, query, CurrentCancellationToken);
+        var response = await client.PostAsJsonAsync(Routes.Authentication.Login, query, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
@@ -24,13 +27,13 @@ public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
 
         var invalidEmailQuery = new LoginUser.Query("doemail.com", UserFactory.Pwd);
         var invalidEmailResponse =
-            await client.PostAsJsonAsync(Routes.Auth.Login, invalidEmailQuery, CurrentCancellationToken);
+            await client.PostAsJsonAsync(Routes.Authentication.Login, invalidEmailQuery, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.BadRequest, invalidEmailResponse.StatusCode);
 
         var invalidPasswordQuery = new LoginUser.Query(UserFactory.Email, "Test123");
         var invalidPasswordResponse =
-            await client.PostAsJsonAsync(Routes.Auth.Login, invalidPasswordQuery, CurrentCancellationToken);
+            await client.PostAsJsonAsync(Routes.Authentication.Login, invalidPasswordQuery, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.BadRequest, invalidPasswordResponse.StatusCode);
     }
@@ -43,7 +46,7 @@ public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
         var client = CreateClient();
 
         var query = new LoginUser.Query(UserFactory.Email, UserFactory.Pwd);
-        var response = await client.PostAsJsonAsync(Routes.Auth.Login, query, CurrentCancellationToken);
+        var response = await client.PostAsJsonAsync(Routes.Authentication.Login, query, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 

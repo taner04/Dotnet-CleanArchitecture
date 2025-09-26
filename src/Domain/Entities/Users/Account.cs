@@ -1,6 +1,6 @@
 ﻿using Domain.Common;
 using Domain.Entities.Users.ValueObjects;
-using SharedKernel.Errors;
+using Shared.Errors;
 using Vogen;
 
 namespace Domain.Entities.Users;

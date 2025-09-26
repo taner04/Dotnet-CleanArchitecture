@@ -12,7 +12,7 @@ public static class DependencyInjection
         services.AddScoped<ITokenService<User>, TokenService>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IPasswordService, PasswordService>();
-        
+
         return services;
     }
 }

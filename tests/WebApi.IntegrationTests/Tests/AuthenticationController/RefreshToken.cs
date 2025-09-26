@@ -1,4 +1,7 @@
-namespace Api.IntegrationTests.Tests.AuthenticationController;
+using Shared.WebApi;
+using WebApi.IntegrationTests.Common;
+
+namespace WebApi.IntegrationTests.Tests.AuthenticationController;
 
 public class RefreshToken(TestingFixture fixture) : TestingBase(fixture)
 {
@@ -6,7 +9,7 @@ public class RefreshToken(TestingFixture fixture) : TestingBase(fixture)
     public async Task RefreshToken_WithValidRefreshToken_ReturnsNewAccessToken()
     {
         var client = await CreateAuthenticatedClientAsync();
-        var response = await client.GetAsync(Routes.Auth.RefreshToken, CurrentCancellationToken);
+        var response = await client.GetAsync(Routes.Authentication.RefreshToken, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -17,7 +20,7 @@ public class RefreshToken(TestingFixture fixture) : TestingBase(fixture)
     public async Task RefreshToken_WithInvalidRefreshToken_ReturnsBadRequest()
     {
         var client = CreateClient();
-        var response = await client.GetAsync(Routes.Auth.RefreshToken, CurrentCancellationToken);
+        var response = await client.GetAsync(Routes.Authentication.RefreshToken, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }

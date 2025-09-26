@@ -1,5 +1,5 @@
 ﻿using Domain.Common;
-using SharedKernel.Errors;
+using Shared.Errors;
 using Vogen;
 using Money = Domain.Entities.Users.ValueObjects.Money;
 

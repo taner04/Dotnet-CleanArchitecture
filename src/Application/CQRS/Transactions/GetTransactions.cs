@@ -1,6 +1,7 @@
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
-using SharedKernel.Errors;
+using Application.Mapper;
+using Shared.Errors;
 
 namespace Application.CQRS.Transactions;
 
@@ -9,7 +10,7 @@ public static class GetTransactions
     public record Query : IQuery<ErrorOr<List<TransactionDto>>>;
 
     internal sealed class Handler(
-        IBudgetDbContext dbContext,
+        IApplicationDbContext dbContext,
         ICurrentUserService currentUserService) : IQueryHandler<Query, ErrorOr<List<TransactionDto>>>
     {
         public async ValueTask<ErrorOr<List<TransactionDto>>> Handle(Query query, CancellationToken cancellationToken)
@@ -25,18 +26,10 @@ public static class GetTransactions
                 return UserErrors.Unauthorized;
             }
 
-            return user.GetTransactions().Select(TransactionDto.From).ToList();
+            return user.GetTransactions().Select(t => t.ToDto()).ToList();
         }
     }
-
-    public record TransactionDto(decimal Amount, string Type, DateTime Date, string Description)
-    {
-        public static TransactionDto From(Transaction transaction)
-        {
-            var transactionAmount = transaction.Amount.Value;
-            var type = transaction.Type.ToString();
-
-            return new TransactionDto(transactionAmount, type, transaction.Date, transaction.Description);
-        }
-    }
+    
+    // ReSharper disable once ClassNeverInstantiated.Global
+    public record TransactionDto(decimal Amount, string Type, DateTime Date, string Description);
 }

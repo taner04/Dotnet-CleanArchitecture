@@ -1,6 +1,6 @@
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
-using SharedKernel.Errors;
+using Shared.Errors;
 
 namespace Application.CQRS.Authentication;
 
@@ -9,7 +9,7 @@ public static class RefreshToken
     public record Command : ICommand<ErrorOr<string>>;
 
     internal sealed class Handler(
-        IBudgetDbContext dbContext,
+        IApplicationDbContext dbContext,
         ICurrentUserService currentUserService,
         ITokenService<User> tokenService) : ICommandHandler<Command, ErrorOr<string>>
     {

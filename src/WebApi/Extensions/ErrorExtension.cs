@@ -29,6 +29,6 @@ public static class ErrorExtension
             }
         }
 
-        return new BadRequestObjectResult(new CustomError(validationErrors, httpContext));
+        return new BadRequestObjectResult(new WebApiError(validationErrors, httpContext));
     }
 }

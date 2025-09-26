@@ -2,7 +2,7 @@ using Application;
 using Infrastructure;
 using JetBrains.Annotations;
 using Persistence;
-using SharedKernel.Aspire;
+using Shared.Aspire;
 using WebApi.ExceptionHandler;
 using WebApi.Extensions;
 

@@ -1,27 +1,27 @@
 using System.Net.Http.Headers;
-using Api.IntegrationTests.Common.Database;
 using Application.CQRS.Authentication;
-using Microsoft.Extensions.Configuration;
 using Npgsql;
 using Persistence.Data;
+using Shared.WebApi;
+using WebApi.IntegrationTests.Common.Database;
+using WebApi.IntegrationTests.Factories;
 
-namespace Api.IntegrationTests.Common;
+namespace WebApi.IntegrationTests.Common;
 
 [Collection("TestingFixtureCollection")]
 public abstract class TestingBase : IAsyncLifetime
 {
-    private readonly BudgetDbContext _dbContext;
+    private readonly ApplicationDbContext _dbContext;
     private readonly TestingFixture _fixture;
     private readonly IServiceScope _scope;
-    protected readonly IConfiguration Configuration;
     protected readonly Repository Repository;
 
     protected TestingBase(TestingFixture fixture)
     {
         _fixture = fixture;
         _scope = _fixture.CreateScope();
-        _dbContext = _scope.ServiceProvider.GetRequiredService<BudgetDbContext>();
-        Configuration = _scope.ServiceProvider.GetRequiredService<IConfiguration>();
+
+        _dbContext = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         if (!_dbContext.Database.CanConnect())
         {
             throw new NpgsqlException("Cannot connect to the database");
@@ -55,10 +55,10 @@ public abstract class TestingBase : IAsyncLifetime
         var client = _fixture.CreateClient();
 
         var registerCommand = new RegisterUser.Command("John", "Doe", UserFactory.Email, UserFactory.Pwd, true);
-        await client.PostAsJsonAsync(Routes.Auth.Register, registerCommand, CurrentCancellationToken);
+        await client.PostAsJsonAsync(Routes.Authentication.Register, registerCommand, CurrentCancellationToken);
 
         var loginResponse = await client.PostAsJsonAsync(
-            Routes.Auth.Login,
+            Routes.Authentication.Login,
             new LoginUser.Query(UserFactory.Email, UserFactory.Pwd));
 
         var token = await loginResponse.Content.ReadAsStringAsync();

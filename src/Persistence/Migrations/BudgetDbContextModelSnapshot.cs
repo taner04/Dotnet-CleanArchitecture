@@ -10,7 +10,7 @@ using Persistence.Data;
 
 namespace Persistence.Migrations
 {
-    [DbContext(typeof(BudgetDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class BudgetDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

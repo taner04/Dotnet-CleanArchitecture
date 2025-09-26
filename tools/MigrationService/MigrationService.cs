@@ -18,7 +18,7 @@ public class MigrationService(IServiceProvider serviceProvider, IHostApplication
         try
         {
             using var scope = serviceProvider.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<BudgetDbContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             await RunMigrationAsync(dbContext, stoppingToken);
         }
@@ -33,7 +33,7 @@ public class MigrationService(IServiceProvider serviceProvider, IHostApplication
         }
     }
 
-    private static async Task RunMigrationAsync(BudgetDbContext dbContext, CancellationToken cancellationToken)
+    private static async Task RunMigrationAsync(ApplicationDbContext dbContext, CancellationToken cancellationToken)
     {
         var strategy = dbContext.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(async () => { await dbContext.Database.MigrateAsync(cancellationToken); });

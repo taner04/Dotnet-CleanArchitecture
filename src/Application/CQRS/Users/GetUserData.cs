@@ -1,6 +1,6 @@
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
-using SharedKernel.Errors;
+using Shared.Errors;
 
 namespace Application.CQRS.Users;
 
@@ -9,7 +9,7 @@ public static class GetUserData
     public record Query : IQuery<ErrorOr<UserDataDto>>;
 
     internal sealed class Handler(
-        IBudgetDbContext dbContext,
+        IApplicationDbContext dbContext,
         ICurrentUserService currentUserService) : IQueryHandler<Query, ErrorOr<UserDataDto>>
     {
         public async ValueTask<ErrorOr<UserDataDto>> Handle(Query query, CancellationToken cancellationToken)
@@ -29,6 +29,6 @@ public static class GetUserData
             return new UserDataDto(user.FirstName, user.LastName, user.Email.Value);
         }
     }
-
+    
     public record UserDataDto(string FirstName, string LastName, string Email);
 }

@@ -2,19 +2,19 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 
-namespace Api.IntegrationTests.Common.Database;
+namespace WebApi.IntegrationTests.Common.Database;
 
-public class Repository(BudgetDbContext budgetDbContext)
+public class Repository(ApplicationDbContext dbContext)
 {
     public async Task AddAsync<T>(T entity, CancellationToken cancellationToken) where T : class
     {
-        budgetDbContext.Set<T>().Add(entity);
-        await budgetDbContext.SaveChangesAsync(cancellationToken);
+        dbContext.Set<T>().Add(entity);
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<T?> SearchByAsync<T>(Expression<Func<T, bool>> expression, CancellationToken cancellationToken)
         where T : class
     {
-        return await budgetDbContext.Set<T>().Where(expression).FirstOrDefaultAsync(cancellationToken);
+        return await dbContext.Set<T>().Where(expression).FirstOrDefaultAsync(cancellationToken);
     }
 }

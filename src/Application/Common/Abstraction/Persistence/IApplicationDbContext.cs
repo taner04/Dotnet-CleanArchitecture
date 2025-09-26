@@ -6,7 +6,7 @@ namespace Application.Common.Abstraction.Persistence;
 ///     Represents the abstraction for the Budget database context.
 ///     Provides access to Users, database operations, and save functionality.
 /// </summary>
-public interface IBudgetDbContext : IDisposable
+public interface IApplicationDbContext : IDisposable
 {
     /// <summary>
     ///     Gets the set of users in the database.

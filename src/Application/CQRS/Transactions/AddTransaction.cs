@@ -1,6 +1,6 @@
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
-using SharedKernel.Errors;
+using Shared.Errors;
 
 namespace Application.CQRS.Transactions;
 
@@ -9,7 +9,7 @@ public static class AddTransaction
     public record Command(decimal Amount, TransactionType Type, string Description) : ICommand<ErrorOr<Success>>;
 
     internal sealed class Handler(
-        IBudgetDbContext dbContext,
+        IApplicationDbContext dbContext,
         ICurrentUserService currentUserService) : ICommandHandler<Command, ErrorOr<Success>>
     {
         public async ValueTask<ErrorOr<Success>> Handle(Command command, CancellationToken cancellationToken)

@@ -1,6 +1,6 @@
-using Api.IntegrationTests.Common.Database;
+using WebApi.IntegrationTests.Common.Database;
 
-namespace Api.IntegrationTests.Common;
+namespace WebApi.IntegrationTests.Common;
 
 [CollectionDefinition("TestingFixtureCollection")]
 public class TestingFixtureCollection : ICollectionFixture<TestingFixture>;

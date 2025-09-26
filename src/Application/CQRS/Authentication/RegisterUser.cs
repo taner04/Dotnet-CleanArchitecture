@@ -1,7 +1,7 @@
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
 using Domain.Entities.Users.ValueObjects;
-using SharedKernel.Errors;
+using Shared.Errors;
 
 namespace Application.CQRS.Authentication;
 
@@ -11,7 +11,7 @@ public static class RegisterUser
         : ICommand<ErrorOr<Success>>;
 
     internal sealed class Handler(
-        IBudgetDbContext budgetDbContext,
+        IApplicationDbContext applicationDbContext,
         IPasswordService passwordService) : ICommandHandler<Command, ErrorOr<Success>>
     {
         public async ValueTask<ErrorOr<Success>> Handle(Command command, CancellationToken cancellationToken)
@@ -23,7 +23,7 @@ public static class RegisterUser
             }
 
             var mail = emailResult.ValueObject;
-            if (await budgetDbContext.Users.FirstOrDefaultAsync(u => u.Email == mail, cancellationToken) != null)
+            if (await applicationDbContext.Users.FirstOrDefaultAsync(u => u.Email == mail, cancellationToken) != null)
             {
                 return UserErrors.AlreadyExists;
             }
@@ -33,8 +33,8 @@ public static class RegisterUser
             var hashedPassword = passwordService.HashPassword(command.Password);
             newUser.SetPassword(Password.From(hashedPassword));
 
-            await budgetDbContext.Users.AddAsync(newUser, cancellationToken);
-            await budgetDbContext.SaveChangesAsync(cancellationToken);
+            await applicationDbContext.Users.AddAsync(newUser, cancellationToken);
+            await applicationDbContext.SaveChangesAsync(cancellationToken);
 
             return Result.Success;
         }

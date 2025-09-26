@@ -2,7 +2,7 @@ using Domain.Entities.Users;
 using Domain.Entities.Users.ValueObjects;
 using Infrastructure.Utils;
 
-namespace Api.IntegrationTests.Factories;
+namespace WebApi.IntegrationTests.Factories;
 
 public static class UserFactory
 {

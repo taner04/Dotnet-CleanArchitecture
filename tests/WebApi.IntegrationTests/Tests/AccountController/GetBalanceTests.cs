@@ -1,4 +1,7 @@
-namespace Api.IntegrationTests.Tests.AccountController;
+using Shared.WebApi;
+using WebApi.IntegrationTests.Common;
+
+namespace WebApi.IntegrationTests.Tests.AccountController;
 
 public class GetBalanceTests(TestingFixture fixture) : TestingBase(fixture)
 {

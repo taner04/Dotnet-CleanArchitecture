@@ -1,6 +1,6 @@
 using Testcontainers.PostgreSql;
 
-namespace Api.IntegrationTests.Common.Database;
+namespace WebApi.IntegrationTests.Common.Database;
 
 public class PostgresContainer : IAsyncDisposable
 {
@@ -29,7 +29,7 @@ public class PostgresContainer : IAsyncDisposable
             try
             {
                 await _postgresSqlContainer.StartAsync();
-                return;
+                attempt = MaxRetries; // Exit loop on success
             }
             catch (Exception ex)
             {

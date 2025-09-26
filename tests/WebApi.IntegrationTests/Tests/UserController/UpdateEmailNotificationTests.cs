@@ -1,8 +1,11 @@
 using Application.CQRS.Users;
 using Domain.Entities.Users;
 using Domain.Entities.Users.ValueObjects;
+using Shared.WebApi;
+using WebApi.IntegrationTests.Common;
+using WebApi.IntegrationTests.Factories;
 
-namespace Api.IntegrationTests.Tests.UserController;
+namespace WebApi.IntegrationTests.Tests.UserController;
 
 public class UpdateEmailNotificationTests(TestingFixture fixture) : TestingBase(fixture)
 {
