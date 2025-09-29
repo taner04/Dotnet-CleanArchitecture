@@ -8,14 +8,14 @@ namespace Application.CQRS.Authentication;
 
 public static class LoginUser
 {
-    public record Query(string Email, string Password) : IQuery<ErrorOr<string>>;
+    public record Query(string Email, string Password) : IQuery<ErrorOr<Dto>>;
 
     internal sealed class Handler(
         IApplicationDbContext applicationDbContext,
         IPasswordService passwordService,
-        ITokenService<User> tokenService) : IQueryHandler<Query, ErrorOr<string>>
+        ITokenService<User> tokenService) : IQueryHandler<Query, ErrorOr<Dto>>
     {
-        public async ValueTask<ErrorOr<string>> Handle(Query query, CancellationToken cancellationToken)
+        public async ValueTask<ErrorOr<Dto>> Handle(Query query, CancellationToken cancellationToken)
         {
             var emailResult = Email.TryFrom(query.Email);
             if (!emailResult.IsSuccess)
@@ -39,7 +39,9 @@ public static class LoginUser
 
             user.AddDomainEvent(new UserLoggedInDomainEvent(user));
 
-            return tokenService.GenerateAccessToken(user);
+            return new Dto(
+                AccessToken: tokenService.GenerateAccessToken(user),
+                RefreshToken: user.RefreshToken!);
         }
     }
 
@@ -51,4 +53,6 @@ public static class LoginUser
             RuleFor(u => u.Password).NotEmpty();
         }
     }
+    
+    public record Dto(string AccessToken, string RefreshToken);
 }

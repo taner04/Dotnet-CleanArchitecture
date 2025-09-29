@@ -1,3 +1,4 @@
+using Application.Common;
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
 using Shared.Errors;
@@ -10,17 +11,11 @@ public static class UpdateEmailNotification
 
     internal sealed class Handler(
         IApplicationDbContext dbContext,
-        ICurrentUserService currentUserService) : ICommandHandler<Command, ErrorOr<Success>>
+        UserService userService) : ICommandHandler<Command, ErrorOr<Success>>
     {
         public async ValueTask<ErrorOr<Success>> Handle(Command command, CancellationToken cancellationToken)
         {
-            var userId = currentUserService.GetUserId();
-            var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
-
-            if (user is null)
-            {
-                return UserErrors.Unauthorized;
-            }
+            var user = await userService.GetCurrentUserAsync(cancellationToken);
 
             user.ChangeEmailNotificationPreference(command.WantsEmailNotifications);
             await dbContext.SaveChangesAsync(cancellationToken);

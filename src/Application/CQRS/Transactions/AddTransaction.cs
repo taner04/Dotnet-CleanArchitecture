@@ -1,3 +1,4 @@
+using Application.Common;
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
 using Shared.Errors;
@@ -9,21 +10,12 @@ public static class AddTransaction
     public record Command(decimal Amount, TransactionType Type, string Description) : ICommand<ErrorOr<Success>>;
 
     internal sealed class Handler(
-        IApplicationDbContext dbContext,
-        ICurrentUserService currentUserService) : ICommandHandler<Command, ErrorOr<Success>>
+        UserService userService,
+        IApplicationDbContext dbContext) : ICommandHandler<Command, ErrorOr<Success>>
     {
         public async ValueTask<ErrorOr<Success>> Handle(Command command, CancellationToken cancellationToken)
         {
-            var userId = currentUserService.GetUserId();
-
-            var user = await dbContext.Users.Where(x => x.Id == userId)
-                .Include(x => x.Account)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            if (user is null)
-            {
-                return UserErrors.Unauthorized;
-            }
+            var user = await userService.GetCurrentUserWithAccountAndTransactionsAsync(cancellationToken);
 
             var newTransaction = Transaction.TryCreate(command.Amount, command.Type, command.Description);
             user.AddTransaction(newTransaction);

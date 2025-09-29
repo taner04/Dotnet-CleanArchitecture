@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using Application.CQRS.Authentication;
+using Newtonsoft.Json;
 using Npgsql;
 using Persistence.Data;
 using Shared.WebApi;
@@ -11,23 +12,20 @@ namespace WebApi.IntegrationTests.Common;
 [Collection("TestingFixtureCollection")]
 public abstract class TestingBase : IAsyncLifetime
 {
-    private readonly ApplicationDbContext _dbContext;
+    protected readonly ApplicationDbContext DbContext;
     private readonly TestingFixture _fixture;
     private readonly IServiceScope _scope;
-    protected readonly Repository Repository;
 
     protected TestingBase(TestingFixture fixture)
     {
         _fixture = fixture;
         _scope = _fixture.CreateScope();
 
-        _dbContext = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        if (!_dbContext.Database.CanConnect())
+        DbContext = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        if (!DbContext.Database.CanConnect())
         {
             throw new NpgsqlException("Cannot connect to the database");
         }
-
-        Repository = new Repository(_dbContext);
     }
 
     protected static CancellationToken CurrentCancellationToken => TestContext.Current.CancellationToken;
@@ -61,8 +59,8 @@ public abstract class TestingBase : IAsyncLifetime
             Routes.Authentication.Login,
             new LoginUser.Query(UserFactory.Email, UserFactory.Pwd));
 
-        var token = await loginResponse.Content.ReadAsStringAsync();
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var token = JsonConvert.DeserializeObject<LoginUser.Dto>(await loginResponse.Content.ReadAsStringAsync());
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
 
         return client;
     }

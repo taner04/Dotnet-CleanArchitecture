@@ -1,3 +1,4 @@
+using Application.Common;
 using Application.Common.Behaviours;
 using Application.CQRS.Authentication;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,8 @@ public static class DependencyInjection
                 ];
             }
         );
+        
+        services.AddScoped<UserService>();
 
         return services;
     }

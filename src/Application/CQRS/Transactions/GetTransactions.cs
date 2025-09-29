@@ -1,3 +1,4 @@
+using Application.Common;
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
 using Application.Mapper;
@@ -10,21 +11,12 @@ public static class GetTransactions
     public record Query : IQuery<ErrorOr<List<TransactionDto>>>;
 
     internal sealed class Handler(
-        IApplicationDbContext dbContext,
-        ICurrentUserService currentUserService) : IQueryHandler<Query, ErrorOr<List<TransactionDto>>>
+        UserService userService,
+        IApplicationDbContext dbContext) : IQueryHandler<Query, ErrorOr<List<TransactionDto>>>
     {
         public async ValueTask<ErrorOr<List<TransactionDto>>> Handle(Query query, CancellationToken cancellationToken)
         {
-            var userId = currentUserService.GetUserId();
-
-            var user = await dbContext.Users.Where(x => x.Id == userId)
-                .Include(x => x.Account)
-                .ThenInclude(a => a.Transactions)
-                .FirstOrDefaultAsync(cancellationToken);
-            if (user == null)
-            {
-                return UserErrors.Unauthorized;
-            }
+            var user = await userService.GetCurrentUserWithAccountAndTransactionsAsync(cancellationToken);
 
             return user.GetTransactions().Select(t => t.ToDto()).ToList();
         }

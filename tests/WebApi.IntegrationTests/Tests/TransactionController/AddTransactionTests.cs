@@ -1,5 +1,6 @@
 using Application.CQRS.Transactions;
 using Domain.Entities.Users;
+using Microsoft.EntityFrameworkCore;
 using Shared.WebApi;
 using WebApi.IntegrationTests.Common;
 
@@ -28,7 +29,7 @@ public class AddTransactionTests(TestingFixture fixture) : TestingBase(fixture)
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        var transactions = await Repository.SearchByAsync<Transaction>(
+        var transactions = await DbContext.Set<Transaction>().FirstOrDefaultAsync(
             t => t.Description == command.Description,
             CurrentCancellationToken);
 

@@ -1,6 +1,7 @@
 using Application.CQRS.Users;
 using Domain.Entities.Users;
 using Domain.Entities.Users.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 using Shared.WebApi;
 using WebApi.IntegrationTests.Common;
 using WebApi.IntegrationTests.Factories;
@@ -32,7 +33,7 @@ public class UpdateEmailNotificationTests(TestingFixture fixture) : TestingBase(
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        var user = await Repository.SearchByAsync<User>(
+        var user = await DbContext.Set<User>().FirstOrDefaultAsync(
             u => u.Email == Email.From(UserFactory.Email),
             CurrentCancellationToken);
 

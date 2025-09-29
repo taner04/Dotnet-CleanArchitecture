@@ -1,6 +1,7 @@
 using Application.CQRS.Users;
 using Domain.Entities.Users;
 using Domain.Entities.Users.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 using Shared.WebApi;
 using WebApi.IntegrationTests.Common;
 
@@ -29,7 +30,7 @@ public class ChangeEmailTests(TestingFixture fixture) : TestingBase(fixture)
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        var user = await Repository.SearchByAsync<User>(
+        var user = await DbContext.Set<User>().FirstOrDefaultAsync(
             u => u.Email == Email.From(command.NewEmail),
             CurrentCancellationToken);
 

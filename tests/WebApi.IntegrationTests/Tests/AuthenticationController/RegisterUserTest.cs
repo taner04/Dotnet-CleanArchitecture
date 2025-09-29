@@ -2,6 +2,7 @@
 using Domain.Entities.Users;
 using Domain.Entities.Users.ValueObjects;
 using Infrastructure.Utils;
+using Microsoft.EntityFrameworkCore;
 using Shared.WebApi;
 using WebApi.IntegrationTests.Common;
 using WebApi.IntegrationTests.Factories;
@@ -20,9 +21,8 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
 
         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
 
-        var user = await Repository.SearchByAsync<User>(
-            u => u.Email == Email.From(command.Email),
-            CurrentCancellationToken);
+        var user = await DbContext.Set<User>()
+            .FirstOrDefaultAsync(u => u.Email == Email.From(command.Email), CurrentCancellationToken);
 
         Assert.NotNull(user);
         Assert.Equal(Email.From(command.Email), user.Email);
@@ -57,7 +57,9 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
     [Fact]
     public async Task RegisterUser_WhenUserAlreadyExists_ReturnsBadRequest()
     {
-        await Repository.AddAsync(UserFactory.User(), CurrentCancellationToken);
+        DbContext.Set<User>().Add(UserFactory.User());
+        await DbContext.SaveChangesAsync(CurrentCancellationToken);
+        
         var client = CreateClient();
 
         var command = new RegisterUser.Command("John", "Doe", "doe@mail.com", "John123!", true);
