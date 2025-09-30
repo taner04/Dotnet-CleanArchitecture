@@ -10,7 +10,7 @@ public class AccountTests
 
         account.AddTransaction(transaction);
 
-        Assert.Equal(100, account.Balance.Value);
+        Assert.Equal(100, account.Balance);
         Assert.Single(account.Transactions);
         Assert.Equal(transaction, account.Transactions[0]);
     }
@@ -25,7 +25,7 @@ public class AccountTests
         account.AddTransaction(income);
         account.AddTransaction(expense);
 
-        Assert.Equal(150, account.Balance.Value);
+        Assert.Equal(150, account.Balance);
         Assert.Equal(2, account.Transactions.Count);
     }
 }

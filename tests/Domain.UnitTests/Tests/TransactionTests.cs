@@ -12,7 +12,7 @@ public class TransactionTests
         var transaction = Transaction.TryCreate(amount, type, description);
 
         Assert.NotNull(transaction);
-        Assert.Equal(amount, transaction.Amount.Value);
+        Assert.Equal(amount, transaction.Amount);
         Assert.Equal(type, transaction.Type);
         Assert.Equal(description, transaction.Description);
         Assert.True(transaction.Date <= DateTime.UtcNow);

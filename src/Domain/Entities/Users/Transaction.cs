@@ -1,7 +1,6 @@
 ﻿using Domain.Common;
 using Shared.Errors;
 using Vogen;
-using Money = Domain.Entities.Users.ValueObjects.Money;
 
 namespace Domain.Entities.Users;
 
@@ -26,7 +25,7 @@ public class Transaction : Entity<TransactionId>
     {
     } // EF
 
-    private Transaction(Money amount, TransactionType type, string description)
+    private Transaction(decimal amount, TransactionType type, string description)
     {
         Id = TransactionId.New();
         Amount = amount;
@@ -36,7 +35,7 @@ public class Transaction : Entity<TransactionId>
     }
 
     public AccountId AccountId { get; private set; }
-    public Money Amount { get; private set; }
+    public decimal Amount { get; private set; }
     public TransactionType Type { get; private set; }
     public DateTime Date { get; private set; }
     public string Description { get; private set; }
@@ -50,10 +49,6 @@ public class Transaction : Entity<TransactionId>
             throw new DomainException(TransactionErrors.InvalidDescription);
         }
 
-        var money = Money.TryFrom(amount);
-
-        return !money.IsSuccess
-            ? throw new DomainException(TransactionErrors.InvalidMoney)
-            : new Transaction(money.ValueObject, type, description);
+        return new Transaction(amount, type, description);
     }
 }

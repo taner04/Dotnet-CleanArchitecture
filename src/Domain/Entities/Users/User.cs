@@ -87,6 +87,6 @@ public class User : AggregateRoot<UserId>
 
     public decimal GetBalance()
     {
-        return Account.Balance.Value;
+        return Account.Balance;
     }
 }

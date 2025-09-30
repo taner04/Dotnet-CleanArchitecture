@@ -26,11 +26,11 @@ public class Account : Entity<AccountId>
     {
         Id = AccountId.New();
         UserId = userId;
-        Balance = Money.From(0); // Initial balance is zero
+        Balance = 0; // Initial balance is zero
     }
 
     public UserId UserId { get; private set; }
-    public Money Balance { get; private set; }
+    public decimal Balance { get; private set; }
 
     public User User { get; private set; } = null!; // Navigation property
     public IReadOnlyList<Transaction> Transactions => _transactions.ToList(); // Navigation property
@@ -38,18 +38,16 @@ public class Account : Entity<AccountId>
     public void AddTransaction(Transaction transaction)
     {
         _transactions.Add(transaction);
-        UpdateBalance(transaction.Amount.Value, transaction.Type);
+        UpdateBalance(transaction.Amount, transaction.Type);
     }
 
     private void UpdateBalance(decimal amount, TransactionType type)
     {
-        var newBalanceResult = type switch
+        Balance = type switch
         {
-            TransactionType.Income => Money.TryFrom(Balance.Value + amount),
-            TransactionType.Expense => Money.TryFrom(Balance.Value - amount),
+            TransactionType.Income => Balance + amount,
+            TransactionType.Expense => Balance - amount,
             _ => throw new DomainException(TransactionErrors.InvalidTransactionType)
         };
-
-        Balance = newBalanceResult.ValueObject;
     }
 }
