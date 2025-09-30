@@ -1,6 +1,6 @@
 using Domain.Common.Abstraction.Entity;
 
-namespace Domain.Common;
+namespace Domain.Common.Entities;
 
 public abstract class Auditable : IAuditable
 {

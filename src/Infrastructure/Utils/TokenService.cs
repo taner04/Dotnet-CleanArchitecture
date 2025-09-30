@@ -4,21 +4,14 @@ using System.Text;
 using Application.Common.Abstraction.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Shared.WebApi;
 
-namespace Infrastructure.Utils.Token;
+namespace Infrastructure.Utils;
 
-public sealed class TokenService : ITokenService<User>
+public sealed class TokenService(IConfiguration configuration) : ITokenService<User>
 {
-    private readonly IConfiguration _configuration;
-    private readonly JwtSettings _jwtSettings;
-    private readonly JwtSecurityTokenHandler _tokenHandler;
-
-    public TokenService(IConfiguration configuration)
-    {
-        _configuration = configuration;
-        _jwtSettings = GetJwtSettings();
-        _tokenHandler = new JwtSecurityTokenHandler();
-    }
+    private readonly JwtSettings _jwtSettings = configuration.GetSection("JWTSettings").Get<JwtSettings>() ?? throw new InvalidOperationException("JWT settings are not configured properly.");
+    private readonly JwtSecurityTokenHandler _tokenHandler = new();
 
     public string GenerateAccessToken(User user)
     {
@@ -38,11 +31,9 @@ public sealed class TokenService : ITokenService<User>
 
     public bool IsRefreshTokenValid(string token)
     {
-        var validationParameters = GetValidationParameters();
-
         try
         {
-            var principal = _tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+            var principal = _tokenHandler.ValidateToken(token, _jwtSettings.ToTokenValidationParameters(), out var validatedToken);
 
             var scope = principal.Claims.FirstOrDefault(c => c.Type == "scope")?.Value;
             return string.Equals(scope, "refresh", StringComparison.Ordinal);
@@ -79,38 +70,5 @@ public sealed class TokenService : ITokenService<User>
             expires,
             signingCredentials
         );
-    }
-
-    private JwtSettings GetJwtSettings()
-    {
-        return new JwtSettings(
-            _configuration["JwtSettings:SecretKey"] ?? throw new ArgumentNullException("The SecretKey was null"),
-            _configuration["JwtSettings:Issuer"] ?? throw new ArgumentNullException("The Issuer was null"),
-            _configuration["JwtSettings:Audience"] ?? throw new ArgumentNullException("The Audience was null")
-        );
-    }
-
-    private TokenValidationParameters GetValidationParameters()
-    {
-        return new TokenValidationParameters
-        {
-            // Issuer/Audience
-            ValidIssuer = _jwtSettings.Issuer,
-            ValidAudience = _jwtSettings.Audience,
-            ValidateIssuer = true,
-            ValidateAudience = true,
-
-            // Signature
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey)),
-
-            // Expiration
-            ValidateLifetime = true,
-            RequireExpirationTime = true,
-            ClockSkew = TimeSpan.FromMinutes(2),
-
-            // Algo
-            ValidAlgorithms = [SecurityAlgorithms.HmacSha256]
-        };
     }
 }

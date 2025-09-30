@@ -1,6 +1,5 @@
 using Application.Common.Abstraction.Infrastructure;
 using Infrastructure.Utils;
-using Infrastructure.Utils.Token;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure;

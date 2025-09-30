@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Common.Entities;
 using Shared.Errors;
 using Vogen;
 

@@ -9,6 +9,7 @@
         <PackageReference Include="ErrorOr"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore"/>
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"/>
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" />
         <PackageReference Include="Npgsql"/>
         <PackageReference Include="Testcontainers.PostgreSql"/>
         <PackageReference Include="xunit.v3.extensibility.core"/>

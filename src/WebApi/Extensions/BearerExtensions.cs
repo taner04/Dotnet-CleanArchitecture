@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Shared.WebApi;
 using WebApi.Bearer;
 
 namespace WebApi.Extensions;
@@ -12,36 +13,12 @@ public static class BearerExtensions
 
         services.AddAuthorization();
 
-        var secretKey = configuration["JwtSettings:SecretKey"];
-        if (string.IsNullOrEmpty(secretKey))
-        {
-            throw new Exception("JWT secret key is missing");
-        }
-
-        var issuer = configuration["JwtSettings:Issuer"];
-        if (string.IsNullOrEmpty(issuer))
-        {
-            throw new Exception("JWT issuer is missing");
-        }
-
-        var audience = configuration["JwtSettings:Audience"];
-        if (string.IsNullOrEmpty(audience))
-        {
-            throw new Exception("JWT audience is missing");
-        }
-
+        var jwtSettings = configuration.GetSection("JWTSettings").Get<JwtSettings>() ?? throw new InvalidOperationException("JWT settings are not configured properly.");
+        
         services.AddAuthentication("Bearer")
             .AddJwtBearer("Bearer", options =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
-                    ValidIssuer = issuer,
-                    ValidAudience = audience,
-                    ValidateIssuer = true,
-                    ValidateAudience = true
-                };
+                options.TokenValidationParameters = jwtSettings.ToTokenValidationParameters();
             });
 
         return services;

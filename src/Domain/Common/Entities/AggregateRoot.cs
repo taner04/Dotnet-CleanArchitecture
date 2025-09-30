@@ -1,7 +1,7 @@
 ﻿using Domain.Common.Abstraction.DomainEvent;
 using Domain.Common.Abstraction.Entity;
 
-namespace Domain.Common;
+namespace Domain.Common.Entities;
 
 public abstract class AggregateRoot<TId> : Entity<TId>, IAggregateRoot
     where TId : struct
