@@ -52,15 +52,17 @@ public abstract class TestingBase : IAsyncLifetime
     {
         var client = _fixture.CreateClient();
 
-        var registerCommand = new RegisterUser.Command("John", "Doe", UserFactory.Email, UserFactory.Pwd, true);
-        await client.PostAsJsonAsync(Routes.Authentication.Register, registerCommand, CurrentCancellationToken);
+        await client.PostAsJsonAsync(
+            Routes.Authentication.Register,
+            new RegisterUser.Command("John", "Doe", UserFactory.Email, UserFactory.Pwd, true),
+            CurrentCancellationToken);
 
-        var loginResponse = await client.PostAsJsonAsync(
+        var response = await client.PostAsJsonAsync(
             Routes.Authentication.Login,
             new LoginUser.Query(UserFactory.Email, UserFactory.Pwd));
 
-        var token = JsonConvert.DeserializeObject<LoginUser.Dto>(await loginResponse.Content.ReadAsStringAsync());
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
+        var dto = JsonConvert.DeserializeObject<LoginUser.Dto>(await response.Content.ReadAsStringAsync());
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", dto.AccessToken);
 
         return client;
     }

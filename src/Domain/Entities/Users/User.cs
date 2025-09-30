@@ -75,22 +75,6 @@ public class User : AggregateRoot<UserId>
         PasswordHash = newPassword;
     }
 
-    public void ChangeEmail(string newMail)
-    {
-        var emailResult = Email.TryFrom(newMail);
-        if (!emailResult.IsSuccess)
-        {
-            throw new DomainException(UserErrors.InvalidEmail);
-        }
-
-        Email = emailResult.ValueObject;
-    }
-
-    public void ChangeEmailNotificationPreference(bool wantsEmailNotifications)
-    {
-        WantsEmailNotifications = wantsEmailNotifications;
-    }
-
     public void AddTransaction(Transaction transaction)
     {
         Account.AddTransaction(transaction);

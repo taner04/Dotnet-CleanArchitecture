@@ -9,10 +9,12 @@ namespace WebApi.IntegrationTests.Tests.AuthenticationController;
 
 public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
 {
+    private const string InvalidEmail = "doemail.com";
+    
     [Fact]
     public async Task Login_WithInvalidEmail_ReturnsBadRequest()
     {
-        var query = new LoginUser.Query("doemail.com", "Test123!");
+        var query = new LoginUser.Query(InvalidEmail, UserFactory.Pwd);
         var client = CreateClient();
 
         var response = await client.PostAsJsonAsync(Routes.Authentication.Login, query, CurrentCancellationToken);
@@ -28,13 +30,13 @@ public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
 
         var client = CreateClient();
 
-        var invalidEmailQuery = new LoginUser.Query("doemail.com", UserFactory.Pwd);
+        var invalidEmailQuery = new LoginUser.Query(InvalidEmail, UserFactory.Pwd);
         var invalidEmailResponse =
             await client.PostAsJsonAsync(Routes.Authentication.Login, invalidEmailQuery, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.BadRequest, invalidEmailResponse.StatusCode);
 
-        var invalidPasswordQuery = new LoginUser.Query(UserFactory.Email, "Test123");
+        var invalidPasswordQuery = new LoginUser.Query(UserFactory.Email, "WrongPassword123!");
         var invalidPasswordResponse =
             await client.PostAsJsonAsync(Routes.Authentication.Login, invalidPasswordQuery, CurrentCancellationToken);
 
