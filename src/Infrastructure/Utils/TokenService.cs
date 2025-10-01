@@ -10,12 +10,21 @@ namespace Infrastructure.Utils;
 
 public sealed class TokenService(IConfiguration configuration) : ITokenService<User>
 {
-    private readonly JwtSettings _jwtSettings = configuration.GetSection("JWTSettings").Get<JwtSettings>() ?? throw new InvalidOperationException("JWT settings are not configured properly.");
+    private enum Scope
+    {
+        Access,
+        Refresh
+    }
+
+    private readonly JwtSettings _jwtSettings = configuration.GetSection("JWTSettings").Get<JwtSettings>() ??
+                                                throw new InvalidOperationException(
+                                                    "JWT settings are not configured properly.");
+
     private readonly JwtSecurityTokenHandler _tokenHandler = new();
 
     public string GenerateAccessToken(User user)
     {
-        var claims = GetClaims(user, "access");
+        var claims = GetClaims(user, Scope.Access);
         var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddHours(User.AccessTokenValidityInHour));
 
         return _tokenHandler.WriteToken(jwt);
@@ -23,7 +32,7 @@ public sealed class TokenService(IConfiguration configuration) : ITokenService<U
 
     public string GenerateRefreshToken(User user)
     {
-        var claims = GetClaims(user, "refresh");
+        var claims = GetClaims(user, Scope.Refresh);
         var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddDays(User.RefreshTokenValidityInDays));
 
         return _tokenHandler.WriteToken(jwt);
@@ -33,7 +42,7 @@ public sealed class TokenService(IConfiguration configuration) : ITokenService<U
     {
         try
         {
-            var principal = _tokenHandler.ValidateToken(token, _jwtSettings.ToTokenValidationParameters(), out var validatedToken);
+            var principal = _tokenHandler.ValidateToken(token, _jwtSettings.ToTokenValidationParameters(), out var _);
 
             var scope = principal.Claims.FirstOrDefault(c => c.Type == "scope")?.Value;
             return string.Equals(scope, "refresh", StringComparison.Ordinal);
@@ -44,14 +53,26 @@ public sealed class TokenService(IConfiguration configuration) : ITokenService<U
         }
     }
 
-    private static Claim[] GetClaims(User user, string scope)
+    private static Claim[] GetClaims(User user, Scope scope)
     {
+        if (scope == Scope.Access)
+        {
+            return
+            [
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email.Value),
+                // Optional: Add roles or permissions if available
+                // new Claim(ClaimTypes.Role, user.Role),
+                new Claim("scope", "access")
+            ];
+        }
+
         return
         [
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email.Value),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-            new Claim("scope", scope)
+            new Claim("scope", "refresh")
         ];
     }
 
