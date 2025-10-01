@@ -1,3 +1,6 @@
+using Domain.Entities.ApplicationUsers;
+using UserId = Domain.Entities.ApplicationUsers.UserId;
+
 namespace Domain.UnitTests.Tests;
 
 public class AccountTests

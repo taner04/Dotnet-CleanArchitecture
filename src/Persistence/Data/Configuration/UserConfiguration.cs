@@ -1,10 +1,11 @@
-﻿namespace Persistence.Data.Configuration;
+﻿using Domain.Entities.ApplicationUsers;
+using UserId = Domain.Entities.ApplicationUsers.UserId;
 
-public sealed class UserConfiguration : EntityConfiguration<User, UserId>
+namespace Persistence.Data.Configuration;
+
+public sealed class UserConfiguration : EntityConfiguration<ApplicationUser, UserId>
 {
-    protected override string TableName => "Users";
-
-    protected override void PostConfigure(EntityTypeBuilder<User> builder)
+    protected override void PostConfigure(EntityTypeBuilder<ApplicationUser> builder)
     {
         builder.Property(u => u.FirstName)
             .IsRequired();
@@ -24,7 +25,7 @@ public sealed class UserConfiguration : EntityConfiguration<User, UserId>
             .IsRequired();
 
         builder.HasOne(u => u.Account)
-            .WithOne(a => a.User)
+            .WithOne(a => a.ApplicationUser)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

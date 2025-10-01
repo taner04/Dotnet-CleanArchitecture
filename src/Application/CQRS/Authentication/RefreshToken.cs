@@ -1,6 +1,7 @@
 using Application.Common;
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
+using Domain.Entities.ApplicationUsers;
 using Shared.Errors;
 
 namespace Application.CQRS.Authentication;
@@ -12,7 +13,7 @@ public static class RefreshToken
     internal sealed class Handler(
         UserService userService,
         IApplicationDbContext dbContext,
-        ITokenService<User> tokenService) : ICommandHandler<Command, ErrorOr<string>>
+        ITokenService<ApplicationUser> tokenService) : ICommandHandler<Command, ErrorOr<string>>
     {
         public async ValueTask<ErrorOr<string>> Handle(Command command, CancellationToken cancellationToken)
         {

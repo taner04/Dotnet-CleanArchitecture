@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Application.Common.Abstraction.Infrastructure;
 using Microsoft.AspNetCore.Http;
+using UserId = Domain.Entities.ApplicationUsers.UserId;
 
 namespace Infrastructure.Utils;
 

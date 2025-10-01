@@ -1,6 +1,6 @@
-using Domain.Entities.Users.ValueObjects;
+using Domain.Entities.ApplicationUsers;
+using Domain.Entities.ApplicationUsers.ValueObjects;
 using Vogen;
-
 namespace Persistence.Data;
 
 [EfCoreConverter<UserId>]

@@ -11,7 +11,7 @@ public class GetUserDataTests(TestingFixture fixture) : TestingBase(fixture)
     public async Task GetUserData_WithoutToken_ReturnsUnauthorized()
     {
         var client = CreateClient();
-        var response = await client.GetAsync(Routes.User.GetUserData, CurrentCancellationToken);
+        var response = await client.GetAsync(Routes.ApplicationUser.GetUserData, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }
@@ -20,7 +20,7 @@ public class GetUserDataTests(TestingFixture fixture) : TestingBase(fixture)
     public async Task GetUserData_WithValidToken_ReturnsSuccess()
     {
         var client = await CreateAuthenticatedClientAsync();
-        var response = await client.GetAsync(Routes.User.GetUserData, CurrentCancellationToken);
+        var response = await client.GetAsync(Routes.ApplicationUser.GetUserData, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 

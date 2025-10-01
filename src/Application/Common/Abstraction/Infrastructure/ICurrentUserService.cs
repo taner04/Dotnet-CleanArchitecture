@@ -1,13 +1,15 @@
+using UserId = Domain.Entities.ApplicationUsers.UserId;
+
 namespace Application.Common.Abstraction.Infrastructure;
 
 /// <summary>
-///     Provides access to the current user's information.
+///     Provides access to the current applicationUser's information.
 /// </summary>
 public interface ICurrentUserService
 {
     /// <summary>
-    ///     Gets the unique identifier of the current user.
+    ///     Gets the unique identifier of the current applicationUser.
     /// </summary>
-    /// <returns>The <see cref="UserId" /> of the current user, or null if not available.</returns>
+    /// <returns>The <see cref="UserId" /> of the current applicationUser, or null if not available.</returns>
     UserId? GetUserId();
 }

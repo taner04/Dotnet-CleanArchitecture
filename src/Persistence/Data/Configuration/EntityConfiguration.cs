@@ -6,7 +6,7 @@ public abstract class EntityConfiguration<TEntity, TId> : IEntityTypeConfigurati
     where TEntity : class, IEntity<TId>, IAuditable
     where TId : struct
 {
-    protected abstract string TableName { get; }
+    private static string TableName => typeof(TEntity).Name + "s";
 
 
     public void Configure(EntityTypeBuilder<TEntity> builder)

@@ -1,4 +1,5 @@
 using Application.CQRS.Transactions;
+using Domain.Entities.ApplicationUsers;
 using Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Shared.WebApi;

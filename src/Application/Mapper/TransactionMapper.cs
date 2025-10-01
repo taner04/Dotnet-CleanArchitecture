@@ -1,4 +1,6 @@
 using Application.CQRS.Transactions;
+using Domain.Entities.ApplicationUsers;
+
 namespace Application.Mapper;
 
 public static class TransactionMapper

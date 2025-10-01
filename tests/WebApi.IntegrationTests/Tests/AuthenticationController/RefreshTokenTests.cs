@@ -1,10 +1,10 @@
 using Application.CQRS.Authentication;
-using Domain.Entities.Users;
-using Domain.Entities.Users.ValueObjects;
+using Domain.Entities.ApplicationUsers;
 using Microsoft.EntityFrameworkCore;
 using Shared.WebApi;
 using WebApi.IntegrationTests.Common;
 using WebApi.IntegrationTests.Factories;
+using Email = Domain.Entities.ApplicationUsers.ValueObjects.Email;
 
 namespace WebApi.IntegrationTests.Tests.AuthenticationController;
 
@@ -15,7 +15,7 @@ public class RefreshTokenTests(TestingFixture fixture) : TestingBase(fixture)
     {
         var client = await CreateAuthenticatedClientAsync();
 
-        var user = await DbContext.Set<User>()
+        var user = await DbContext.Set<ApplicationUser>()
             .FirstOrDefaultAsync(u => u.Email == Email.From(UserFactory.Email), CurrentCancellationToken);
         
         var command = new RefreshToken.Command(user.RefreshToken);

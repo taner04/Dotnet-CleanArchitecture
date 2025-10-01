@@ -1,9 +1,10 @@
-﻿namespace Persistence.Data.Configuration;
+﻿using Domain.Entities.ApplicationUsers;
+using TransactionId = Domain.Entities.ApplicationUsers.TransactionId;
+
+namespace Persistence.Data.Configuration;
 
 public sealed class TransactionConfiguration : EntityConfiguration<Transaction, TransactionId>
 {
-    protected override string TableName => "Transactions";
-
     protected override void PostConfigure(EntityTypeBuilder<Transaction> builder)
     {
         builder.Property(t => t.AccountId)

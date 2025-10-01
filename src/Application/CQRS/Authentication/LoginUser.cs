@@ -1,7 +1,8 @@
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
-using Domain.Entities.Users.DomainEvents;
-using Domain.Entities.Users.ValueObjects;
+using Domain.Entities.ApplicationUsers;
+using Domain.Entities.ApplicationUsers.DomainEvents;
+using Domain.Entities.ApplicationUsers.ValueObjects;
 using Shared.Errors;
 
 namespace Application.CQRS.Authentication;
@@ -13,7 +14,7 @@ public static class LoginUser
     internal sealed class Handler(
         IApplicationDbContext applicationDbContext,
         IPasswordService passwordService,
-        ITokenService<User> tokenService) : IQueryHandler<Query, ErrorOr<Dto>>
+        ITokenService<ApplicationUser> tokenService) : IQueryHandler<Query, ErrorOr<Dto>>
     {
         public async ValueTask<ErrorOr<Dto>> Handle(Query query, CancellationToken cancellationToken)
         {

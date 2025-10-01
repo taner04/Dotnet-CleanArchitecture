@@ -1,6 +1,6 @@
 using Vogen;
 
-namespace Domain.Entities.Users.ValueObjects;
+namespace Domain.Entities.ApplicationUsers.ValueObjects;
 
 [ValueObject<string>]
 public readonly partial struct Password

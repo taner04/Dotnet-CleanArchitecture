@@ -1,4 +1,5 @@
 using Application.Common.Abstraction.Infrastructure;
+using Domain.Entities.ApplicationUsers;
 using Infrastructure.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,7 +9,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        services.AddScoped<ITokenService<User>, TokenService>();
+        services.AddScoped<ITokenService<ApplicationUser>, TokenService>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IPasswordService, PasswordService>();
 

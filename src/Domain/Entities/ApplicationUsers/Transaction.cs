@@ -3,7 +3,7 @@ using Domain.Common.Entities;
 using Shared.Errors;
 using Vogen;
 
-namespace Domain.Entities.Users;
+namespace Domain.Entities.ApplicationUsers;
 
 [ValueObject<Guid>]
 public readonly partial struct TransactionId

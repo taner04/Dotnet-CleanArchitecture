@@ -1,10 +1,9 @@
 ﻿using Domain.Common;
 using Domain.Common.Entities;
-using Domain.Entities.Users.ValueObjects;
 using Shared.Errors;
 using Vogen;
 
-namespace Domain.Entities.Users;
+namespace Domain.Entities.ApplicationUsers;
 
 [ValueObject<Guid>]
 public readonly partial struct AccountId
@@ -23,17 +22,17 @@ public class Account : Entity<AccountId>
     {
     } // For EF Core
 
-    public Account(UserId userId)
+    public Account(ApplicationUsers.UserId userId)
     {
         Id = AccountId.New();
         UserId = userId;
         Balance = 0; // Initial balance is zero
     }
 
-    public UserId UserId { get; private set; }
+    public ApplicationUsers.UserId UserId { get; private set; }
     public decimal Balance { get; private set; }
 
-    public User User { get; private set; } = null!; // Navigation property
+    public ApplicationUser ApplicationUser { get; private set; } = null!; // Navigation property
     public IReadOnlyList<Transaction> Transactions => _transactions.ToList(); // Navigation property
 
     public void AddTransaction(Transaction transaction)

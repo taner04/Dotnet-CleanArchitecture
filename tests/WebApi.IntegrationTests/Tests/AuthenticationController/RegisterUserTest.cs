@@ -1,11 +1,11 @@
 ﻿using Application.CQRS.Authentication;
-using Domain.Entities.Users;
-using Domain.Entities.Users.ValueObjects;
+using Domain.Entities.ApplicationUsers;
 using Infrastructure.Utils;
 using Microsoft.EntityFrameworkCore;
 using Shared.WebApi;
 using WebApi.IntegrationTests.Common;
 using WebApi.IntegrationTests.Factories;
+using Email = Domain.Entities.ApplicationUsers.ValueObjects.Email;
 
 namespace WebApi.IntegrationTests.Tests.AuthenticationController;
 
@@ -21,7 +21,7 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
 
         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
 
-        var user = await DbContext.Set<User>()
+        var user = await DbContext.Set<ApplicationUser>()
             .FirstOrDefaultAsync(u => u.Email == Email.From(command.Email), CurrentCancellationToken);
 
         Assert.NotNull(user);
@@ -57,7 +57,7 @@ public class RegisterUserTest(TestingFixture fixture) : TestingBase(fixture)
     [Fact]
     public async Task RegisterUser_WhenUserAlreadyExists_ReturnsBadRequest()
     {
-        DbContext.Set<User>().Add(UserFactory.User());
+        DbContext.Set<ApplicationUser>().Add(UserFactory.User());
         await DbContext.SaveChangesAsync(CurrentCancellationToken);
         
         var client = CreateClient();

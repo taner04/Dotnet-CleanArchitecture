@@ -1,8 +1,8 @@
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
-using Domain.Entities.Users.ValueObjects;
+using Domain.Entities.ApplicationUsers;
+using Domain.Entities.ApplicationUsers.ValueObjects;
 using Shared.Errors;
-
 namespace Application.CQRS.Authentication;
 
 public static class RegisterUser
@@ -28,7 +28,7 @@ public static class RegisterUser
                 return UserErrors.AlreadyExists;
             }
 
-            var newUser = User.TryCreate(command.FirstName, command.LastName, mail, command.WantsEmailNotification);
+            var newUser = ApplicationUser.TryCreate(command.FirstName, command.LastName, mail, command.WantsEmailNotification);
 
             var hashedPassword = passwordService.HashPassword(command.Password);
             newUser.SetPassword(Password.From(hashedPassword));

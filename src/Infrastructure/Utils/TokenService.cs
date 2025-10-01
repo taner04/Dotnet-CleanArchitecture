@@ -2,13 +2,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Application.Common.Abstraction.Infrastructure;
+using Domain.Entities.ApplicationUsers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Shared.WebApi;
 
 namespace Infrastructure.Utils;
 
-public sealed class TokenService(IConfiguration configuration) : ITokenService<User>
+public sealed class TokenService(IConfiguration configuration) : ITokenService<ApplicationUser>
 {
     private enum Scope
     {
@@ -22,18 +23,18 @@ public sealed class TokenService(IConfiguration configuration) : ITokenService<U
 
     private readonly JwtSecurityTokenHandler _tokenHandler = new();
 
-    public string GenerateAccessToken(User user)
+    public string GenerateAccessToken(ApplicationUser applicationUser)
     {
-        var claims = GetClaims(user, Scope.Access);
-        var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddHours(User.AccessTokenValidityInHour));
+        var claims = GetClaims(applicationUser, Scope.Access);
+        var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddHours(ApplicationUser.AccessTokenValidityInHour));
 
         return _tokenHandler.WriteToken(jwt);
     }
 
-    public string GenerateRefreshToken(User user)
+    public string GenerateRefreshToken(ApplicationUser applicationUser)
     {
-        var claims = GetClaims(user, Scope.Refresh);
-        var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddDays(User.RefreshTokenValidityInDays));
+        var claims = GetClaims(applicationUser, Scope.Refresh);
+        var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddDays(ApplicationUser.RefreshTokenValidityInDays));
 
         return _tokenHandler.WriteToken(jwt);
     }
@@ -53,24 +54,24 @@ public sealed class TokenService(IConfiguration configuration) : ITokenService<U
         }
     }
 
-    private static Claim[] GetClaims(User user, Scope scope)
+    private static Claim[] GetClaims(ApplicationUser applicationUser, Scope scope)
     {
         if (scope == Scope.Access)
         {
             return
             [
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email.Value),
+                new Claim(JwtRegisteredClaimNames.Sub, applicationUser.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, applicationUser.Email.Value),
                 // Optional: Add roles or permissions if available
-                // new Claim(ClaimTypes.Role, user.Role),
+                // new Claim(ClaimTypes.Role, applicationUser.Role),
                 new Claim("scope", "access")
             ];
         }
 
         return
         [
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email.Value),
+            new Claim(JwtRegisteredClaimNames.Sub, applicationUser.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, applicationUser.Email.Value),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
             new Claim("scope", "refresh")
         ];

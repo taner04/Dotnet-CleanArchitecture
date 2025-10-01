@@ -95,7 +95,7 @@ namespace Persistence.Migrations
                     b.ToTable("Transactions", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.Users.User", b =>
+            modelBuilder.Entity("Domain.Entities.Users.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -151,13 +151,13 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Users.Account", b =>
                 {
-                    b.HasOne("Domain.Entities.Users.User", "User")
+                    b.HasOne("Domain.Entities.Users.ApplicationUser", "ApplicationUser")
                         .WithOne("Account")
                         .HasForeignKey("Domain.Entities.Users.Account", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("Domain.Entities.Users.Transaction", b =>
@@ -176,7 +176,7 @@ namespace Persistence.Migrations
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Users.User", b =>
+            modelBuilder.Entity("Domain.Entities.Users.ApplicationUser", b =>
                 {
                     b.Navigation("Account");
                 });

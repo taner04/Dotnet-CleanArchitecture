@@ -23,7 +23,7 @@ public static class Routes
         public const string Add = $"{Base}/add";
     }
 
-    public static class User
+    public static class ApplicationUser
     {
         private const string Base = "users";
         public const string UpdateEmailNotification = $"{Base}/update-email-notification";

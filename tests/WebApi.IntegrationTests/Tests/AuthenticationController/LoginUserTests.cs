@@ -1,6 +1,5 @@
 using Application.CQRS.Authentication;
-using Domain.Entities.Users;
-using Persistence.Data;
+using Domain.Entities.ApplicationUsers;
 using Shared.WebApi;
 using WebApi.IntegrationTests.Common;
 using WebApi.IntegrationTests.Factories;
@@ -25,7 +24,7 @@ public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
     [Fact]
     public async Task Login_WithInvalidCredentials_ReturnsBadRequest()
     {
-        DbContext.Set<User>().Add(UserFactory.User());
+        DbContext.Set<ApplicationUser>().Add(UserFactory.User());
         await DbContext.SaveChangesAsync(CurrentCancellationToken);
 
         var client = CreateClient();
@@ -46,7 +45,7 @@ public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
     [Fact]
     public async Task Login_WithValidCredentials_ReturnsSuccess()
     {
-        DbContext.Set<User>().Add(UserFactory.User());
+        DbContext.Set<ApplicationUser>().Add(UserFactory.User());
         await DbContext.SaveChangesAsync(CurrentCancellationToken);
         
         var client = CreateClient();

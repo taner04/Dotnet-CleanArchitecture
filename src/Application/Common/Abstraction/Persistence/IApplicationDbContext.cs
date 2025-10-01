@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Domain.Entities.ApplicationUsers;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Application.Common.Abstraction.Persistence;
 
@@ -11,7 +12,7 @@ public interface IApplicationDbContext : IDisposable
     /// <summary>
     ///     Gets the set of users in the database.
     /// </summary>
-    DbSet<User> Users { get; }
+    DbSet<ApplicationUser> Users { get; }
 
     /// <summary>
     ///     Provides access to database-related operations.

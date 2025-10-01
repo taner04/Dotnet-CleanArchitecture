@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Domain.Common;
 using Domain.Common.Entities;
-using Domain.Entities.Users.DomainEvents;
-using Domain.Entities.Users.ValueObjects;
+using Domain.Entities.ApplicationUsers.DomainEvents;
+using Domain.Entities.ApplicationUsers.ValueObjects;
 using Shared.Errors;
 using Vogen;
 
-namespace Domain.Entities.Users;
+namespace Domain.Entities.ApplicationUsers;
 
 [ValueObject<Guid>]
 public readonly partial struct UserId
@@ -19,16 +19,16 @@ public readonly partial struct UserId
 
 #nullable disable
 
-public class User : AggregateRoot<UserId>
+public class ApplicationUser : AggregateRoot<UserId>
 {
     public const int AccessTokenValidityInHour = 1;
     public const int RefreshTokenValidityInDays = 7;
 
-    private User()
+    private ApplicationUser()
     {
     } // For EF Core
 
-    private User(string firstName, string lastName, Email email, bool wantsEmailNotifications)
+    private ApplicationUser(string firstName, string lastName, Email email, bool wantsEmailNotifications)
     {
         Id = UserId.New();
         FirstName = firstName;
@@ -54,7 +54,7 @@ public class User : AggregateRoot<UserId>
 
     public Account Account { get; } // Navigation property
 
-    public static User TryCreate(string firstName, string lastName, Email email, bool wantsEmailNotifications)
+    public static ApplicationUser TryCreate(string firstName, string lastName, Email email, bool wantsEmailNotifications)
     {
         if (string.IsNullOrEmpty(firstName) || firstName.Length > 50 || string.IsNullOrEmpty(lastName) ||
             lastName.Length > 50)
@@ -62,7 +62,7 @@ public class User : AggregateRoot<UserId>
             throw new DomainException(UserErrors.InvalidName);
         }
 
-        return new User(firstName, lastName, email, wantsEmailNotifications);
+        return new ApplicationUser(firstName, lastName, email, wantsEmailNotifications);
     }
 
     public void SetRefreshToken(string refreshToken)

@@ -1,6 +1,7 @@
 using Application.Common;
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
+using Domain.Entities.ApplicationUsers;
 using Shared.Errors;
 
 namespace Application.CQRS.Transactions;

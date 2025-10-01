@@ -1,3 +1,5 @@
+using Domain.Entities.ApplicationUsers;
+
 namespace Domain.UnitTests.Tests;
 
 public class TransactionTests
