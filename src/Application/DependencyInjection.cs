@@ -22,7 +22,7 @@ public static class DependencyInjection
                 ];
             }
         );
-        
+
         services.AddScoped<UserService>();
 
         return services;

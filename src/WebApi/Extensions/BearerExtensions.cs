@@ -1,5 +1,3 @@
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
 using Shared.WebApi;
 using WebApi.Bearer;
 
@@ -13,13 +11,12 @@ public static class BearerExtensions
 
         services.AddAuthorization();
 
-        var jwtSettings = configuration.GetSection("JWTSettings").Get<JwtSettings>() ?? throw new InvalidOperationException("JWT settings are not configured properly.");
-        
+        var jwtSettings = configuration.GetSection("JWTSettings").Get<JwtSettings>() ??
+                          throw new InvalidOperationException("JWT settings are not configured properly.");
+
         services.AddAuthentication("Bearer")
-            .AddJwtBearer("Bearer", options =>
-            {
-                options.TokenValidationParameters = jwtSettings.ToTokenValidationParameters();
-            });
+            .AddJwtBearer("Bearer",
+                options => { options.TokenValidationParameters = jwtSettings.ToTokenValidationParameters(); });
 
         return services;
     }

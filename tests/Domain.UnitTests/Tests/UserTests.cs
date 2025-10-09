@@ -1,14 +1,14 @@
-using Domain.Entities.ApplicationUsers;
-using Email = Domain.Entities.ApplicationUsers.ValueObjects.Email;
+using Domain.Entities.Users;
+using Email = Domain.Entities.Users.ValueObjects.Email;
 
 namespace Domain.UnitTests.Tests;
 
-public class ApplicationUserTests
+public class UserTests
 {
     [Fact]
     public void TryCreate_WithValidParameters_ShouldCreateUser()
     {
-        var user = ApplicationUser.TryCreate("John", "Doe", Email.TryFrom("john.doe@example.com").ValueObject, true);
+        var user = User.TryCreate("John", "Doe", Email.TryFrom("john.doe@example.com").ValueObject, true);
 
         Assert.NotNull(user);
         Assert.Equal("John", user.FirstName);
@@ -21,13 +21,13 @@ public class ApplicationUserTests
     public void TryCreate_WithEmptyFirstName_ShouldThrowDomainException()
     {
         Assert.Throws<DomainException>(() =>
-            ApplicationUser.TryCreate("", "Doe", Email.TryFrom("john.doe@example.com").ValueObject, true));
+            User.TryCreate("", "Doe", Email.TryFrom("john.doe@example.com").ValueObject, true));
     }
 
     [Fact]
     public void SetRefreshToken_ShouldUpdateTokenAndExpiry()
     {
-        var user = ApplicationUser.TryCreate("John", "Doe", Email.TryFrom("john.doe@example.com").ValueObject, true);
+        var user = User.TryCreate("John", "Doe", Email.TryFrom("john.doe@example.com").ValueObject, true);
         user.SetRefreshToken("refresh_token");
 
         Assert.Equal("refresh_token", user.RefreshToken);

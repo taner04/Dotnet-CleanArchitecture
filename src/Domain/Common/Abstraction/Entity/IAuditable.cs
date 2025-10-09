@@ -16,24 +16,24 @@ public interface IAuditable
     DateTimeOffset? UpdatedAt { get; }
 
     /// <summary>
-    ///     Gets the identifier of the applicationUser who created the entity.
+    ///     Gets the identifier of the user who created the entity.
     /// </summary>
     string CreatedBy { get; }
 
     /// <summary>
-    ///     Gets the identifier of the applicationUser who last updated the entity.
+    ///     Gets the identifier of the user who last updated the entity.
     /// </summary>
     string? UpdatedBy { get; }
 
     /// <summary>
     ///     Sets the creation metadata for the entity.
     /// </summary>
-    /// <param name="createdBy">The identifier of the applicationUser who created the entity.</param>
+    /// <param name="createdBy">The identifier of the user who created the entity.</param>
     void SetCreated(string createdBy = null!);
 
     /// <summary>
     ///     Sets the update metadata for the entity.
     /// </summary>
-    /// <param name="updatedBy">The identifier of the applicationUser who updated the entity.</param>
+    /// <param name="updatedBy">The identifier of the user who updated the entity.</param>
     void SetUpdated(string updatedBy = null!);
 }

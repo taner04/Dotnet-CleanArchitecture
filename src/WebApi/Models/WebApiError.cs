@@ -49,6 +49,42 @@ public class WebApiError
     }
 
     /// <summary>
+    ///     Gets the error type describing the nature of the problem.
+    /// </summary>
+    [JsonProperty("type")]
+    public string Type { get; private set; }
+
+    /// <summary>
+    ///     Gets the error title providing a short, human-readable summary.
+    /// </summary>
+    [JsonProperty("title")]
+    public string Title { get; private set; }
+
+    /// <summary>
+    ///     Gets the HTTP status code associated with the error.
+    /// </summary>
+    [JsonProperty("status")]
+    public int Status { get; private set; }
+
+    /// <summary>
+    ///     Gets the instance string indicating the request path and method.
+    /// </summary>
+    [JsonProperty("instance")]
+    public string Instance { get; private set; }
+
+    /// <summary>
+    ///     Gets the dictionary containing validation errors, if any.
+    /// </summary>
+    [JsonProperty("errors")]
+    public Dictionary<string, List<string>> Errors { get; private set; } = [];
+
+    /// <summary>
+    ///     Gets the trace identifier for the request.
+    /// </summary>
+    [JsonProperty("traceId")]
+    public string TraceId { get; private set; }
+
+    /// <summary>
     ///     Maps an <see cref="ErrorType" /> to its corresponding HTTP status code.
     /// </summary>
     /// <param name="type">The error type.</param>
@@ -73,36 +109,6 @@ public class WebApiError
     {
         return httpContext.Features.Get<IHttpActivityFeature>()?.Activity.Id!;
     }
-
-    /// <summary>
-    /// Gets the error type describing the nature of the problem.
-    /// </summary>
-    [JsonProperty("type")] public string Type { get; private set; }
-
-    /// <summary>
-    /// Gets the error title providing a short, human-readable summary.
-    /// </summary>
-    [JsonProperty("title")] public string Title { get; private set; }
-
-    /// <summary>
-    /// Gets the HTTP status code associated with the error.
-    /// </summary>
-    [JsonProperty("status")] public int Status { get; private set; }
-
-    /// <summary>
-    /// Gets the instance string indicating the request path and method.
-    /// </summary>
-    [JsonProperty("instance")] public string Instance { get; private set; }
-
-    /// <summary>
-    /// Gets the dictionary containing validation errors, if any.
-    /// </summary>
-    [JsonProperty("errors")] public Dictionary<string, List<string>> Errors { get; private set; } = [];
-
-    /// <summary>
-    /// Gets the trace identifier for the request.
-    /// </summary>
-    [JsonProperty("traceId")] public string TraceId { get; private set; }
 
     /// <summary>
     ///     Attempts to write a <see cref="WebApiError" /> response to the HTTP context for a given

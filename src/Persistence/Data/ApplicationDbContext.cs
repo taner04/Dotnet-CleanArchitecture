@@ -1,12 +1,12 @@
 ﻿using Application.Common.Abstraction.Persistence;
-using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Users;
 
 namespace Persistence.Data;
 
 public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
     : DbContext(options), IApplicationDbContext
 {
-    public DbSet<ApplicationUser> Users => Set<ApplicationUser>();
+    public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

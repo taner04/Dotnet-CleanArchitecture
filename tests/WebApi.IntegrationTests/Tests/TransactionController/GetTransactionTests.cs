@@ -25,8 +25,9 @@ public class GetTransactionTests(TestingFixture fixture) : TestingBase(fixture)
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        
-        var transactions = await response.Content.ReadFromJsonAsync<List<GetTransactions.TransactionDto>>(CurrentCancellationToken);
+
+        var transactions =
+            await response.Content.ReadFromJsonAsync<List<GetTransactions.TransactionDto>>(CurrentCancellationToken);
         Assert.NotNull(transactions);
         Assert.Empty(transactions);
     }

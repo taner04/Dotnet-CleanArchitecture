@@ -1,5 +1,5 @@
-﻿using Domain.Entities.ApplicationUsers;
-using AccountId = Domain.Entities.ApplicationUsers.AccountId;
+﻿using Domain.Entities.Users;
+using AccountId = Domain.Entities.Users.AccountId;
 
 namespace Persistence.Data.Configuration;
 
@@ -13,7 +13,7 @@ public sealed class AccountConfiguration : EntityConfiguration<Account, AccountI
         builder.Property(a => a.UserId)
             .IsRequired();
 
-        builder.HasOne(a => a.ApplicationUser)
+        builder.HasOne(a => a.User)
             .WithOne(u => u.Account);
 
         builder.HasMany(a => a.Transactions)

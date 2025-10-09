@@ -46,10 +46,10 @@ public class JwtSettings(string secretKey, string issuer, string audience)
     public bool ValidateAudience { get; init; } = true;
 
     /// <summary>
-    ///     Creates a <see cref="TokenValidationParameters"/> instance based on the current JWT settings.
+    ///     Creates a <see cref="TokenValidationParameters" /> instance based on the current JWT settings.
     /// </summary>
     /// <returns>
-    ///     A configured <see cref="TokenValidationParameters"/> object for validating JWT tokens.
+    ///     A configured <see cref="TokenValidationParameters" /> object for validating JWT tokens.
     /// </returns>
     public TokenValidationParameters ToTokenValidationParameters()
     {

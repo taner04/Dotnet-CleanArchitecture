@@ -1,5 +1,5 @@
 using Application.CQRS.Authentication;
-using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Users;
 using Shared.WebApi;
 using WebApi.IntegrationTests.Common;
 using WebApi.IntegrationTests.Factories;
@@ -9,7 +9,7 @@ namespace WebApi.IntegrationTests.Tests.AuthenticationController;
 public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
 {
     private const string InvalidEmail = "doemail.com";
-    
+
     [Fact]
     public async Task Login_WithInvalidEmail_ReturnsBadRequest()
     {
@@ -24,7 +24,7 @@ public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
     [Fact]
     public async Task Login_WithInvalidCredentials_ReturnsBadRequest()
     {
-        DbContext.Set<ApplicationUser>().Add(UserFactory.User());
+        DbContext.Set<User>().Add(UserFactory.User());
         await DbContext.SaveChangesAsync(CurrentCancellationToken);
 
         var client = CreateClient();
@@ -45,9 +45,9 @@ public class LoginUserTests(TestingFixture fixture) : TestingBase(fixture)
     [Fact]
     public async Task Login_WithValidCredentials_ReturnsSuccess()
     {
-        DbContext.Set<ApplicationUser>().Add(UserFactory.User());
+        DbContext.Set<User>().Add(UserFactory.User());
         await DbContext.SaveChangesAsync(CurrentCancellationToken);
-        
+
         var client = CreateClient();
 
         var query = new LoginUser.Query(UserFactory.Email, UserFactory.Pwd);

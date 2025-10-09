@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using Npgsql;
 using Persistence.Data;
 using Shared.WebApi;
-using WebApi.IntegrationTests.Common.Database;
 using WebApi.IntegrationTests.Factories;
 
 namespace WebApi.IntegrationTests.Common;
@@ -12,9 +11,9 @@ namespace WebApi.IntegrationTests.Common;
 [Collection("TestingFixtureCollection")]
 public abstract class TestingBase : IAsyncLifetime
 {
-    protected readonly ApplicationDbContext DbContext;
     private readonly TestingFixture _fixture;
     private readonly IServiceScope _scope;
+    protected readonly ApplicationDbContext DbContext;
 
     protected TestingBase(TestingFixture fixture)
     {

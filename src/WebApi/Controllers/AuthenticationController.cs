@@ -22,7 +22,8 @@ public class AuthenticationController(IMediator mediator) : ControllerBase
 
     [Authorize]
     [HttpPut(Routes.Authentication.RefreshToken)]
-    public async ValueTask<IActionResult> RefreshTokenAsync(RefreshToken.Command command, CancellationToken cancellationToken)
+    public async ValueTask<IActionResult> RefreshTokenAsync(RefreshToken.Command command,
+        CancellationToken cancellationToken)
     {
         return MapResult(await mediator.Send(command, cancellationToken));
     }

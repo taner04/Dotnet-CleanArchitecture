@@ -1,4 +1,4 @@
-using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Users;
 
 namespace Application.Common.Abstraction.Infrastructure;
 
@@ -15,10 +15,10 @@ public interface IPasswordService
     string HashPassword(string password);
 
     /// <summary>
-    ///     Verifies that the provided password matches the applicationUser's stored password.
+    ///     Verifies that the provided password matches the user's stored password.
     /// </summary>
-    /// <param name="applicationUser">The applicationUser whose password is being verified.</param>
+    /// <param name="user">The user whose password is being verified.</param>
     /// <param name="providedPassword">The password to verify.</param>
     /// <returns><c>true</c> if the password is correct; otherwise, <c>false</c>.</returns>
-    bool VerifyPassword(ApplicationUser applicationUser, string providedPassword);
+    bool VerifyPassword(User user, string providedPassword);
 }

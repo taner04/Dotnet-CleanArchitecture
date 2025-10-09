@@ -1,9 +1,9 @@
 using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
-using Domain.Entities.ApplicationUsers;
-using Domain.Entities.ApplicationUsers.DomainEvents;
-using Domain.Entities.ApplicationUsers.ValueObjects;
+using Domain.Entities.Users;
+using Domain.Entities.Users.DomainEvents;
 using Shared.Errors;
+using Email = Domain.Entities.Users.ValueObjects.Email;
 
 namespace Application.CQRS.Authentication;
 
@@ -14,7 +14,7 @@ public static class LoginUser
     internal sealed class Handler(
         IApplicationDbContext applicationDbContext,
         IPasswordService passwordService,
-        ITokenService<ApplicationUser> tokenService) : IQueryHandler<Query, ErrorOr<Dto>>
+        ITokenService<User> tokenService) : IQueryHandler<Query, ErrorOr<Dto>>
     {
         public async ValueTask<ErrorOr<Dto>> Handle(Query query, CancellationToken cancellationToken)
         {
@@ -41,8 +41,8 @@ public static class LoginUser
             user.AddDomainEvent(new UserLoggedInDomainEvent(user));
 
             return new Dto(
-                AccessToken: tokenService.GenerateAccessToken(user),
-                RefreshToken: user.RefreshToken!);
+                tokenService.GenerateAccessToken(user),
+                user.RefreshToken!);
         }
     }
 
@@ -54,6 +54,6 @@ public static class LoginUser
             RuleFor(u => u.Password).NotEmpty();
         }
     }
-    
+
     public record Dto(string AccessToken, string RefreshToken);
 }

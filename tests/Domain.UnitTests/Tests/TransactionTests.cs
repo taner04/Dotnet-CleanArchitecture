@@ -1,4 +1,4 @@
-using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Users;
 
 namespace Domain.UnitTests.Tests;
 

@@ -1,5 +1,5 @@
-using Domain.Entities.ApplicationUsers;
-using UserId = Domain.Entities.ApplicationUsers.UserId;
+using Domain.Entities.Users;
+using UserId = Domain.Entities.Users.UserId;
 
 namespace Domain.UnitTests.Tests;
 

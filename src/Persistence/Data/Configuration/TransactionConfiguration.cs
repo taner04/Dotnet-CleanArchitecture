@@ -1,5 +1,5 @@
-﻿using Domain.Entities.ApplicationUsers;
-using TransactionId = Domain.Entities.ApplicationUsers.TransactionId;
+﻿using Domain.Entities.Users;
+using TransactionId = Domain.Entities.Users.TransactionId;
 
 namespace Persistence.Data.Configuration;
 

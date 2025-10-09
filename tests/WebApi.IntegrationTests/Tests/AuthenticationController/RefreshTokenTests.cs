@@ -1,10 +1,10 @@
 using Application.CQRS.Authentication;
-using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Shared.WebApi;
 using WebApi.IntegrationTests.Common;
 using WebApi.IntegrationTests.Factories;
-using Email = Domain.Entities.ApplicationUsers.ValueObjects.Email;
+using Email = Domain.Entities.Users.ValueObjects.Email;
 
 namespace WebApi.IntegrationTests.Tests.AuthenticationController;
 
@@ -15,11 +15,12 @@ public class RefreshTokenTests(TestingFixture fixture) : TestingBase(fixture)
     {
         var client = await CreateAuthenticatedClientAsync();
 
-        var user = await DbContext.Set<ApplicationUser>()
+        var user = await DbContext.Set<User>()
             .FirstOrDefaultAsync(u => u.Email == Email.From(UserFactory.Email), CurrentCancellationToken);
-        
+
         var command = new RefreshToken.Command(user.RefreshToken);
-        var response = await client.PutAsJsonAsync(Routes.Authentication.RefreshToken, command,CurrentCancellationToken);
+        var response =
+            await client.PutAsJsonAsync(Routes.Authentication.RefreshToken, command, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
@@ -30,9 +31,10 @@ public class RefreshTokenTests(TestingFixture fixture) : TestingBase(fixture)
     public async Task RefreshToken_WithInvalidRefreshToken_ReturnsBadRequest()
     {
         var client = CreateClient();
-        
+
         var command = new RefreshToken.Command("");
-        var response = await client.PutAsJsonAsync(Routes.Authentication.RefreshToken, command, CurrentCancellationToken);
+        var response =
+            await client.PutAsJsonAsync(Routes.Authentication.RefreshToken, command, CurrentCancellationToken);
 
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }

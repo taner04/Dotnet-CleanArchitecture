@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Vogen;
 
-namespace Domain.Entities.ApplicationUsers.ValueObjects;
+namespace Domain.Entities.Users.ValueObjects;
 
 [ValueObject<string>]
 public readonly partial struct Email

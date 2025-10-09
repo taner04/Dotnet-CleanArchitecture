@@ -1,5 +1,5 @@
 using Application.CQRS.Transactions;
-using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Users;
 
 namespace Application.Mapper;
 

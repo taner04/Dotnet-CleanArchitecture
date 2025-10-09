@@ -1,7 +1,5 @@
 using Application.Common;
-using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
-using Shared.Errors;
 
 namespace Application.CQRS.Users;
 
@@ -20,6 +18,6 @@ public static class GetUserData
             return new UserDataDto(user.FirstName, user.LastName, user.Email.Value);
         }
     }
-    
+
     public record UserDataDto(string FirstName, string LastName, string Email);
 }

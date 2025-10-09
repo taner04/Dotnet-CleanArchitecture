@@ -1,6 +1,6 @@
-using Domain.Entities.ApplicationUsers;
-using Domain.Entities.ApplicationUsers.ValueObjects;
+using Domain.Entities.Users;
 using Infrastructure.Utils;
+using Password = Domain.Entities.Users.ValueObjects.Password;
 
 namespace WebApi.IntegrationTests.Factories;
 
@@ -11,10 +11,10 @@ public static class UserFactory
 
     private static readonly PasswordService PasswordService = new();
 
-    public static ApplicationUser User()
+    public static User User()
     {
-        var user = ApplicationUser.TryCreate("John", "Doe",
-            Domain.Entities.ApplicationUsers.ValueObjects.Email.From(Email), true);
+        var user = Domain.Entities.Users.User.TryCreate("John", "Doe",
+            Domain.Entities.Users.ValueObjects.Email.From(Email), true);
 
         var pwd = Password.From(PasswordService.HashPassword(Pwd));
         user.SetPassword(pwd);

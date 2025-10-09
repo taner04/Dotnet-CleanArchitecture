@@ -1,5 +1,5 @@
 using Application.Common.Abstraction.Infrastructure;
-using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Users;
 
 namespace Infrastructure.Utils;
 
@@ -10,8 +10,8 @@ public class PasswordService : IPasswordService
         return BCrypt.Net.BCrypt.HashPassword(password);
     }
 
-    public bool VerifyPassword(ApplicationUser applicationUser, string providedPassword)
+    public bool VerifyPassword(User user, string providedPassword)
     {
-        return BCrypt.Net.BCrypt.Verify(providedPassword, applicationUser.PasswordHash.Value);
+        return BCrypt.Net.BCrypt.Verify(providedPassword, user.PasswordHash.Value);
     }
 }

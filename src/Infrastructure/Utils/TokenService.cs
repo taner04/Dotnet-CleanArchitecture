@@ -2,39 +2,33 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Application.Common.Abstraction.Infrastructure;
-using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Shared.WebApi;
 
 namespace Infrastructure.Utils;
 
-public sealed class TokenService(IConfiguration configuration) : ITokenService<ApplicationUser>
+public sealed class TokenService(IConfiguration configuration) : ITokenService<User>
 {
-    private enum Scope
-    {
-        Access,
-        Refresh
-    }
-
     private readonly JwtSettings _jwtSettings = configuration.GetSection("JWTSettings").Get<JwtSettings>() ??
                                                 throw new InvalidOperationException(
                                                     "JWT settings are not configured properly.");
 
     private readonly JwtSecurityTokenHandler _tokenHandler = new();
 
-    public string GenerateAccessToken(ApplicationUser applicationUser)
+    public string GenerateAccessToken(User user)
     {
-        var claims = GetClaims(applicationUser, Scope.Access);
-        var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddHours(ApplicationUser.AccessTokenValidityInHour));
+        var claims = GetClaims(user, Scope.Access);
+        var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddHours(User.AccessTokenValidityInHour));
 
         return _tokenHandler.WriteToken(jwt);
     }
 
-    public string GenerateRefreshToken(ApplicationUser applicationUser)
+    public string GenerateRefreshToken(User user)
     {
-        var claims = GetClaims(applicationUser, Scope.Refresh);
-        var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddDays(ApplicationUser.RefreshTokenValidityInDays));
+        var claims = GetClaims(user, Scope.Refresh);
+        var jwt = GetJwtSecurityToken(claims, DateTime.UtcNow.AddDays(User.RefreshTokenValidityInDays));
 
         return _tokenHandler.WriteToken(jwt);
     }
@@ -43,7 +37,7 @@ public sealed class TokenService(IConfiguration configuration) : ITokenService<A
     {
         try
         {
-            var principal = _tokenHandler.ValidateToken(token, _jwtSettings.ToTokenValidationParameters(), out var _);
+            var principal = _tokenHandler.ValidateToken(token, _jwtSettings.ToTokenValidationParameters(), out _);
 
             var scope = principal.Claims.FirstOrDefault(c => c.Type == "scope")?.Value;
             return string.Equals(scope, "refresh", StringComparison.Ordinal);
@@ -54,24 +48,24 @@ public sealed class TokenService(IConfiguration configuration) : ITokenService<A
         }
     }
 
-    private static Claim[] GetClaims(ApplicationUser applicationUser, Scope scope)
+    private static Claim[] GetClaims(User user, Scope scope)
     {
         if (scope == Scope.Access)
         {
             return
             [
-                new Claim(JwtRegisteredClaimNames.Sub, applicationUser.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, applicationUser.Email.Value),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email.Value),
                 // Optional: Add roles or permissions if available
-                // new Claim(ClaimTypes.Role, applicationUser.Role),
+                // new Claim(ClaimTypes.Role, user.Role),
                 new Claim("scope", "access")
             ];
         }
 
         return
         [
-            new Claim(JwtRegisteredClaimNames.Sub, applicationUser.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, applicationUser.Email.Value),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email.Value),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
             new Claim("scope", "refresh")
         ];
@@ -92,5 +86,11 @@ public sealed class TokenService(IConfiguration configuration) : ITokenService<A
             expires,
             signingCredentials
         );
+    }
+
+    private enum Scope
+    {
+        Access,
+        Refresh
     }
 }

@@ -1,7 +1,5 @@
 using Application.Common;
-using Application.Common.Abstraction.Infrastructure;
 using Application.Common.Abstraction.Persistence;
-using Shared.Errors;
 
 namespace Application.CQRS.Accounts;
 
